@@ -1,3 +1,25 @@
 .header {
     width: 100%;
+    background-color: #1C1C21;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    max-width: 1280px;
+    /*width: 100%;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.link {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav {
+    display: flex;
 }
