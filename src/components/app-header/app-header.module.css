@@ -1,5 +1,5 @@
 .header {
-    width: 100%;
+
     background-color: #1C1C21;
     display: flex;
     justify-content: center;
@@ -8,7 +8,7 @@
 
 .content {
     max-width: 1280px;
-    /*width: 100%;*/
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,5 +21,9 @@
 }
 
 .nav {
+    display: flex;
+}
+
+.cabinet {
     display: flex;
 }

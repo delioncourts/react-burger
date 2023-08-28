@@ -7,20 +7,20 @@ const BurgerIngredients = () => {
     const [current, setCurrent] = useState('one');
 
     return (
-        <>
+        <section className={styles.section}>
             <h1 className="text text_type_main-medium">Соберите бургер</h1>
             <div style={{ display: 'flex' }}>
                 <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-                Булки
+                    Булки
                 </Tab>
                 <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-                Соусы
+                    Соусы
                 </Tab>
                 <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-                Начинки
+                    Начинки
                 </Tab>
             </div>
-        </>
+        </section>
     )
 }
 

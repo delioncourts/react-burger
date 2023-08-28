@@ -7,13 +7,13 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 
 function App() {
     return (
-        <div className="App">
+        <>
             <AppHeader />
-            <main className="main">
-                <BurgerConstructor />
+            <main className={styles.main}>
                 <BurgerIngredients />
+                <BurgerConstructor />
             </main>
-        </div>
+        </>
     );
 }
 

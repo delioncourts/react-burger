@@ -7,23 +7,25 @@ const AppHeader = () => {
     return (
         <header className={styles.header}>
             <div className={styles.content}>
-            <nav className={styles.nav}>
-            <a href="#" className={styles.link}>
-            <BurgerIcon type="primary" />
-            <p className="text text_type_main-default">Конструктор</p>
-            </a>
+                <nav className={styles.nav}>
+                    <a href="#" className={styles.link}>
+                        <BurgerIcon type="primary" />
+                        <p className="text text_type_main-default">Конструктор</p>
+                    </a>
 
-            <a href="#" className={styles.link}>
-            <ListIcon type="secondary" />
-            <p className="text text_type_main-default text_color_inactive">Лента заказов</p>
-            </a>
+                    <a href="#" className={styles.link}>
+                        <ListIcon type="secondary" />
+                        <p className="text text_type_main-default text_color_inactive">Лента заказов</p>
+                    </a>
 
-            </nav>
+                </nav>
 
-            <Logo />
+                <Logo />
 
-            <ProfileIcon type="secondary" />
-            <p className="text text_type_main-default">Личный кабинет</p>
+                <div className={styles.cabinet}>
+                    <ProfileIcon type="secondary" />
+                    <p className="text text_type_main-default">Личный кабинет</p>
+                </div>
             </div>
         </header>
     );

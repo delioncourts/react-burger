@@ -1,4 +1,7 @@
-.main{
-    display: grid; 
+.main {
+    display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1280px;
+    margin: 0 auto;
 }
