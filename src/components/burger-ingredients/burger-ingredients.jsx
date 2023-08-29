@@ -7,7 +7,7 @@ import data from '../../data/data';
 import BurgerCard from '../burger-card/burger-card';
 
 const BurgerIngredients = () => {
-    const [current, setCurrent] = useState('');
+    const [current, setCurrent] = useState('bun');
 
     const ingredients = data.ingredients;
 
@@ -33,19 +33,19 @@ const BurgerIngredients = () => {
             <ul className={`${styles.ingredients} custom-scroll`}>
 
                 <h2 className="text text_type_main-medium pt-10 pb-6">Булки</h2>
-                <ul className={styles.list}>
+                <ul className={`${styles.list} pr-3`}>
                     {buns.map((item) => (
                         <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} />
                     ))}
                 </ul>
                 <h2 className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
-                <ul className={styles.list}>
+                <ul className={`${styles.list} pr-3`}>
                     {sauces.map((item) => (
                         <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} />
                     ))}
                 </ul>
                 <h2 className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
-                <ul className={styles.list}>
+                <ul className={`${styles.list} pr-3`}>
                     {mains.map((item) => (
                         <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} />
                     ))}

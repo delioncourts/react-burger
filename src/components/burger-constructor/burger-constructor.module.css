@@ -1,6 +1,10 @@
 .section {
     display: flex;
     flex-direction: column;
+
+    /*overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 200px);*/
 }
 
 .order {
@@ -12,4 +16,10 @@
 .price {
     display: flex;
     align-items: center;
+}
+
+.list {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
 }

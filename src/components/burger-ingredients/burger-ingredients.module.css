@@ -10,7 +10,7 @@
 .ingredients {
     display: flex;
     flex-direction: column;
-
+    padding: 0;
     overflow-y: auto;
     overflow-x: hidden;
     max-height: calc(100vh - 200px);
