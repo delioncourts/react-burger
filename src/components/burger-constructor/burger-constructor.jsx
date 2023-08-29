@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
 import styles from './burger-constructor.module.css';
@@ -60,5 +61,15 @@ const BurgerConstructor = () => {
         </section>
     )
 }
+
+BurgerConstructor.propTypes = {
+    text: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    type: PropTypes.oneOf(['top','bottom',undefined]),
+    isLocked: PropTypes.bool,
+    extraClass: PropTypes.string,
+    handleClose: PropTypes.func,
+};
 
 export default BurgerConstructor;
