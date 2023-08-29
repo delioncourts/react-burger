@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import data from '../../data/data';
 import BurgerCard from '../burger-card/burger-card';
 
 const BurgerIngredients = () => {
-    const [current, setCurrent] = useState('bun');
+    const [current, setCurrent] = useState('');
 
     const ingredients = data.ingredients;
 
