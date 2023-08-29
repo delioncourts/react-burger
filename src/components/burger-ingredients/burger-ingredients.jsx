@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import data from '../../data/data';
+import data from '../../utils/data';
 import BurgerCard from '../burger-card/burger-card';
 
 const BurgerIngredients = () => {
@@ -54,5 +54,8 @@ const BurgerIngredients = () => {
         </section>
     )
 }
+
+
+
 
 export default BurgerIngredients;
