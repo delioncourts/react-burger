@@ -9,7 +9,7 @@ const BurgerIngredients = () => {
     return (
         <section className={styles.section}>
             <h1 className="text text_type_main-medium">Соберите бургер</h1>
-            <div style={{ display: 'flex' }}>
+            <div className={styles.tab}>
                 <Tab value="one" active={current === 'one'} onClick={setCurrent}>
                     Булки
                 </Tab>
@@ -20,6 +20,13 @@ const BurgerIngredients = () => {
                     Начинки
                 </Tab>
             </div>
+
+            <ul className={`${styles.ingredients} custom-scroll`}>
+
+                <h2 className="text text_type_main-medium">Булки</h2>
+                <h2 className="text text_type_main-medium">Соусы</h2>
+                <h2 className="text text_type_main-medium">Начинки</h2>
+            </ul>
         </section>
     )
 }
