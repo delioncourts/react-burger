@@ -6,3 +6,22 @@
 .tab {
     display: flex;
 }
+
+.ingredients {
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 200px);
+}
+
+.list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    grid-row-gap: 32px;
+    grid-column-gap: 24px;
+}

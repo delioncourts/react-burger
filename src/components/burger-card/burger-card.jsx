@@ -1,20 +1,27 @@
 import React from 'react';
-import styles from './burger-constructor.module.css';
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
-const BurgerCard = ({ card, name, image }) => {
+import styles from './burger-card.module.css';
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+const BurgerCard = ({ name, image, price }) => {
     return (
         <li className={styles.card}>
             <Counter count={1} size="default" extraClass="m-1" />
-            <img className={styles.img} scr={image} alt={name} />
+            <img className={styles.img} src={image} alt={name} />
             <div className={styles.container}>
-                <p className={styles.price}>{card.price}</p>
+                <p className="text text_type_main-default">{price}</p>
                 <CurrencyIcon type="primary" />
             </div>
-            <p className={styles.name}>{name}</p>
+            <p className="text text_type_main-default">{name}</p>
         </li>
     )
 }
+
+BurgerCard.propTypes = {
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+};
 
 export default BurgerCard;

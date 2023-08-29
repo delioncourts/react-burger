@@ -1,5 +1,4 @@
 .header {
-
     background-color: #1C1C21;
     display: flex;
     justify-content: center;
@@ -22,6 +21,7 @@
 
 .nav {
     display: flex;
+    gap: 8px;
 }
 
 .cabinet {
