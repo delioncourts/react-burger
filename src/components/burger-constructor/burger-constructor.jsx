@@ -5,13 +5,13 @@ import data from '../../data/data';
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const BurgerConstructor = () => {
-    
+
     const ingredients = data.ingredients;
     const buns = ingredients.find(item => item.type === 'bun');
 
     return (
         <section className={`${styles.section} pt-25`}>
-            <div className={styles.list}>
+            <div className={`${styles.list} custom-scroll pr-2`}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
@@ -20,9 +20,24 @@ const BurgerConstructor = () => {
                     thumbnail={buns.image}
                 />
 
-<ul className={`${styles.list} custom-scroll`}>
-
-</ul>
+                <ul className={styles.items}>
+                    {ingredients.map((item) => {
+                        if (item.type !== 'bun') {
+                            return (
+                                <li key={item._id}>
+                                    <DragIcon type="primary" />
+                                    <ConstructorElement
+                                        text={item.name}
+                                        price={item.price}
+                                        thumbnail={item.image}
+                                        extraClass="ml-1"
+                                    />
+                                </li>
+                            )
+                        }
+                    }
+                    )}
+                </ul>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
@@ -33,7 +48,7 @@ const BurgerConstructor = () => {
             </div>
             <div className={`${styles.order} pt-10`}>
                 <div className={styles.price}>
-                    <p className="text text_type_digits-medium">610</p>
+                    <p className="text text_type_digits-medium pr-1">610</p>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button htmlType="button" type="primary" size="large">

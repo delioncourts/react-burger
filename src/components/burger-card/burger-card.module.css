@@ -8,9 +8,7 @@
     text-align: center;
 }
 
-
-
 .container {
     display: flex;
-gap: 8px;
+    gap: 8px;
 }

@@ -1,10 +1,6 @@
 .section {
     display: flex;
     flex-direction: column;
-
-    /*overflow-y: auto;
-    overflow-x: hidden;
-    max-height: calc(100vh - 200px);*/
 }
 
 .order {
@@ -19,7 +15,21 @@
 }
 
 .list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 350px);
+}
+
+.items {
     list-style-type: none;
     margin-left: 0;
     padding-left: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
