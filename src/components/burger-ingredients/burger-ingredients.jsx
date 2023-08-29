@@ -18,7 +18,7 @@ const BurgerIngredients = (props) => {
     const mains = ingredients.filter(item => item.type === 'main');
 
     return (
-        <section className={styles.section}>
+        <section id="order-line" className={styles.section}>
             <h1 className="text text_type_main-medium pb-5 pt-10">Соберите бургер</h1>
             <div className={styles.tab}>
                 <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>

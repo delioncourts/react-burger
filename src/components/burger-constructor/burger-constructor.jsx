@@ -11,9 +11,10 @@ const BurgerConstructor = () => {
 
     const ingredients = data.ingredients;
     const buns = ingredients.find(item => item.type === 'bun');
+    const other = ingredients.filter(item => item.type !== 'bun');
 
     return (
-        <section className={`${styles.section} pt-25`}>
+        <section id="burger-constructor" className={`${styles.section} pt-25`}>
             <div className={`${styles.list} custom-scroll pr-2`}>
                 <ConstructorElement
                     type="top"
@@ -24,10 +25,9 @@ const BurgerConstructor = () => {
                 />
 
                 <ul className={styles.items}>
-                    {ingredients.map((item) => {
-                        if (item.type !== 'bun') {
+                    {other.map((item, index) => {
                             return (
-                                <li key={item._id}>
+                                <li key={index}>
                                     <DragIcon type="primary" />
                                     <ConstructorElement
                                         text={item.name}
@@ -38,7 +38,7 @@ const BurgerConstructor = () => {
                                 </li>
                             )
                         }
-                    }
+                    
                     )}
                 </ul>
                 <ConstructorElement
