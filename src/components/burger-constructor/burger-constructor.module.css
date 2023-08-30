@@ -18,10 +18,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: calc(100vh - 350px);
 }
 
 .items {
@@ -32,4 +28,8 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 350px);
 }

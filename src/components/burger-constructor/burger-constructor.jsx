@@ -15,16 +15,17 @@ const BurgerConstructor = () => {
 
     return (
         <section id="burger-constructor" className={`${styles.section} pt-25`}>
-            <div className={`${styles.list} custom-scroll pr-2`}>
+            <div className={`${styles.list} pr-2`}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${buns.name} (верх)`}
                     price={buns.price}
                     thumbnail={buns.image}
+                    extraClass="mr-5"
                 />
 
-                <ul className={styles.items}>
+                <ul className={`${styles.items} custom-scroll pr-2`}>
                     {other.map((item, index) => {
                             return (
                                 <li key={index}>
@@ -47,6 +48,7 @@ const BurgerConstructor = () => {
                     text={`${buns.name} (низ)`}
                     price={buns.price}
                     thumbnail={buns.image}
+                    extraClass="mr-5"
                 />
             </div>
             <div className={`${styles.order} pt-10`}>
