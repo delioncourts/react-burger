@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -6,12 +7,24 @@ import styles from './burger-constructor.module.css';
 import data from '../../utils/data';
 
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import Modal from "../modal/modal";
+import OrderDetails from '../order-details/order-details';
 
 const BurgerConstructor = () => {
 
     const ingredients = data.ingredients;
     const buns = ingredients.find(item => item.type === 'bun');
     const other = ingredients.filter(item => item.type !== 'bun');
+
+    const [isActive, setIsActive] = useState(false);
+
+    const openModal = () => {
+        setIsActive(true);
+    };
+
+    const closeModal = () => {
+        setIsActive(false);
+    };
 
     return (
         <section id="burger-constructor" className={`${styles.section} pt-25`}>
@@ -27,19 +40,19 @@ const BurgerConstructor = () => {
 
                 <ul className={`${styles.items} custom-scroll pr-2`}>
                     {other.map((item, index) => {
-                            return (
-                                <li key={index}>
-                                    <DragIcon type="primary" />
-                                    <ConstructorElement
-                                        text={item.name}
-                                        price={item.price}
-                                        thumbnail={item.image}
-                                        extraClass="ml-1"
-                                    />
-                                </li>
-                            )
-                        }
-                    
+                        return (
+                            <li key={index}>
+                                <DragIcon type="primary" />
+                                <ConstructorElement
+                                    text={item.name}
+                                    price={item.price}
+                                    thumbnail={item.image}
+                                    extraClass="ml-1"
+                                />
+                            </li>
+                        )
+                    }
+
                     )}
                 </ul>
                 <ConstructorElement
@@ -56,7 +69,12 @@ const BurgerConstructor = () => {
                     <p className="text text_type_digits-medium pr-1">610</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="large">
+                {isActive && (
+                    <Modal onClose={closeModal}>
+                        <OrderDetails />
+                    </Modal>
+                )}
+                <Button htmlType="button" type="primary" size="large" onClick={openModal}>
                     Оформить заказ
                 </Button>
             </div>
@@ -68,7 +86,7 @@ BurgerConstructor.propTypes = {
     text: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    type: PropTypes.oneOf(['top','bottom',undefined]),
+    type: PropTypes.oneOf(['top', 'bottom', undefined]),
     isLocked: PropTypes.bool,
     extraClass: PropTypes.string,
     handleClose: PropTypes.func,
