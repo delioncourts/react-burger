@@ -3,8 +3,7 @@ import styles from "./modal-overlay.module.css";
 
 const ModalOverlay = () => {
     return (
-        <div>
-        </div>
+        <div className={styles.overlay}></div>
     )
 }
 
