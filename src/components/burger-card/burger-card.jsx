@@ -18,10 +18,10 @@ const BurgerCard = ({ name, image, price }) => {
     )
 }
 
-BurgerCard.propTypes = {	
-    name: PropTypes.string.isRequired,	
-    image: PropTypes.string.isRequired,	
-    price: PropTypes.number.isRequired,	
+BurgerCard.propTypes = {
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
 };
 
 export default BurgerCard;
