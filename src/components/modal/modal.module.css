@@ -1,0 +1,13 @@
+.content{}
+
+.heading{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+
+    gap: 40px;
+}
+
+.close{
+    cursor: pointer;
+}
