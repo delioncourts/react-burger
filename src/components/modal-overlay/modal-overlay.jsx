@@ -3,8 +3,8 @@ import styles from "./modal-overlay.module.css";
 
 const ModalOverlay = () => {
     return (
-        <>
-        </>
+        <div>
+        </div>
     )
 }
 
