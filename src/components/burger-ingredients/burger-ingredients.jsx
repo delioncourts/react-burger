@@ -5,40 +5,52 @@ import PropTypes from 'prop-types';
 import { useState, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import data from '../../utils/data';
+
 import BurgerCard from '../burger-card/burger-card';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Loader from '../loader/loader'
 
-const BurgerIngredients = (props) => {
+const BurgerIngredients = ({ data }) => {
     const [current, setCurrent] = useState('bun');
-    const [activeIngredient, setActiveIngredient] = useState(null);
-    const [isVisible, setIsVisible] = useState(false);
 
-    const ingredients = data.ingredients;
-    if (!ingredients) {
+    const [openModal, setOpenModal] = useState(false);
+    const [activeIngredient, setActiveIngredient] = useState(null);
+
+    if (!data) {
         return <Loader />;
     }
 
-    const handleOpenClick = (item) => {
-        setActiveIngredient(item);
-        setIsVisible(true);
-    };
+    const buns = data.filter(item => item.type === 'bun');
+    const sauces = data.filter(item => item.type === 'sauce');
+    const mains = data.filter(item => item.type === 'main');
 
-    const closeModal = () => {
-        setActiveIngredient(null);
-        setIsVisible(false);
-    };
-
-    const buns = ingredients.filter(item => item.type === 'bun');
-    const sauces = ingredients.filter(item => item.type === 'sauce');
-    const mains = ingredients.filter(item => item.type === 'main');
+    //попробовала обернуть в useMemo, но стала появляться ошибка :(
+    //React Hook "useMemo" is called conditionally. 
+    //React Hooks must be called in the exact same order in every component render  
+    /*
+     const { buns, sauces, mains } = useMemo(() => {
+         return {
+             buns: data.filter((item) => item.type === 'bun'),
+             sauces: data.filter((item) => item.type === 'sauce'),
+             mains: data.filter((item) => item.type === 'main'),
+         };
+     }, [data]);*/
 
     const onClickTabElement = (tab) => {
         setCurrent(tab);
         const element = document.getElementById(tab);
         if (element) element.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleIngredientClick(item) {
+        setActiveIngredient(item);
+        setOpenModal(true);
+    }
+
+    function handleCloseModal() {
+        setActiveIngredient({});
+        setOpenModal(false);
     }
 
     return (
@@ -61,26 +73,27 @@ const BurgerIngredients = (props) => {
                 <h2 id="bun" className="text text_type_main-medium pt-10 pb-6">Булки</h2>
                 <ul className={`${styles.list} pr-3`}>
                     {buns.map((item) => (
-                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onClick={() => handleOpenClick(item)} />
+                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={handleIngredientClick} />
                     ))}
                 </ul>
                 <h2 id="sauce" className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
                 <ul className={`${styles.list} pr-3`}>
                     {sauces.map((item) => (
-                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onClick={() => handleOpenClick(item)} />
+                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={handleIngredientClick} />
                     ))}
                 </ul>
                 <h2 id="main" className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
                 <ul className={`${styles.list} pr-3`}>
                     {mains.map((item) => (
-                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onClick={() => handleOpenClick(item)} />
+                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={handleIngredientClick} />
                     ))}
                 </ul>
-                {isVisible && (
-                    <Modal onClose={closeModal}>
-                        <IngredientDetails activeIngredient={activeIngredient} />
+                {openModal && activeIngredient && (
+                    <Modal onCloseModal={handleCloseModal}>
+                        <IngredientDetails data={activeIngredient} />
                     </Modal>
                 )}
+
             </ul>
         </section>
     )

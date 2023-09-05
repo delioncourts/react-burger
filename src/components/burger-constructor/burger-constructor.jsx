@@ -1,33 +1,37 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import PropTypes from 'prop-types';
 
 import styles from './burger-constructor.module.css';
-import data from '../../utils/data';
 
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../modal/modal";
 import OrderDetails from '../order-details/order-details';
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ data }) => {
+    const [orderModalOpen, setOrderModalOpen] = useState(false);
 
-    const ingredients = data.ingredients;
-    const buns = ingredients.find(item => item.type === 'bun');
-    const other = ingredients.filter(item => item.type !== 'bun');
+    //const buns = data.find(item => item.type === 'bun');
+    //const other = data.filter(item => item.type !== 'bun');
 
-    const [isActive, setIsActive] = useState(false);
+    const { buns, other } = useMemo(() => {
+        return {
+            buns: data.find(item => item.type === 'bun'),
+            other: data.filter(item => item.type !== 'bun'),
+        };
+    }, [data]);
 
-    const openModal = () => {
-        setIsActive(true);
-    };
+    function handleButtonClick() {
+        setOrderModalOpen(true);
+    }
 
-    const closeModal = () => {
-        setIsActive(false);
-    };
+    function handleCloseModal() {
+        setOrderModalOpen(false);
+    }
 
     return (
-        <section id="burger-constructor" className={`${styles.section} pt-25`}>
+        data.length && <section id="burger-constructor" className={`${styles.section} pt-25`}>
             <div className={`${styles.list} pr-2`}>
                 <ConstructorElement
                     type="top"
@@ -39,14 +43,14 @@ const BurgerConstructor = () => {
                 />
 
                 <ul className={`${styles.items} custom-scroll pr-2`}>
-                    {other.map((item, index) => {
+                    {other.map(({ _id, name, price, image }) => {
                         return (
-                            <li key={index}>
+                            <li key={_id}>
                                 <DragIcon type="primary" />
                                 <ConstructorElement
-                                    text={item.name}
-                                    price={item.price}
-                                    thumbnail={item.image}
+                                    text={name}
+                                    price={price}
+                                    thumbnail={image}
                                     extraClass="ml-1"
                                 />
                             </li>
@@ -69,12 +73,12 @@ const BurgerConstructor = () => {
                     <p className="text text_type_digits-medium pr-1">610</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                {isActive && (
-                    <Modal onClose={closeModal}>
-                        <OrderDetails />
-                    </Modal>
+
+                {orderModalOpen && (<Modal onCloseModal={handleCloseModal}>
+                    <OrderDetails />
+                </Modal>
                 )}
-                <Button htmlType="button" type="primary" size="large" onClick={openModal}>
+                <Button htmlType="button" type="primary" size="large" onClick={handleButtonClick}>
                     Оформить заказ
                 </Button>
             </div>

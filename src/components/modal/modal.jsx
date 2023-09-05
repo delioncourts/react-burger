@@ -9,33 +9,30 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const modalsRoot = document.getElementById("modals");
 
-const Modal = ({ title, closeModal, children }) => {
+const Modal = ({ title, onCloseModal, children }) => {
 
     useEffect(() => {
-        const handleEsc = (evt) => {
+        const closeEsc = (evt) => {
             if (evt.key === 'Escape') {
                 console.log('close by Esc');
-                closeModal();
+                onCloseModal();
             }
-        };
-
-        window.addEventListener('keydown', handleEsc);
-
-        return () => {
-            window.removeEventListener('keydown', handleEsc);
-        };
+        }
+        document.addEventListener('keydown', closeEsc);
+        return () =>
+            document.removeEventListener('keydown', closeEsc);
     }, []);
 
     return (
         ReactDOM.createPortal(
-            <ModalOverlay closeModal={closeModal}>
+            <ModalOverlay onOverlay={onCloseModal}>
                 <article className={styles.content}>
                     <div className={styles.heading}>
                         <h2 className="text text_type_main-large">
                             {title}
                         </h2>
-                        <div className={styles.close} onClick={closeModal}>
-                            <CloseIcon type="primary" onClick={closeModal} />
+                        <div className={styles.close} onClick={onCloseModal}>
+                            <CloseIcon type="primary" />
                         </div>
                     </div>
                     <div className={styles.wrapper}>
