@@ -9,6 +9,7 @@ import data from '../../utils/data';
 import BurgerCard from '../burger-card/burger-card';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import Loader from '../loader/loader'
 
 const BurgerIngredients = (props) => {
     const [current, setCurrent] = useState('bun');
@@ -17,7 +18,7 @@ const BurgerIngredients = (props) => {
 
     const ingredients = data.ingredients;
     if (!ingredients) {
-        return <div>Загружается... Пожалуйста, подождите.</div>;
+        return <Loader />;
     }
 
     const handleOpenClick = (item) => {
