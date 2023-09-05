@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import data from '../../utils/data';
@@ -40,7 +40,6 @@ const BurgerIngredients = (props) => {
         const element = document.getElementById(tab);
         if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
-
 
     return (
         <section id="order-line" className={styles.section}>
