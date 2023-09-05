@@ -35,7 +35,7 @@ const Modal = ({ title, closeModal, children }) => {
                             {title}
                         </h2>
                         <div className={styles.close} onClick={closeModal}>
-                            <CloseIcon type="primary" onClick={onClose} />
+                            <CloseIcon type="primary" onClick={closeModal} />
                         </div>
                     </div>
                     <div className={styles.wrapper}>

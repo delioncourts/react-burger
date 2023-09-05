@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./ingredient-details.module.css";
+import styles from "./order-details.module.css";
 import done from '../../images/done.svg';
 
 const OrderDetails = () => {
