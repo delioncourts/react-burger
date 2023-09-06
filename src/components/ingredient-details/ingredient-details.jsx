@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import styles from "./ingredient-details.module.css";
 
-const IngredientDetails = ({ image_large, name, calories, fat, proteins, carbohydrates }) => {
+//image_large, name, calories, fat, proteins, carbohydrates
+
+const IngredientDetails = ({ image_large, name, calories, fat, proteins, carbohydrates}) => {
     return (
         <div className={styles.container}>
             <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>

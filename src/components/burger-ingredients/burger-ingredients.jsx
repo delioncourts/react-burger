@@ -89,12 +89,12 @@ const BurgerIngredients = ({ data }) => {
                         <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={handleIngredientClick} />
                     ))}
                 </ul>
+              
                 {openModal && (
                     <Modal onCloseModal={handleCloseModal}>
                         <IngredientDetails data={activeIngredient} />
                     </Modal>
                 )}
-
             </ul>
         </section>
     )
