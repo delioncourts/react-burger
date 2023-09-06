@@ -44,6 +44,7 @@ const BurgerIngredients = ({ data }) => {
     }
 
     function handleIngredientClick(item) {
+        console.log(item);
         setActiveIngredient(item);
         setOpenModal(true);
     }
