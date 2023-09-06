@@ -5,7 +5,7 @@ import styles from './burger-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const BurgerCard = ({ name, image, price, onIngredientClick }) => {
-
+  
     function handleIngredientClick() {
         onIngredientClick();
     }

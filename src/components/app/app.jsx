@@ -10,7 +10,7 @@ import { loadIngredients } from '../../utils/api';
 function App() {
     const [ingredients, setIngredients] = useState([]);
 
-    //загружаем ингридиенты
+    //загружаем ингредиенты
     useEffect(() => {
         loadIngredients()
             .then(res => {
