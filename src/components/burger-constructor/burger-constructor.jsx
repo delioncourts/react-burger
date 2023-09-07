@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useMemo } from 'react';
 
 import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/types';
 
 import styles from './burger-constructor.module.css';
 
@@ -87,13 +88,7 @@ const BurgerConstructor = ({ data }) => {
 }
 
 BurgerConstructor.propTypes = {
-    text: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    type: PropTypes.oneOf(['top', 'bottom', undefined]),
-    isLocked: PropTypes.bool,
-    extraClass: PropTypes.string,
-    handleClose: PropTypes.func,
-};
+    data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
+}
 
 export default BurgerConstructor;

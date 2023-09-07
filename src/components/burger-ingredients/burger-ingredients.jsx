@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/types';
 
 import { useState, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
@@ -89,7 +90,7 @@ const BurgerIngredients = ({ data }) => {
                         <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
                 </ul>
-              
+
                 {openModal && (
                     <Modal title={"Детали ингредиента"} onCloseModal={handleCloseModal}>
                         <IngredientDetails data={activeIngredient} />
@@ -101,16 +102,7 @@ const BurgerIngredients = ({ data }) => {
 }
 
 BurgerIngredients.propTypes = {
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired
-};
+    data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
+}
 
 export default BurgerIngredients;
