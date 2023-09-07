@@ -1,12 +1,17 @@
 .container {
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+
+.containes{
     display: flex;
     flex-direction: column;
     padding-top: 50px;
     padding-bottom: 60px;
 }
-
 .content {
     margin: 0 auto;
+    text-align: center;
 }
 
 .list {

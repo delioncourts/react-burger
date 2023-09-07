@@ -74,24 +74,24 @@ const BurgerIngredients = ({ data }) => {
                 <h2 id="bun" className="text text_type_main-medium pt-10 pb-6">Булки</h2>
                 <ul className={`${styles.list} pr-3`}>
                     {buns.map((item) => (
-                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={handleIngredientClick} />
+                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
                 </ul>
                 <h2 id="sauce" className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
                 <ul className={`${styles.list} pr-3`}>
                     {sauces.map((item) => (
-                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={handleIngredientClick} />
+                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
                 </ul>
                 <h2 id="main" className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
                 <ul className={`${styles.list} pr-3`}>
                     {mains.map((item) => (
-                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={handleIngredientClick} />
+                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
                 </ul>
               
                 {openModal && (
-                    <Modal onCloseModal={handleCloseModal}>
+                    <Modal title={"Детали ингредиента"} onCloseModal={handleCloseModal}>
                         <IngredientDetails data={activeIngredient} />
                     </Modal>
                 )}

@@ -8,21 +8,19 @@
 
     max-width: 720px;
     width: 100%;
-    /*padding: 40px 40px 60px 40px;*/
     border-radius: 40px;
     height: max-content;
 
     position: fixed;
-    /*z-index: 3;*/
-    z-index: 1000;
+    z-index: 5;
 }
 
 .heading {
     display: flex;
+    max-width: 720px;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
-
-    gap: 60px;
 }
 
 .wrapper {
@@ -37,7 +35,7 @@
 .close {
     cursor: pointer;
     position: absolute;
-    top: 60px;
+    top: 50px;
     right: 40px;
     width: 24px;
     height: 24px;

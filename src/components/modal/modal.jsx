@@ -28,7 +28,7 @@ const Modal = ({ title, onCloseModal, children }) => {
             <ModalOverlay onOverlay={onCloseModal}>
                 <article className={styles.content}>
                     <div className={styles.heading}>
-                        <h2 className="text text_type_main-large">
+                        <h2 className="text text_type_main-large pt-10 ml-10">
                             {title}
                         </h2>
                         <div className={styles.close} onClick={onCloseModal}>

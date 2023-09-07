@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 
 import styles from "./ingredient-details.module.css";
 
-//image_large, name, calories, fat, proteins, carbohydrates
 
-const IngredientDetails = ({ image_large, name, calories, fat, proteins, carbohydrates}) => {
+const IngredientDetails = ({ data }) => {
+    const { image_large, name, calories, fat, proteins, carbohydrates } = data;
+
     return (
         <div className={styles.container}>
-            <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
-            <div className={styles.container}>
             <div className={styles.content}>
                 <img src={image_large} alt={name} />
                 <p className="text text_type_main-medium">{name}</p>
@@ -36,8 +35,8 @@ const IngredientDetails = ({ image_large, name, calories, fat, proteins, carbohy
                     </li>
                 </ul>
             </div>
-            </div>
         </div>
+
     )
 }
 
