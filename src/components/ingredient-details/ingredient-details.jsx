@@ -41,20 +41,8 @@ const IngredientDetails = ({ data }) => {
     )
 }
 
-{/* 
 IngredientDetails.propTypes = {
-    image_large: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    calories: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-}
-*/}
-
-
-IngredientDetails.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
+    data: PropTypes.shape(ingredientPropTypes).isRequired
 }
 
 export default IngredientDetails;
