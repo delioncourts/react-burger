@@ -4,6 +4,7 @@ const initialState = {
   currentIngredient: null,
   isOpen: false,
 };
+
 export const modalIngredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_VIEWED_INGREDIENT: {
