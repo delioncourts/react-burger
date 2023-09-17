@@ -17,7 +17,8 @@ import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burge
 
 const BurgerConstructor = ({ data }) => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
-
+    const dispatch = useDispatch();
+    
     const { buns, other } = useMemo(() => {
         return {
             buns: data.find(item => item.type === 'bun'),
