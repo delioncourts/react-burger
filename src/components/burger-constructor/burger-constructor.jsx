@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrag, useDrop } from 'react-dnd';
 
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
@@ -7,14 +9,14 @@ import { ingredientPropTypes } from '../../utils/types';
 import styles from './burger-constructor.module.css';
 
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import Modal from "../modal/modal";
 import OrderDetails from '../order-details/order-details';
 
+import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burger-constructor";
+
 const BurgerConstructor = ({ data }) => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
-
-    //const buns = data.find(item => item.type === 'bun');
-    //const other = data.filter(item => item.type !== 'bun');
 
     const { buns, other } = useMemo(() => {
         return {
