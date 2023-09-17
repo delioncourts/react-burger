@@ -1,9 +1,10 @@
 import React from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
 
-import { useState, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -11,6 +12,9 @@ import BurgerCard from '../burger-card/burger-card';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Loader from '../loader/loader'
+
+import { getIngregients } from '../../services/actions/burger-ingredients';
+import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/actions/modal';
 
 const BurgerIngredients = ({ data }) => {
     const [current, setCurrent] = useState('bun');
@@ -22,21 +26,20 @@ const BurgerIngredients = ({ data }) => {
         return <Loader />;
     }
 
-    const buns = data.filter(item => item.type === 'bun');
-    const sauces = data.filter(item => item.type === 'sauce');
-    const mains = data.filter(item => item.type === 'main');
+    const dispatch = useDispatch();
+    const burgerIngredients = useSelector(store => store.burgerIngredients.items);
 
-    //попробовала обернуть в useMemo, но стала появляться ошибка :(
-    //React Hook "useMemo" is called conditionally. 
-    //React Hooks must be called in the exact same order in every component render  
-    /*
-     const { buns, sauces, mains } = useMemo(() => {
-         return {
-             buns: data.filter((item) => item.type === 'bun'),
-             sauces: data.filter((item) => item.type === 'sauce'),
-             mains: data.filter((item) => item.type === 'main'),
-         };
-     }, [data]);*/
+    useEffect(() => {
+        dispatch(getIngregients());
+    }, [dispatch]);
+
+    const buns = useMemo(() => burgerIngredients.filter((item) => item.type === 'bun'), [burgerIngredients]);
+    const sauces = useMemo(() => burgerIngredients.filter((item) => item.type === 'sauce'), [burgerIngredients]);
+    const mains = useMemo(() => burgerIngredients.filter((item) => item.type === 'main'), [burgerIngredients]);
+
+    //const buns = data.filter(item => item.type === 'bun');
+    //const sauces = data.filter(item => item.type === 'sauce');
+    //const mains = data.filter(item => item.type === 'main');
 
     const onClickTabElement = (tab) => {
         setCurrent(tab);
@@ -45,14 +48,16 @@ const BurgerIngredients = ({ data }) => {
     }
 
     function handleIngredientClick(item) {
-        console.log(item);
-        setActiveIngredient(item);
-        setOpenModal(true);
+        dispatch({
+            type: GET_VIEWED_INGREDIENT,
+            burgerIngredients: item
+        })
     }
 
     function handleCloseModal() {
-        setActiveIngredient({});
-        setOpenModal(false);
+        dispatch({
+            type: REMOVE_VIEWED_INGREDIENT
+        })
     }
 
     return (
