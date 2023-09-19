@@ -25,7 +25,6 @@ const BurgerConstructor = ({ data }) => {
             other: data.filter(item => item.type !== 'bun'),
         };
     }, [data]);
-
     function handleButtonClick() {
         setOrderModalOpen(true);
     }

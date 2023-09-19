@@ -1,4 +1,5 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
