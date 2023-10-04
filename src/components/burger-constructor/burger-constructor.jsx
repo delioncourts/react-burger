@@ -15,16 +15,20 @@ import OrderDetails from '../order-details/order-details';
 
 import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burger-constructor";
 
-const BurgerConstructor = ({ data }) => {
-    const [orderModalOpen, setOrderModalOpen] = useState(false);
-    const dispatch = useDispatch();
+const BurgerConstructor = () => {
+    /*const [orderModalOpen, setOrderModalOpen] = useState(false);
+    const dispatch = useDispatch();*/
     
-    const { buns, other } = useMemo(() => {
+   /* const { buns, other } = useMemo(() => {
         return {
             buns: data.find(item => item.type === 'bun'),
             other: data.filter(item => item.type !== 'bun'),
         };
-    }, [data]);
+    }, [data]);*/
+
+    const orderNumber = useSelector(store => store.order.number);
+    const buns = useSelector(store => store.cart.buns);
+    
     function handleButtonClick() {
         setOrderModalOpen(true);
     }

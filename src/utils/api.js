@@ -8,6 +8,11 @@ function checkResponse(res) {
   }
 }
 
+ // принимает два аргумента: урл и объект опций, как и `fetch`
+/*function request(url, options) {
+  return fetch(url, options).then(checkResponse)
+}*/
+
 export const loadIngredients = () => {
   return fetch(BASE_URL).then((res) => {
     return checkResponse(res);
