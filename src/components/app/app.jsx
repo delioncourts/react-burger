@@ -22,7 +22,10 @@ function App() {
             .catch(err => {
                 console.log(err);
             });
-    }, []);*/
+    }, []);
+    
+    <BurgerConstructor />
+    */
 
     return (
         <>
@@ -30,7 +33,7 @@ function App() {
             <main className={styles.main}>
                 <DndProvider backend={HTML5Backend}>
                     <BurgerIngredients />
-                    <BurgerConstructor />
+                    
                 </DndProvider>
             </main>
         </>

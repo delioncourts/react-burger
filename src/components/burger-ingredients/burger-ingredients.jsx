@@ -1,9 +1,10 @@
 import React from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
 
-import { useState, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -12,31 +13,37 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Loader from '../loader/loader'
 
-const BurgerIngredients = ({ data }) => {
+import { getIngregients } from '../../services/actions/burger-ingredients';
+
+
+const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
 
     const [openModal, setOpenModal] = useState(false);
     const [activeIngredient, setActiveIngredient] = useState(null);
 
-    if (!data) {
-        return <Loader />;
-    }
+    //if (!data) {
+    // return <Loader />;
+    // }
 
-    const buns = data.filter(item => item.type === 'bun');
-    const sauces = data.filter(item => item.type === 'sauce');
-    const mains = data.filter(item => item.type === 'main');
+    const ingredients = useSelector(store => store.ingredients.ingredients);
+    const dispatch = useDispatch();
 
-    //попробовала обернуть в useMemo, но стала появляться ошибка :(
-    //React Hook "useMemo" is called conditionally. 
-    //React Hooks must be called in the exact same order in every component render  
-    /*
-     const { buns, sauces, mains } = useMemo(() => {
-         return {
-             buns: data.filter((item) => item.type === 'bun'),
-             sauces: data.filter((item) => item.type === 'sauce'),
-             mains: data.filter((item) => item.type === 'main'),
-         };
-     }, [data]);*/
+    useEffect(() => {
+        dispatch(getIngregients());
+    }, [dispatch]);
+
+    const buns = useMemo(() => ingredients.filter((item) => item.type === 'bun'), [ingredients]);
+    const sauces = useMemo(() => ingredients.filter((item) => item.type === 'sauce'), [ingredients]);
+    const mains = useMemo(() => ingredients.filter((item) => item.type === 'main'), [ingredients]);
+
+    //const buns = ingredients.filter(item => item.type === 'bun');
+    // const sauces = ingredients.filter(item => item.type === 'sauce');
+    // const mains = ingredients.filter(item => item.type === 'main');
+
+    //const buns = data.filter(item => item.type === 'bun');
+    //const sauces = data.filter(item => item.type === 'sauce');
+    //const mains = data.filter(item => item.type === 'main');
 
     const onClickTabElement = (tab) => {
         setCurrent(tab);
@@ -101,8 +108,8 @@ const BurgerIngredients = ({ data }) => {
     )
 }
 
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
-}
+/*BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
+}*/
 
 export default BurgerIngredients;

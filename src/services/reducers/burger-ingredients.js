@@ -29,7 +29,7 @@ export const burgerIngredientsReducer = (state = defaultState, action) => {
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
-        ingredients: action.items,
+        ingredients: action.ingredients,
         ingredientsRequest: false,
       };
     }
