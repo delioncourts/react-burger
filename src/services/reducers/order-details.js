@@ -7,13 +7,13 @@ import {
   UPDATE_ORDER_NUMBER,
 } from '../actions/order-details';
 
-const initialState = {
-  orderNumber: 0,
+const defaultState = {
+  number: 0,
   orderRequest: false,
   orderError: false,
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {
@@ -25,7 +25,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
     case GET_ORDER_SUCCESS: {
       return {
         ...state,
-        orderNumber: action.order.number,
+        number: action.orderNumber,
         orderRequest: false,
       };
     }
@@ -38,7 +38,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
     case UPDATE_ORDER_NUMBER: {
       return {
         ...state,
-        orderNumber: action.order.number,
+       number: action.orderNumber,
       };
     }
     default: {

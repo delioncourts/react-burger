@@ -4,13 +4,13 @@ import {
   GET_INGREDIENTS_SUCCESS,
 } from '../actions/burger-ingredients';
 
-const initialState = {
+const defaultState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsError: false,
 };
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
