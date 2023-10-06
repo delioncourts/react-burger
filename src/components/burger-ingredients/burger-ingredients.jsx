@@ -1,6 +1,7 @@
 import React from 'react';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useInView } from 'react-intersection-observer';
 
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
@@ -14,7 +15,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Loader from '../loader/loader'
 
 import { getIngregients } from '../../services/actions/burger-ingredients';
-
+import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/actions/modal';
 
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
@@ -45,20 +46,34 @@ const BurgerIngredients = () => {
     //const sauces = data.filter(item => item.type === 'sauce');
     //const mains = data.filter(item => item.type === 'main');
 
+    //observer
+    const [isIntersecting, setIsIntersecting] = useState(false);
+
+
     const onClickTabElement = (tab) => {
         setCurrent(tab);
         const element = document.getElementById(tab);
         if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 
+    const currentIngr = useSelector(store => store.modal.currentIngredient);
+
     function handleIngredientClick(item) {
-        console.log(item);
-        setActiveIngredient(item);
-        setOpenModal(true);
+       console.log(item);
+      //  setActiveIngredient(item);
+       setOpenModal(true);
+
+       dispatch({
+        type: GET_VIEWED_INGREDIENT,
+        currentIngredient: item
+    })
     }
 
     function handleCloseModal() {
-        setActiveIngredient({});
+        dispatch({
+            type: REMOVE_VIEWED_INGREDIENT
+        })
+        //setActiveIngredient({});
         setOpenModal(false);
     }
 
@@ -98,9 +113,9 @@ const BurgerIngredients = () => {
                     ))}
                 </ul>
 
-                {openModal && (
+                {currentIngr && (
                     <Modal title={"Детали ингредиента"} onCloseModal={handleCloseModal}>
-                        <IngredientDetails data={activeIngredient} />
+                        <IngredientDetails item={currentIngr} />
                     </Modal>
                 )}
             </ul>
