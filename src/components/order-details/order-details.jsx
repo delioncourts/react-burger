@@ -6,7 +6,7 @@ import done from '../../images/done.svg';
 
 const OrderDetails = () => {
 
-    const { orderNumber } = useSelector((state) => state.order);
+    const orderNumber = useSelector((state) => state.order.number);
 
     return (
         <div className={`${styles.popup} pt-15 pb-25`}>

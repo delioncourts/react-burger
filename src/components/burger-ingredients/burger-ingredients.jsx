@@ -20,6 +20,7 @@ import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
 
+    //модальное окно
     const [openModal, setOpenModal] = useState(false);
     const [activeIngredient, setActiveIngredient] = useState(null);
 
@@ -27,6 +28,7 @@ const BurgerIngredients = () => {
     // return <Loader />;
     // }
 
+    //все ингредиенты из стора 
     const ingredients = useSelector(store => store.ingredients.ingredients);
     const dispatch = useDispatch();
 
@@ -46,9 +48,31 @@ const BurgerIngredients = () => {
     //const sauces = data.filter(item => item.type === 'sauce');
     //const mains = data.filter(item => item.type === 'main');
 
-    //observer
-    const [isIntersecting, setIsIntersecting] = useState(false);
 
+    //При помощи observer меняется таб при прокрутке 
+    const containerRef = useRef(null);
+    const [bunsRef, bunsInView] = useInView({
+        threshold: 0,
+        root: containerRef.current
+    });
+
+    const [saucesRef, saucesInView] = useInView({
+        threshold: 0,
+        root: containerRef.current
+    });
+
+    const [mainsRef, mainsInView] = useInView({
+        threshold: 0,
+        root: containerRef.current
+    });
+
+    useEffect(() => {
+        bunsInView
+            ? setCurrent('bun')
+            : saucesInView
+                ? setCurrent('sauce')
+                : setCurrent('main')
+    }, [bunsInView, mainsInView, saucesInView])
 
     const onClickTabElement = (tab) => {
         setCurrent(tab);
@@ -56,17 +80,18 @@ const BurgerIngredients = () => {
         if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 
+    //получаем текущий выбранный элемент из стора для модального окна
     const currentIngr = useSelector(store => store.modal.currentIngredient);
 
     function handleIngredientClick(item) {
-       console.log(item);
-      //  setActiveIngredient(item);
-       setOpenModal(true);
+        console.log(item);
+        //  setActiveIngredient(item);
+        setOpenModal(true);
 
-       dispatch({
-        type: GET_VIEWED_INGREDIENT,
-        currentIngredient: item
-    })
+        dispatch({
+            type: GET_VIEWED_INGREDIENT,
+            currentIngredient: item
+        })
     }
 
     function handleCloseModal() {
@@ -78,7 +103,7 @@ const BurgerIngredients = () => {
     }
 
     return (
-        <section id="order-line" className={styles.section}>
+        <section ref={containerRef} id="order-line" className={styles.section}>
             <h1 className="text text_type_main-medium pb-5 pt-10">Соберите бургер</h1>
             <div className={styles.tab}>
                 <Tab value="bun" active={current === 'bun'} onClick={onClickTabElement}>
@@ -95,19 +120,19 @@ const BurgerIngredients = () => {
             <ul className={`${styles.ingredients} custom-scroll`}>
 
                 <h2 id="bun" className="text text_type_main-medium pt-10 pb-6">Булки</h2>
-                <ul className={`${styles.list} pr-3`}>
+                <ul ref={bunsRef} className={`${styles.list} pr-3`}>
                     {buns.map((item) => (
                         <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
                 </ul>
                 <h2 id="sauce" className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
-                <ul className={`${styles.list} pr-3`}>
+                <ul ref={saucesRef} className={`${styles.list} pr-3`}>
                     {sauces.map((item) => (
                         <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
                 </ul>
                 <h2 id="main" className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
-                <ul className={`${styles.list} pr-3`}>
+                <ul ref={mainsRef} className={`${styles.list} pr-3`}>
                     {mains.map((item) => (
                         <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
