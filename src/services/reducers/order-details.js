@@ -8,7 +8,7 @@ import {
 } from '../actions/order-details';
 
 const defaultState = {
-  number: 0,
+  number: null,
   orderRequest: false,
   orderError: false,
 };
@@ -25,7 +25,7 @@ export const orderDetailsReducer = (state = defaultState, action) => {
     case GET_ORDER_SUCCESS: {
       return {
         ...state,
-        number: action.orderNumber,
+        number: action.number,
         orderRequest: false,
       };
     }
@@ -38,9 +38,10 @@ export const orderDetailsReducer = (state = defaultState, action) => {
     case UPDATE_ORDER_NUMBER: {
       return {
         ...state,
-       number: action.orderNumber,
+       number: action.number,
       };
     }
+    
     default: {
       return state;
     }

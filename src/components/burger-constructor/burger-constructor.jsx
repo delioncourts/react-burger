@@ -16,8 +16,8 @@ import OrderDetails from '../order-details/order-details';
 import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burger-constructor";
 
 const BurgerConstructor = () => {
-    /*const [orderModalOpen, setOrderModalOpen] = useState(false);
-    const dispatch = useDispatch();*/
+    const [orderModalOpen, setOrderModalOpen] = useState(false);
+    const dispatch = useDispatch();
     
    /* const { buns, other } = useMemo(() => {
         return {
@@ -27,7 +27,9 @@ const BurgerConstructor = () => {
     }, [data]);*/
 
     const orderNumber = useSelector(store => store.order.number);
+    
     const buns = useSelector(store => store.cart.buns);
+    const other = useSelector(store => store.cart.otherItems)
     
     function handleButtonClick() {
         setOrderModalOpen(true);
@@ -38,7 +40,7 @@ const BurgerConstructor = () => {
     }
 
     return (
-        data.length && <section id="burger-constructor" className={`${styles.section} pt-25`}>
+        <section id="burger-constructor" className={`${styles.section} pt-25`}>
             <div className={`${styles.list} pr-2`}>
                 <ConstructorElement
                     type="top"

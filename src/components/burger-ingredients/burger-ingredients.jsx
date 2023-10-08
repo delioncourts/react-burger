@@ -67,10 +67,8 @@ const BurgerIngredients = () => {
     });
 
     useEffect(() => {
-        bunsInView
-            ? setCurrent('bun')
-            : saucesInView
-                ? setCurrent('sauce')
+        bunsInView ? setCurrent('bun')
+            : saucesInView ? setCurrent('sauce')
                 : setCurrent('main')
     }, [bunsInView, mainsInView, saucesInView])
 

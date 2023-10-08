@@ -33,7 +33,7 @@ function App() {
             <main className={styles.main}>
                 <DndProvider backend={HTML5Backend}>
                     <BurgerIngredients />
-                    
+                    <BurgerConstructor />
                 </DndProvider>
             </main>
         </>
