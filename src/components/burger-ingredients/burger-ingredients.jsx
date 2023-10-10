@@ -3,9 +3,6 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/types';
-
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -24,12 +21,16 @@ const BurgerIngredients = () => {
     const [openModal, setOpenModal] = useState(false);
     const [activeIngredient, setActiveIngredient] = useState(null);
 
+    //loader пока не загрузились данные 
     //if (!data) {
     // return <Loader />;
     // }
 
-    //все ингредиенты из стора 
+    //получение ингредиентов из стора 
     const ingredients = useSelector(store => store.ingredients.ingredients);
+    //получаем текущий выбранный элемент из стора для модального окна
+    const currentIngr = useSelector(store => store.modal.currentIngredient);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -40,14 +41,14 @@ const BurgerIngredients = () => {
     const sauces = useMemo(() => ingredients.filter((item) => item.type === 'sauce'), [ingredients]);
     const mains = useMemo(() => ingredients.filter((item) => item.type === 'main'), [ingredients]);
 
-    //const buns = ingredients.filter(item => item.type === 'bun');
-    // const sauces = ingredients.filter(item => item.type === 'sauce');
-    // const mains = ingredients.filter(item => item.type === 'main');
-
-    //const buns = data.filter(item => item.type === 'bun');
-    //const sauces = data.filter(item => item.type === 'sauce');
-    //const mains = data.filter(item => item.type === 'main');
-
+    //из предыдущего спринта - плавный скролл до раздела по клику по табу
+    //в этом спринте, к сожалению, сломался и не знаю как починить :(
+    //скролл приисходит, но черточка только по второму клику доезжает до активного таба
+    const onClickTabElement = (tab) => {
+        setCurrent(tab);
+        const element = document.getElementById(tab);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+    }
 
     //При помощи observer меняется таб при прокрутке 
     const containerRef = useRef(null);
@@ -72,18 +73,8 @@ const BurgerIngredients = () => {
                 : setCurrent('main')
     }, [bunsInView, mainsInView, saucesInView])
 
-    const onClickTabElement = (tab) => {
-        setCurrent(tab);
-        const element = document.getElementById(tab);
-        if (element) element.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    //получаем текущий выбранный элемент из стора для модального окна
-    const currentIngr = useSelector(store => store.modal.currentIngredient);
-
     function handleIngredientClick(item) {
         console.log(item);
-        //  setActiveIngredient(item);
         setOpenModal(true);
 
         dispatch({
@@ -96,7 +87,6 @@ const BurgerIngredients = () => {
         dispatch({
             type: REMOVE_VIEWED_INGREDIENT
         })
-        //setActiveIngredient({});
         setOpenModal(false);
     }
 
@@ -145,9 +135,5 @@ const BurgerIngredients = () => {
         </section>
     )
 }
-
-/*BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
-}*/
 
 export default BurgerIngredients;

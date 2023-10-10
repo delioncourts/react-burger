@@ -27,10 +27,10 @@ const BurgerConstructor = () => {
     }, [data]);*/
 
     const orderNumber = useSelector(store => store.order.number);
-    
+
     const buns = useSelector(store => store.cart.buns);
     const other = useSelector(store => store.cart.otherItems)
-    
+    console.log(buns)
     function handleButtonClick() {
         setOrderModalOpen(true);
     }
@@ -42,7 +42,7 @@ const BurgerConstructor = () => {
     return (
         <section id="burger-constructor" className={`${styles.section} pt-25`}>
             <div className={`${styles.list} pr-2`}>
-                <ConstructorElement
+            <ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${buns.name} (верх)`}
@@ -50,7 +50,6 @@ const BurgerConstructor = () => {
                     thumbnail={buns.image}
                     extraClass="mr-5"
                 />
-
                 <ul className={`${styles.items} custom-scroll pr-2`}>
                     {other.map(({ _id, name, price, image }) => {
                         return (
@@ -77,6 +76,7 @@ const BurgerConstructor = () => {
                     extraClass="mr-5"
                 />
             </div>
+
             <div className={`${styles.order} pt-10`}>
                 <div className={styles.price}>
                     <p className="text text_type_digits-medium pr-1">610</p>

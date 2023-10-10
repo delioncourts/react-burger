@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../actions/burger-constructor';
 
 const defaultState = {
-  buns: {},
+  buns: null,
   otherItems: [],
 };
 
