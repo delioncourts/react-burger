@@ -3,34 +3,27 @@
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../actions/burger-constructor';
 
 const defaultState = {
-  buns: {},
+  buns: null,
   otherItems: [],
 };
 
 export const burgerConstructorReducer = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_INGREDIENT: {
-      if (action.item.type === 'bun') {
+      if (action.item.type === "bun") {
         return {
           ...state,
-          buns: state.buns
-            ? state.buns._id === action.item._id
-              ? state.buns
-              : action.item
-            : [...state.buns, action.item],
+          buns: action.item,
         };
       } else {
         return {
           ...state,
-          otherItems: [
-            ...state.otherItems,
-            {
-              ...action.item
-            },
-          ],
+          otherItems: [...state.otherItems].concat(action.item)
         };
       }
     }
+
+
     case REMOVE_INGREDIENT: {
       const itemIndex = state.otherItems.indexOf(action.item);
       const doubleItems = state.otherItems.slice();
@@ -40,6 +33,7 @@ export const burgerConstructorReducer = (state = defaultState, action) => {
         otherItems: doubleItems,
       };
     }
+
     case MOVE_INGREDIENT: {
       const ingredientsToMove = [...state.otherItems];
       ingredientsToMove.splice(action.toIndex, 0, ingredientsToMove.splice(action.fromIndex, 1)[0]);

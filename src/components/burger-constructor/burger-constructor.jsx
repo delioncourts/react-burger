@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrop } from 'react-dnd';
 
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
@@ -13,7 +13,7 @@ import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktiku
 import Modal from "../modal/modal";
 import OrderDetails from '../order-details/order-details';
 
-import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burger-constructor";
+import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burger-constructor";
 
 import bun_image from '../../images/bun.png'
 const BurgerConstructor = () => {
@@ -31,7 +31,8 @@ const BurgerConstructor = () => {
 
     const buns = useSelector(store => store.cart.buns);
     const other = useSelector(store => store.cart.otherItems)
-    console.log(buns)
+    console.log(buns);
+    console.log(other);
 
     function handleButtonClick() {
         setOrderModalOpen(true);
@@ -41,8 +42,19 @@ const BurgerConstructor = () => {
         setOrderModalOpen(false);
     }
 
+    const [, dropTarget] = useDrop({
+        accept: "ingredients",
+        drop(item) {
+          dispatch({
+            type: ADD_INGREDIENT,
+            ...item,
+          });
+        },
+      });
+
+
     return (
-        <section id="burger-constructor" className={`${styles.section} pt-25`}>
+        <section ref={dropTarget} id="burger-constructor" className={`${styles.section} pt-25`}>
             <div className={`${styles.list} pr-2`}>
                 {buns ? (<ConstructorElement
                     type="top"
@@ -52,8 +64,10 @@ const BurgerConstructor = () => {
                     thumbnail={buns.image}
                     extraClass="mr-5"
                 />) : (
-                    <p className="text text_type_main-medium pr-1">Перетащите булочку</p>)
+                    <p className="text text_type_main-medium pr-1 pb-4">Перетащите булочку</p>)
                 }
+
+                {other.length === 0 && <p className="text text_type_main-medium pr-1">Перетащите начинку или соус</p>}
 
                 <ul className={`${styles.items} custom-scroll pr-2`}>
                     {other.map(({ _id, name, price, image }) => {
@@ -71,18 +85,6 @@ const BurgerConstructor = () => {
                     }
 
                     )}
-                </ul>
-
-                <ul className={`${styles.items} pr-2`}>
-                    <li>
-                        <ConstructorElement
-                            text={`Перетащите начинку или соус`}
-                            price={0}
-                            thumbnail={bun_image}
-                            extraClass="ml-1"
-                        />
-                        <p className="text text_type_main-medium pr-1">Перетащите начинку или соус</p>
-                    </li>
                 </ul>
 
                 {buns ? (<ConstructorElement
