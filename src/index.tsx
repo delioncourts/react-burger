@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createStore } from 'redux';
 import { Provider } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit'
 
@@ -12,9 +11,9 @@ import { rootReducer } from './services/reducers/rootreducer';
 import { enhancer } from './utils/utils';
 
 //const store = createStore(rootReducer, enhancer);
+//в configureStore devTools дефолтно true
 const store = configureStore({
-  reducer: rootReducer,
-  devTools: true
+  reducer: rootReducer
 })
 
 const root = ReactDOM.createRoot(

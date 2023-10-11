@@ -13,7 +13,7 @@ import Loader from '../loader/loader'
 
 import { getIngregients } from '../../services/actions/burger-ingredients';
 import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/actions/modal';
-
+import {AllIngredients, currentIngredientModal} from '../../services/selectors.js'
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
 
@@ -27,9 +27,9 @@ const BurgerIngredients = () => {
     // }
 
     //получение ингредиентов из стора 
-    const ingredients = useSelector(store => store.ingredients.ingredients);
+    const ingredients = useSelector(AllIngredients);
     //получаем текущий выбранный элемент из стора для модального окна
-    const currentIngr = useSelector(store => store.modal.currentIngredient);
+    const currentIngr = useSelector(currentIngredientModal);
 
     const dispatch = useDispatch();
 

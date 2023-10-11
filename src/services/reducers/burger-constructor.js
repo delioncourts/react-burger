@@ -1,9 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
+//редьюсер должен быть чистой функцией
 
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../actions/burger-constructor';
 
 const defaultState = {
-  buns: null,
+  buns: {},
   otherItems: [],
 };
 
@@ -19,17 +19,17 @@ export const burgerConstructorReducer = (state = defaultState, action) => {
               : action.item
             : [...state.buns, action.item],
         };
+      } else {
+        return {
+          ...state,
+          otherItems: [
+            ...state.otherItems,
+            {
+              ...action.item
+            },
+          ],
+        };
       }
-      return {
-        ...state,
-        otherItems: [
-          ...state.otherItems,
-          {
-            ...action.item,
-            uniqueId: uuidv4(),
-          },
-        ],
-      };
     }
     case REMOVE_INGREDIENT: {
       const itemIndex = state.otherItems.indexOf(action.item);
@@ -52,3 +52,15 @@ export const burgerConstructorReducer = (state = defaultState, action) => {
       return state;
   }
 };
+
+
+/*
+case delete_ingredient 
+const newConstructorState = state.constructorIngr.filter({uniqId} => uniqId !== action.payload) 
+return {...state, constructorIngr: newConstructorState}
+
+conse [addedIngredients, setAddedIngredients] = useState([])
+const deleteHandler = (ingredirents) => {
+setAddedIngredients(addedIngredients.filter(({uniqId}) => uniqId !== ingredient.uniqId ))
+}
+*/

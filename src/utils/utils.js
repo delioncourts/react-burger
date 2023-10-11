@@ -1,3 +1,4 @@
+//это для createStore
 import { compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 

@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 
 import styles from './burger-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
 
 const BurgerCard = ({ name, image, price, onIngredientClick }) => {
-  
+    const buns = useSelector(store => store.cart.buns);
+    const other = useSelector(store => store.cart.otherItems);
+
+
     function handleIngredientClick() {
         onIngredientClick();
     }

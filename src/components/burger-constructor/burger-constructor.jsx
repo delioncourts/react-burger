@@ -15,22 +15,24 @@ import OrderDetails from '../order-details/order-details';
 
 import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burger-constructor";
 
+import bun_image from '../../images/bun.png'
 const BurgerConstructor = () => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
     const dispatch = useDispatch();
-    
-   /* const { buns, other } = useMemo(() => {
-        return {
-            buns: data.find(item => item.type === 'bun'),
-            other: data.filter(item => item.type !== 'bun'),
-        };
-    }, [data]);*/
+
+    /* const { buns, other } = useMemo(() => {
+         return {
+             buns: data.find(item => item.type === 'bun'),
+             other: data.filter(item => item.type !== 'bun'),
+         };
+     }, [data]);*/
 
     const orderNumber = useSelector(store => store.order.number);
 
     const buns = useSelector(store => store.cart.buns);
     const other = useSelector(store => store.cart.otherItems)
     console.log(buns)
+
     function handleButtonClick() {
         setOrderModalOpen(true);
     }
@@ -42,14 +44,17 @@ const BurgerConstructor = () => {
     return (
         <section id="burger-constructor" className={`${styles.section} pt-25`}>
             <div className={`${styles.list} pr-2`}>
-            <ConstructorElement
+                {buns ? (<ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${buns.name} (верх)`}
                     price={buns.price}
                     thumbnail={buns.image}
                     extraClass="mr-5"
-                />
+                />) : (
+                    <p className="text text_type_main-medium pr-1">Перетащите булочку</p>)
+                }
+
                 <ul className={`${styles.items} custom-scroll pr-2`}>
                     {other.map(({ _id, name, price, image }) => {
                         return (
@@ -67,7 +72,20 @@ const BurgerConstructor = () => {
 
                     )}
                 </ul>
-                <ConstructorElement
+
+                <ul className={`${styles.items} pr-2`}>
+                    <li>
+                        <ConstructorElement
+                            text={`Перетащите начинку или соус`}
+                            price={0}
+                            thumbnail={bun_image}
+                            extraClass="ml-1"
+                        />
+                        <p className="text text_type_main-medium pr-1">Перетащите начинку или соус</p>
+                    </li>
+                </ul>
+
+                {buns ? (<ConstructorElement
                     type="bottom"
                     isLocked={true}
                     text={`${buns.name} (низ)`}
@@ -75,6 +93,10 @@ const BurgerConstructor = () => {
                     thumbnail={buns.image}
                     extraClass="mr-5"
                 />
+                ) : (
+                    <p className="text text_type_main-medium pr-1">Перетащите булочку</p>
+                )
+                }
             </div>
 
             <div className={`${styles.order} pt-10`}>

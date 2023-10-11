@@ -22,6 +22,8 @@ export const burgerIngredientsReducer = (state = defaultState, action) => {
     case GET_INGREDIENTS_ERROR: {
       return {
         ...state,
+        //сбрасываем состояние до начального чтобы пользователь не работал с устаревшими данными
+        ingredients: [],
         ingredientsRequest: false,
         ingredientsError: true,
       };
