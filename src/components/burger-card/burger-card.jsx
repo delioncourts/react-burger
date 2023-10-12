@@ -6,26 +6,28 @@ import styles from './burger-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 
-const BurgerCard = ({ card, name, image, price, onIngredientClick }) => {
+const BurgerCard = ({ ingredients, name, image, price, onIngredientClick }) => {
     const buns = useSelector(store => store.cart.buns);
     const other = useSelector(store => store.cart.otherItems);
-
 
     function handleIngredientClick() {
         onIngredientClick();
     }
 
-    const [{ }, dragRef] = useDrag({
+    const [{ opacity }, dragRef] = useDrag({
         type: "ingredients",
-        item: card,
+        item: ingredients,
+        collect: (monitor) => ({
+            opacity: monitor.isDragging() ? .5 : 1
+        })
 
-         // collect: (monitor) => ({
-         //   isDrag: monitor.isDragging()
-         // }),
+        // collect: (monitor) => ({
+        //   isDrag: monitor.isDragging()
+        // }),
     });
 
     return (
-        <li ref={dragRef} className={styles.card} onClick={handleIngredientClick}>
+        <li ref={dragRef} className={styles.card} onClick={handleIngredientClick} style={{ opacity }}>
             <Counter count={1} size="default" extraClass="m-1" />
             <img className={styles.img} src={image} alt={name} />
             <div className={`${styles.container} pt-1`}>

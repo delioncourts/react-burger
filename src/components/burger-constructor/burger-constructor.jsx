@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
 
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
@@ -12,10 +13,10 @@ import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktiku
 
 import Modal from "../modal/modal";
 import OrderDetails from '../order-details/order-details';
-
+import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burger-constructor";
+import { bunsInCart, otherInCart } from '../../services/selectors';
 
-import bun_image from '../../images/bun.png'
 const BurgerConstructor = () => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
     const dispatch = useDispatch();
@@ -29,8 +30,8 @@ const BurgerConstructor = () => {
 
     const orderNumber = useSelector(store => store.order.number);
 
-    const buns = useSelector(store => store.cart.buns);
-    const other = useSelector(store => store.cart.otherItems)
+    const buns = useSelector(bunsInCart);
+    const other = useSelector(otherInCart)
     console.log(buns);
     console.log(other);
 
@@ -42,16 +43,32 @@ const BurgerConstructor = () => {
         setOrderModalOpen(false);
     }
 
+    const uniqueId = (obj) => {
+        const id = uuidv4();
+        return {
+            ...obj,
+            idtd: id
+        }
+    }
+
     const [, dropTarget] = useDrop({
         accept: "ingredients",
         drop(item) {
-          dispatch({
-            type: ADD_INGREDIENT,
-            ...item,
-          });
+            dispatch({
+                type: ADD_INGREDIENT,
+                item: uniqueId(item)
+            });
         },
-      });
+        collect: (monitor => ({
+            isOver: monitor.isOver(),
+            itemType: monitor.getItem()
+        }))
+    });
 
+    //посчитать финальную стоимость - в useMemo чтобы перерисовыввть только если есть изменения
+    /*const totalPrice = useMemo(() => {
+        return (buns && buns.price * 2) + other.reduce((acc, item) => acc += item?.price, 0);;
+    }, [burgersData])*/
 
     return (
         <section ref={dropTarget} id="burger-constructor" className={`${styles.section} pt-25`}>
@@ -70,16 +87,11 @@ const BurgerConstructor = () => {
                 {other.length === 0 && <p className="text text_type_main-medium pr-1">Перетащите начинку или соус</p>}
 
                 <ul className={`${styles.items} custom-scroll pr-2`}>
-                    {other.map(({ _id, name, price, image }) => {
+                    {other.map((item, index) => {
                         return (
-                            <li key={_id}>
+                            <li>
                                 <DragIcon type="primary" />
-                                <ConstructorElement
-                                    text={name}
-                                    price={price}
-                                    thumbnail={image}
-                                    extraClass="ml-1"
-                                />
+
                             </li>
                         )
                     }
@@ -119,8 +131,8 @@ const BurgerConstructor = () => {
     )
 }
 
-BurgerConstructor.propTypes = {
+/*(BurgerConstructor.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
-}
+}*/
 
 export default BurgerConstructor;
