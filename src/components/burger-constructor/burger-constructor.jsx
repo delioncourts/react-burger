@@ -15,7 +15,7 @@ import Modal from "../modal/modal";
 import OrderDetails from '../order-details/order-details';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burger-constructor";
-import { bunsInCart, otherInCart } from '../../services/selectors';
+import { bunsInCart, otherInCart, receiveOrderNumber  } from '../../services/selectors';
 
 const BurgerConstructor = () => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
@@ -28,10 +28,10 @@ const BurgerConstructor = () => {
          };
      }, [data]);*/
 
-    const orderNumber = useSelector(store => store.order.number);
+    const orderNumber = useSelector(receiveOrderNumber);
 
     const buns = useSelector(bunsInCart);
-    const other = useSelector(otherInCart)
+    const other = useSelector(otherInCart);
     console.log(buns);
     console.log(other);
 
@@ -59,13 +59,14 @@ const BurgerConstructor = () => {
                 item: uniqueId(item)
             });
         },
-        collect: (monitor => ({
+        collect: ((monitor) => ({
             isOver: monitor.isOver(),
-            itemType: monitor.getItem()
+            droppedItem: monitor.getItem(),
+            canDrop: monitor.canDrop(),
         }))
     });
 
-    //посчитать финальную стоимость - в useMemo чтобы перерисовыввть только если есть изменения
+    //посчитать финальную стоимость - в useMemo чтобы перерисовывать только если есть изменения
     /*const totalPrice = useMemo(() => {
         return (buns && buns.price * 2) + other.reduce((acc, item) => acc += item?.price, 0);;
     }, [burgersData])*/
@@ -89,13 +90,12 @@ const BurgerConstructor = () => {
                 <ul className={`${styles.items} custom-scroll pr-2`}>
                     {other.map((item, index) => {
                         return (
-                            <li>
-                                <DragIcon type="primary" />
-
-                            </li>
+                            <BurgerIngredient
+                                item={item}
+                                index={index}
+                                key={item.uuid} />
                         )
                     }
-
                     )}
                 </ul>
 
@@ -120,7 +120,7 @@ const BurgerConstructor = () => {
                 </div>
 
                 {orderModalOpen && (<Modal onCloseModal={handleCloseModal}>
-                    <OrderDetails />
+                    <OrderDetails orderNumber={orderNumber} />
                 </Modal>
                 )}
                 <Button htmlType="button" type="primary" size="large" onClick={handleButtonClick}>

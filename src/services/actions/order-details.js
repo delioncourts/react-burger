@@ -15,11 +15,11 @@ export function sendOrder(arr) {
             type: GET_ORDER_REQUEST
         });
         createOrderRequest(arr)
-        .then(order => {
+        .then((order) => {
             if(order.success) {
                 dispatch({
                     type: GET_ORDER_SUCCESS,
-                    orderNumber: order.order.number
+                    orderNumber: order.number
                 })
             }
             else{

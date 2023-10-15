@@ -14,6 +14,7 @@ import Loader from '../loader/loader'
 import { getIngregients } from '../../services/actions/burger-ingredients';
 import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/actions/modal';
 import {AllIngredients, currentIngredientModal} from '../../services/selectors.js'
+
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
 

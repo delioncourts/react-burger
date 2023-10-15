@@ -23,7 +23,6 @@ export const burgerConstructorReducer = (state = defaultState, action) => {
       }
     }
 
-
     case REMOVE_INGREDIENT: {
       const itemIndex = state.otherItems.indexOf(action.item);
       const doubleItems = state.otherItems.slice();

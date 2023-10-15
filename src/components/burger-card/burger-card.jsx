@@ -20,10 +20,6 @@ const BurgerCard = ({ ingredients, name, image, price, onIngredientClick }) => {
         collect: (monitor) => ({
             opacity: monitor.isDragging() ? .5 : 1
         })
-
-        // collect: (monitor) => ({
-        //   isDrag: monitor.isDragging()
-        // }),
     });
 
     return (

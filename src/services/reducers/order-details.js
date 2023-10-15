@@ -25,7 +25,7 @@ export const orderDetailsReducer = (state = defaultState, action) => {
     case GET_ORDER_SUCCESS: {
       return {
         ...state,
-        number: action.number,
+        number: action.orderNumber,
         orderRequest: false,
       };
     }
@@ -38,10 +38,9 @@ export const orderDetailsReducer = (state = defaultState, action) => {
     case UPDATE_ORDER_NUMBER: {
       return {
         ...state,
-       number: action.number,
+        number: action.orderNumber,
       };
     }
-    
     default: {
       return state;
     }
