@@ -2,18 +2,18 @@ import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
 
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { MOVE_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions/burger-constructor';
 
 //элемент в burger constructor - начинки и соусы
-const BurgerIngredient = ({ item, index, idtd, id }) => {
+const BurgerIngredient = ({ item, index, idtd }) => {
     const { name, price, image } = item;
 
     const dispatch = useDispatch();
     const ref = useRef(null)
 
-    function handleDelete(id) {
+    function handleDeleteIngredient(id) {
         dispatch({
             type: REMOVE_INGREDIENT,
             idtd: id
@@ -22,9 +22,7 @@ const BurgerIngredient = ({ item, index, idtd, id }) => {
 
     const [{ opacity }, dragRef] = useDrag({
         type: 'sorting',
-        item: {
-            index
-        },
+        item: { index },
         collect: (monitor) => {
             return {
                 opacity: monitor.isDragging() ? .5 : 1
@@ -32,6 +30,7 @@ const BurgerIngredient = ({ item, index, idtd, id }) => {
         }
     })
 
+    //сортировка ингредиентов 
     const [, dropRef] = useDrop({
         accept: 'sorting',
         hover(itemToPush, monitor) {
@@ -73,7 +72,7 @@ const BurgerIngredient = ({ item, index, idtd, id }) => {
                 price={price}
                 thumbnail={image}
                 extraClass="ml-1"
-                handleClose={(() => handleDelete(idtd))}
+                handleClose={(() => handleDeleteIngredient(idtd))}
             />
         </li>
     )
