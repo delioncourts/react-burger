@@ -96,7 +96,7 @@ const BurgerConstructor = () => {
                             <BurgerIngredient
                                 item={item}
                                 index={index}
-                                key={item.uniqueId} />
+                                key={item.idtd}  />
                         )
                     }
                     )}

@@ -19,6 +19,12 @@ const BurgerCard = ({ ingredients, name, image, price, onIngredientClick }) => {
     //при объединении concat Cannot read properties of null (reading 'concat')
     //const ingredientsInConstructor = buns.concat(other);
 
+
+    //фильтруем массив всех ингредиентов по id и обращаемся к длине получившегося массива
+    //массив всех ингредиентов обновляется 
+    //const count = useMemo(() => ingredientsInConstructor.filter(element => element._id === ingredients._id).length, [ingredientsInConstructor])
+
+    
     function handleIngredientClick() {
         onIngredientClick();
     }
@@ -31,10 +37,6 @@ const BurgerCard = ({ ingredients, name, image, price, onIngredientClick }) => {
             opacity: monitor.isDragging() ? .5 : 1
         })
     });
-
-    //фильтруем массив всех ингредиентов по id и обращаемся к длине получившегося массива
-    //массив всех ингредиентов обновляется 
-    //const count = useMemo(() => ingredientsInConstructor.filter(element => element._id === ingredients._id).length, [ingredientsInConstructor])
 
     return (
         <li ref={dragRef} className={styles.card} onClick={handleIngredientClick} style={{ opacity }}>
