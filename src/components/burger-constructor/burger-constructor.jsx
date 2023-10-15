@@ -15,7 +15,7 @@ import Modal from "../modal/modal";
 import OrderDetails from '../order-details/order-details';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from "../../services/actions/burger-constructor";
-import { bunsInCart, otherInCart, receiveOrderNumber  } from '../../services/selectors';
+import { bunsInCart, otherInCart, receiveOrderNumber } from '../../services/selectors';
 
 const BurgerConstructor = () => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
@@ -67,9 +67,10 @@ const BurgerConstructor = () => {
     });
 
     //посчитать финальную стоимость - в useMemo чтобы перерисовывать только если есть изменения
-    /*const totalPrice = useMemo(() => {
-        return (buns && buns.price * 2) + other.reduce((acc, item) => acc += item?.price, 0);;
-    }, [burgersData])*/
+    // стоимость булочек умножаетмя на 2, тк 2 булочки всегда 
+    const totalPrice = useMemo(() => {
+        return (buns ? buns.price * 2 : 0) + other.reduce((acc, item) => acc + item.price, 0);
+    }, [buns, other])
 
     return (
         <section ref={dropTarget} id="burger-constructor" className={`${styles.section} pt-25`}>
@@ -93,7 +94,7 @@ const BurgerConstructor = () => {
                             <BurgerIngredient
                                 item={item}
                                 index={index}
-                                key={item.uuid} />
+                                key={item.uniqueId} />
                         )
                     }
                     )}
@@ -115,7 +116,7 @@ const BurgerConstructor = () => {
 
             <div className={`${styles.order} pt-10`}>
                 <div className={styles.price}>
-                    <p className="text text_type_digits-medium pr-1">610</p>
+                    <p className="text text_type_digits-medium pr-1">{totalPrice || 0 }</p>
                     <CurrencyIcon type="primary" />
                 </div>
 
