@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/types';
-
 import styles from './burger-constructor.module.css';
 
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -20,13 +17,6 @@ import { bunsInCart, otherInCart, receiveOrderNumber } from '../../services/sele
 const BurgerConstructor = () => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
     const dispatch = useDispatch();
-
-    /* const { buns, other } = useMemo(() => {
-         return {
-             buns: data.find(item => item.type === 'bun'),
-             other: data.filter(item => item.type !== 'bun'),
-         };
-     }, [data]);*/
 
     const orderNumber = useSelector(receiveOrderNumber);
 
@@ -71,8 +61,15 @@ const BurgerConstructor = () => {
     //посчитать финальную стоимость - в useMemo чтобы перерисовывать только если есть изменения
     //стоимость булочек считается по 2 булочки
     const totalPrice = useMemo(() => {
-        return (buns ? buns.price * 2 : 0) + other.reduce((acc, item) => acc + item.price, 0);
-    }, [buns, other])
+        const bunsPrice = buns?.price || 0;
+        const otherPrice = other.reduce((acc, item) => acc + item.price, 0);
+        return bunsPrice * 2 + otherPrice;
+    }, [buns, other]);
+
+    //блокируем кнопку отправки заказа если нет начинок и булок
+    const checkDisabled = () => {
+        return other.length > 0 && buns;
+    };
 
     return (
         <section ref={dropTarget} id="burger-constructor" className={`${styles.section} pt-25`}>
@@ -96,7 +93,7 @@ const BurgerConstructor = () => {
                             <BurgerIngredient
                                 item={item}
                                 index={index}
-                                key={item.idtd}  />
+                                key={item.idtd} />
                         )
                     }
                     )}
@@ -126,16 +123,12 @@ const BurgerConstructor = () => {
                     <OrderDetails orderNumber={orderNumber} />
                 </Modal>
                 )}
-                <Button htmlType="button" type="primary" size="large" onClick={handleButtonClick}>
+                <Button htmlType="button" type="primary" size="large" onClick={handleButtonClick} disabled={!checkDisabled()} >
                     Оформить заказ
                 </Button>
             </div>
         </section>
     )
 }
-
-/*(BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape(ingredientPropTypes)).isRequired
-}*/
 
 export default BurgerConstructor;
