@@ -1,5 +1,4 @@
 import React from 'react';
-//import { useEffect, useState } from 'react';
 
 import styles from './app.module.css';
 
@@ -11,21 +10,6 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
-
-    //загружаем ингредиенты
-    //const [ingredients, setIngredients] = useState([]);
-    /*useEffect(() => {
-        loadIngredients()
-            .then(res => {
-                setIngredients(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }, []);
-    
-    <BurgerConstructor />
-    */
 
     return (
         <>

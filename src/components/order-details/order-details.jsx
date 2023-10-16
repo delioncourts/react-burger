@@ -6,11 +6,11 @@ import done from '../../images/done.svg';
 
 import { receiveOrderNumber } from "../../services/selectors";
 
-const OrderDetails = () => {
+const OrderDetails = ({ orderNumber }) => {
 
-    const orderNumber = useSelector(receiveOrderNumber);
-    console.log(orderNumber)
-
+    //const orderNumber = useSelector(receiveOrderNumber);
+    //console.log(orderNumber)
+    
     return (
         <div className={`${styles.popup} pt-15 pb-25`}>
             <h2 className={`${styles.glow} text text_type_digits-large`}>{orderNumber}</h2>

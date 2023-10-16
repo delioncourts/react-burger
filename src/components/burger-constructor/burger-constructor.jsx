@@ -11,12 +11,15 @@ import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-de
 import Modal from "../modal/modal";
 import OrderDetails from '../order-details/order-details';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
+
 import { ADD_INGREDIENT } from "../../services/actions/burger-constructor";
 import { bunsInCart, otherInCart, receiveOrderNumber } from '../../services/selectors';
+import { sendOrder } from '../../services/actions/order-details';
 
 const BurgerConstructor = () => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
     const dispatch = useDispatch();
+
 
     const orderNumber = useSelector(receiveOrderNumber);
 
@@ -25,9 +28,9 @@ const BurgerConstructor = () => {
     console.log(buns);
     console.log(other);
 
-    function handleButtonClick() {
+    /*function handleButtonClick() {
         setOrderModalOpen(true);
-    }
+    }*/
 
     function handleCloseModal() {
         setOrderModalOpen(false);
@@ -70,6 +73,15 @@ const BurgerConstructor = () => {
     const checkDisabled = () => {
         return other.length > 0 && buns;
     };
+
+    //отправляем заказ на сервер
+    const handleButtonClick = () => {
+        //создаем массив булочек и ингредиентов 
+        //проверяем есть ли булочки - если да, то spread оператором совмещаем булочки с начинками и соусами 
+        const arrBunsAndOther = buns ? [buns, ...other, buns] : [...other];
+        dispatch(sendOrder(arrBunsAndOther));
+        setOrderModalOpen(true);
+    }
 
     return (
         <section ref={dropTarget} id="burger-constructor" className={`${styles.section} pt-25`}>
