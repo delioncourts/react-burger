@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDrag } from "react-dnd";
@@ -9,22 +8,26 @@ import { useSelector } from 'react-redux';
 import { bunsInCart, otherInCart } from '../../services/selectors';
 
 const BurgerCard = ({ card, onIngredientClick }) => {
-    const { name, image, price, idtd } = card;
+    const { name, image, price } = card;
+
     //булочки и начинки с соусами
-    const bun = useSelector(bunsInCart);
+    const buns = useSelector(bunsInCart);
     const other = useSelector(otherInCart);
 
-    //объединяем массив объектов булочек и начинок и соусов в один массив
-    //можно попробовать объединить либо spread, либо методом concat
-    //при объединении spread появляется ошибка buns is not iterable
-    //при объединении concat Cannot read properties of null (reading 'concat')
-    //const ingredientsInConstructor = buns.concat(other);
+    //объединяем массив объектов булочек и начинок и соусов в один массив методом concat
+    const ingredientsInConstructor = other.concat(buns, buns);
 
-
-    //фильтруем массив всех ингредиентов по id и обращаемся к длине получившегося массива
-    //массив всех ингредиентов обновляется 
-    //const count = useMemo(() => ingredientsInConstructor.filter(element => element._id === ingredients._id).length, [ingredientsInConstructor])
-
+    //используем цикл for..of, чтобы пройти обойти каждый элемент в массиве ingredientsInConstructor.
+    //сравниваем id элемента и id card, если они равны, то добавляем 1
+    const countingItems = useMemo(() => {
+        let count = 0;
+        for (let item of ingredientsInConstructor) {
+            if (item?._id === card._id) {
+                count++;
+            }
+        }
+        return count;
+    }, [ingredientsInConstructor]);
 
     function handleIngredientClick() {
         onIngredientClick();
@@ -39,19 +42,9 @@ const BurgerCard = ({ card, onIngredientClick }) => {
         })
     });
 
-    const countingItems = useMemo(
-        () => other.filter((item) => item._id === card._id),
-        [other, card]
-    );
-
     return (
         <li ref={dragRef} className={styles.card} onClick={handleIngredientClick} style={{ opacity }}>
-            {card.type === "bun" ? (
-                <Counter count={1} size="default" extraClass="m-1" />
-            ) : null}
-            {countingItems.length && card.type !== "bun" ? (
-                <Counter count={countingItems.length} size="default" extraClass="m-1" />
-            ) : null}
+            <Counter count={countingItems} size="default" extraClass="m-1" />
             <img className={styles.img} src={image} alt={name} />
             <div className={`${styles.container} pt-1`}>
                 <p className="text text_type_main-default">{price}</p>

@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -77,5 +78,10 @@ const BurgerIngredient = ({ item, index, idtd }) => {
         </li>
     )
 }
+
+BurgerIngredient.propTypes = {
+    item: PropTypes.object.isRequired,
+};
+
 
 export default BurgerIngredient;
