@@ -1,0 +1,35 @@
+.section {
+    display: flex;
+    flex-direction: column;
+}
+
+.order {
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.items {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 500px);
+}
