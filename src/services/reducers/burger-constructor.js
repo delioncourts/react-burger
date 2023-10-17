@@ -35,7 +35,7 @@ export const burgerConstructorReducer = (state = defaultState, action) => {
 
     case MOVE_INGREDIENT: {
       const ingredientsToMove = [...state.otherItems];
-      ingredientsToMove.splice(action.toIndex, 0, ingredientsToMove.splice(action.fromIndex, 1)[0]);
+      ingredientsToMove.splice(action.dragIndex, 0, ingredientsToMove.splice(action.hoverIndex, 1)[0]);
       return {
         ...state,
         otherItems: [...ingredientsToMove],
