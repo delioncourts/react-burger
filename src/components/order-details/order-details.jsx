@@ -6,7 +6,7 @@ import done from '../../images/done.svg';
 
 import { receiveOrderNumber } from "../../services/selectors";
 
-const OrderDetails = ({  }) => {
+const OrderDetails = ({ }) => {
 
     const orderNumber = useSelector(receiveOrderNumber);
     console.log(orderNumber)

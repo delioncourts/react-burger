@@ -23,16 +23,25 @@ const checkSuccess = (res) => {
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
 const request = (endpoint, options) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
-  return fetch(`${BASE_URL}${endpoint}`, options)
-  .then(checkResponse)
-  .then(checkSuccess);
+  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse).then(checkSuccess);
 };
 
 //загрузка списка ингредиентов
 export const loadIngredients = () => request('ingredients');
 
+export const createOrderRequest = (items) =>
+  request('orders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({
+      ingredients: items.map((item) => item._id),
+    }),
+  });
+
 //создание заказа
-export const createOrderRequest = (items) => {
+/*export const createOrderRequest = (items) => {
   return fetch(`${BASE_URL}orders`, {
     method: 'POST',
     headers: {
@@ -45,16 +54,4 @@ export const createOrderRequest = (items) => {
   .then((res) => {
     return checkResponse(res);
   });
-};
-
-
-//создание заказа c request 
-/*export const createOrderRequest = (items) => request('orders), {
-   method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify({
-      ingredients: items.map((item) => item._id),
-    }),
-}*/
+};*/

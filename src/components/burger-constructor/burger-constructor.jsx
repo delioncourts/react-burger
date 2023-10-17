@@ -77,7 +77,7 @@ const BurgerConstructor = () => {
     //отправляем заказ на сервер
     const handleButtonClick = () => {
         //создаем массив булочек и ингредиентов 
-        //проверяем есть ли булочки - если да, то spread оператором совмещаем булочки с начинками и соусами 
+        //проверяем есть ли булочки - если да, то совмещаем булочки с начинками и соусами 
         const arrBunsAndOther = buns ? [buns, ...other, buns] : [...other];
         dispatch(sendOrder(arrBunsAndOther));
         setOrderModalOpen(true);

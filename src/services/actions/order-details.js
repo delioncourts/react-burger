@@ -19,7 +19,7 @@ export function sendOrder(arr) {
             if(order.success) {
                 dispatch({
                     type: GET_ORDER_SUCCESS,
-                    orderNumber: order.number
+                    orderNumber: order.order.number
                 })
             }
             else{
