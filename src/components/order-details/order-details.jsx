@@ -6,10 +6,10 @@ import done from '../../images/done.svg';
 
 import { receiveOrderNumber } from "../../services/selectors";
 
-const OrderDetails = ({ orderNumber }) => {
+const OrderDetails = ({  }) => {
 
-    //const orderNumber = useSelector(receiveOrderNumber);
-    //console.log(orderNumber)
+    const orderNumber = useSelector(receiveOrderNumber);
+    console.log(orderNumber)
     
     return (
         <div className={`${styles.popup} pt-15 pb-25`}>
