@@ -2,37 +2,30 @@
 
 import { createOrderRequest } from '../../utils/api';
 
-export const GET_ORDER_REQUEST = "SEND_ORDER_REQUEST";
-export const GET_ORDER_ERROR = "SEND_ORDER_ERROR";
-export const GET_ORDER_SUCCESS = "SEND_ORDER_SUCCESS";
+export const GET_ORDER_REQUEST = 'SEND_ORDER_REQUEST';
+export const GET_ORDER_ERROR = 'SEND_ORDER_ERROR';
+export const GET_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
 
 //обновить номер заказа
 export const UPDATE_ORDER_NUMBER = 'UPDATE_ORDER_NUMBER';
 
 export function sendOrder(arr) {
-    return function(dispatch) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_ORDER_REQUEST,
+    });
+    createOrderRequest(arr)
+      .then((order) => {
         dispatch({
-            type: GET_ORDER_REQUEST
+          type: GET_ORDER_SUCCESS,
+          orderNumber: order.order.number,
         });
-        createOrderRequest(arr)
-        .then((order) => {
-            if(order.success) {
-                dispatch({
-                    type: GET_ORDER_SUCCESS,
-                    orderNumber: order.order.number
-                })
-            }
-            else{
-                Promise.reject(`Произошла ошибка: ${order.status}`)
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            dispatch({
-                type: GET_ORDER_ERROR
-            })
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: GET_ORDER_ERROR,
         });
-    }
+      });
+  };
 }
-
-
