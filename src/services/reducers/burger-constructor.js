@@ -45,15 +45,3 @@ export const burgerConstructorReducer = (state = defaultState, action) => {
       return state;
   }
 };
-
-
-/*
-case delete_ingredient 
-const newConstructorState = state.constructorIngr.filter({uniqId} => uniqId !== action.payload) 
-return {...state, constructorIngr: newConstructorState}
-
-conse [addedIngredients, setAddedIngredients] = useState([])
-const deleteHandler = (ingredirents) => {
-setAddedIngredients(addedIngredients.filter(({uniqId}) => uniqId !== ingredient.uniqId ))
-}
-*/
