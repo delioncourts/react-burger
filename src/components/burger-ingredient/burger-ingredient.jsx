@@ -81,6 +81,8 @@ const BurgerIngredient = ({ item, index, idtd }) => {
 
 BurgerIngredient.propTypes = {
     item: PropTypes.object.isRequired,
+    index: PropTypes.string, 
+    idtd: PropTypes.number
 };
 
 
