@@ -7,6 +7,8 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 
 import { MOVE_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions/burger-constructor';
 
+import styles from './burger-ingredient.module.css'
+
 //элемент в burger constructor - начинки и соусы
 const BurgerIngredient = ({ item, index, idtd }) => {
     const { name, price, image } = item;
@@ -66,7 +68,7 @@ const BurgerIngredient = ({ item, index, idtd }) => {
     dragRef(dropRef(ref));
 
     return (
-        <li ref={ref}>
+        <li className={styles.list} ref={ref}>
             <DragIcon type="primary" />
             <ConstructorElement
                 text={name}
@@ -81,7 +83,7 @@ const BurgerIngredient = ({ item, index, idtd }) => {
 
 BurgerIngredient.propTypes = {
     item: PropTypes.object.isRequired,
-    index: PropTypes.string, 
+    index: PropTypes.number, 
     idtd: PropTypes.number
 };
 
