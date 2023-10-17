@@ -24,11 +24,11 @@ const checkSuccess = (res) => {
 const request = (endpoint, options) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
   return fetch(`${BASE_URL}${endpoint}`, options)
-    .then(checkResponse)
-    .then(checkSuccess);
+  .then(checkResponse)
+  .then(checkSuccess);
 };
 
-//загрузка списка ингредиентов 
+//загрузка списка ингредиентов
 export const loadIngredients = () => request('ingredients');
 
 //создание заказа
@@ -46,3 +46,15 @@ export const createOrderRequest = (items) => {
     return checkResponse(res);
   });
 };
+
+
+//создание заказа c request 
+/*export const createOrderRequest = (items) => request('orders), {
+   method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({
+      ingredients: items.map((item) => item._id),
+    }),
+}*/
