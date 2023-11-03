@@ -29,6 +29,7 @@ const request = (endpoint, options) => {
 //загрузка списка ингредиентов
 export const loadIngredients = () => request('ingredients');
 
+//создание заказа
 export const createOrderRequest = (items) =>
   request('orders', {
     method: 'POST',
@@ -39,19 +40,3 @@ export const createOrderRequest = (items) =>
       ingredients: items.map((item) => item._id),
     }),
   });
-
-//создание заказа
-/*export const createOrderRequest = (items) => {
-  return fetch(`${BASE_URL}orders`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify({
-      ingredients: items.map((item) => item._id),
-    }),
-  })
-  .then((res) => {
-    return checkResponse(res);
-  });
-};*/

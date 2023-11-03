@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
+import { useParams } from "react-router-dom";
 
 import styles from "./ingredient-details.module.css";
 
-
 const IngredientDetails = ({ item }) => {
     const { image_large, name, calories, fat, proteins, carbohydrates } = item;
+    const { id } = useParams;
 
     return (
-        <div className={styles.container}>
+       item && <div className={styles.container}>
             <div className={styles.content}>
                 <img src={image_large} alt={name} />
                 <p className="text text_type_main-medium">{name}</p>
