@@ -26,4 +26,6 @@
 
 .cabinet {
     display: flex;
+    text-decoration: none;
+  
 }
