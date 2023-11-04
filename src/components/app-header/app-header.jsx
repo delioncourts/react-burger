@@ -10,23 +10,47 @@ const AppHeader = () => {
         <header className={styles.header}>
             <div className={`${styles.content} pt-4 pb-4`}>
                 <nav className={styles.nav}>
-                    <NavLink to="/" className={`${styles.link} pt-4 pr-5 pb-4 pl-5`}>
-                        <BurgerIcon type="primary" />
-                        <p className="text text_type_main-default pl-2">Конструктор</p>
+                    <NavLink to="/" className={`${styles.link} pt-4 pr-5 pb-4 pl-5`} style={({ isActive }) => {
+                        return {
+                            color: isActive ? "#f2f2f3" : "#8585AD",
+                        };
+                    }}>
+                        {({ isActive }) => (
+                            <>
+                                <BurgerIcon type={isActive ? "primary" : "secondary"} />
+                                <p className="text text_type_main-default pl-2">Конструктор</p>
+                            </>
+                        )}
                     </NavLink>
 
-                    <NavLink to="/" className={`${styles.link} pt-4 pr-5 pb-4 pl-5`}>
-                        <ListIcon type="secondary" />
-                        <p className="text text_type_main-default text_color_inactive pl-2">Лента заказов</p>
+                    <NavLink to="/orders" className={`${styles.link} pt-4 pr-5 pb-4 pl-5`} style={({ isActive }) => {
+                        return {
+                            color: isActive ? "#f2f2f3" : "#8585AD",
+                        };
+                    }}>
+                        {({ isActive }) => (
+                            <>
+                                <ListIcon type={isActive ? "primary" : "secondary"} />
+                                <p className="text text_type_main-default pl-2">Лента заказов</p>
+                            </>
+                        )}
                     </NavLink>
 
                 </nav>
 
                 <Logo />
 
-                <NavLink to="/profile" className={`${styles.cabinet} pt-4 pr-5 pb-4 pl-5`}>
-                    <ProfileIcon type="secondary" />
-                    <p className="text text_type_main-default pl-2">Личный кабинет</p>
+                <NavLink to="/profile" className={`${styles.cabinet} pt-4 pr-5 pb-4 pl-5`} style={({ isActive }) => {
+                    return {
+                        color: isActive ? "#f2f2f3" : "#8585AD",
+                    };
+                }}>
+                    {({ isActive }) => (
+                        <>
+                            <ProfileIcon type={isActive ? "primary" : "secondary"} />
+                            <p className="text text_type_main-default pl-2">Личный кабинет</p>
+                        </>
+                    )}
                 </NavLink>
             </div>
         </header>
