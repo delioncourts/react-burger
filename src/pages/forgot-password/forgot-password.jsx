@@ -19,7 +19,7 @@ export const ForgotPassword = () => {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         dispatch(forgotPassword(email));
-        navigate('/reset-password')
+        navigate('/reset-password');
     }
 
     return (

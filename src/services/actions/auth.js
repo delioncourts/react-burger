@@ -39,6 +39,130 @@ export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST';
 export const RESET_PASSWORD_ERROR = 'RESET_PASSWORD_ERROR';
 export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
 
+//регистрация
+export function register(name, email, password) {
+  return function (dispatch) {
+    dispatch({ type: REGISTER_REQUEST });
+    registerRequest(name, email, password)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: REGISTER_SUCCESS,
+            name: res.user.name,
+            email: res.user.email,
+          });
+          let accessToken, refreshToken;
+          accessToken = res.accessToken.split('Bearer ')[1];
+          refreshToken = res.refreshToken;
+          setCookie('accessToken', accessToken);
+          setCookie('refreshToken', refreshToken);
+        } else {
+          Promise.reject(`Произошла ошибка: ${res.status}`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: REGISTER_ERROR,
+        });
+      });
+  };
+}
+
+//авторизация (логин)
+export function authorize(email, password) {
+  return function (dispatch) {
+    dispatch({
+      type: LOGIN_REQUEST,
+    });
+    authorizeRequest(email, password)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: LOGIN_SUCCESS,
+            name: res.user.name,
+            email: res.user.email,
+          });
+          let accessToken, refreshToken;
+          accessToken = res.accessToken.split('Bearer ')[1];
+          refreshToken = res.refreshToken;
+          setCookie('accessToken', accessToken);
+          setCookie('refreshToken', refreshToken);
+        } else {
+          Promise.reject(`Произошла ошибка: ${res.status}`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: LOGIN_ERROR,
+        });
+      });
+  };
+}
+
+//пользователь
+export function getUserInfo() {
+  return function (dispatch) {
+    getUserInfoRequest()
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: SET_USER,
+            name: res.user.name,
+            email: res.user.email,
+          });
+        } else {
+          Promise.reject(`Произошла ошибка: ${res.status}`);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+}
+
+//обновление данных о пользователе
+export function updateUserInfo(name, email, password) {
+  return function (dispatch) {
+    const newInfo = {
+      ...(!!password && { password }),
+      name,
+      email,
+    };
+    updateUserInfoRequest(newInfo)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: SET_USER,
+            name: res.user.name,
+            email: res.user.email,
+          });
+        } else {
+          Promise.reject(`Произошла ошибка: ${res.status}`);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+}
+
+//выход из профиля
+export function signout() {
+  return function (dispatch) {
+    logoutRequest(getCookie('refreshToken'))
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: SIGNOUT_SUCCESS,
+          });
+          deleteCookie('accessToken');
+          deleteCookie('refreshToken');
+        } else {
+          Promise.reject(`Произошла ошибка: ${res.status}`);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+}
+
 //восстановление пароля из имейла
 export function forgotPassword(email) {
   return function (dispatch) {
@@ -55,7 +179,26 @@ export function forgotPassword(email) {
           Promise.reject(`Произошла ошибка: ${res.status}`);
         }
       })
-      .catch((err) => 
-      console.log(err));
+      .catch((err) => console.log(err));
+  };
+}
+
+//обновление пароля
+export function resetPasswordWithCode(email, token) {
+  return function (dispatch) {
+    resetPasswordRequest(email, token)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+          });
+        } else {
+          dispatch({
+            type: RESET_PASSWORD_ERROR,
+          });
+          Promise.reject(`Произошла ошибка: ${res.status}`);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 }
