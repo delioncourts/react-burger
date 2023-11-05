@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { forgotPassword } from "../../services/actions/auth";
 
 import styles from "./forgot-password.module.css";
 
@@ -17,8 +18,8 @@ export const ForgotPassword = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        //dispatch(forgotPassword(email));
-        navigate('/')
+        dispatch(forgotPassword(email));
+        navigate('/reset-password')
     }
 
     return (

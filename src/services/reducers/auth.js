@@ -55,7 +55,7 @@ export const authReducer = (state = defaultState, action) => {
     case RESET_PASSWORD_SUCCESS: {
       return {
         ...state,
-        isPasswordReseted: true,
+        isPasswordReset: true,
       };
     }
 
