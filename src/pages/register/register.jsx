@@ -17,7 +17,7 @@ export const Register = () => {
     }
 
     const onChangeEmail = (evt) => {
-        setEmail(e.target.value)
+        setEmail(evt.target.value)
     }
 
     const onChangePassword = (evt) => {

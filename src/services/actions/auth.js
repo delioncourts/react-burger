@@ -184,7 +184,7 @@ export function forgotPassword(email) {
 }
 
 //обновление пароля
-export function resetPasswordWithCode(email, token) {
+export function resetPassword(email, token) {
   return function (dispatch) {
     resetPasswordRequest(email, token)
       .then((res) => {

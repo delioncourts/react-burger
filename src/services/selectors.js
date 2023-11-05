@@ -12,3 +12,7 @@ export const otherInCart = store => store.cart.otherItems;
 export const receiveOrderNumber = store => store.order.number;
 
 //авторизация
+export const loggedIn = store => store.user.isLoggedIn;
+export const userNameData = store => store.user.name;
+export const userEmailData = store => store.user.name;
+export const userPasswordData = store => store.user.password;
