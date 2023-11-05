@@ -1,10 +1,16 @@
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import styles from "./forgot-password.module.css";
 
 export const ForgotPassword = () => {
+
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+
     const onChange = (evt) => {
-        evt.preventDefault();
+        setEmail(evt.target.value);
     };
 
     return (
