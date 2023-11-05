@@ -1,5 +1,7 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './app.module.css';
 
@@ -13,25 +15,65 @@ import { ForgotPassword } from '../../pages/forgot-password/forgot-password';
 import { ResetPassword } from '../../pages/reset-password/reset-password';
 import { Profile } from '../../pages/profile/profile';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
+import Modal from '../modal/modal';
+
+import { getUserInfo } from '../../services/actions/auth';
+import { useEffect } from 'react';
+
+import { ProtectedRouteElementAuth } from '../protected-route-element/protected-route-auth';
+import { ProtectedRouteElementNotAuth } from '../protected-route-element/protected-route-not-auth';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 function App() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const location = useLocation();
+
+    const background = location.state && location.state.background;
+
+    const handleClose = () => {
+        navigate(-1);
+    };
+
+    useEffect(() => {
+        dispatch(getUserInfo());
+    }, [dispatch]);
+
 
     return (
         <>
             <AppHeader />
 
-            <Routes>
+            <Routes location={background || location}>
                 <Route path="/" element={<MainPage />} />
-
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/ingredients/:id" element={<IngredientPage />} />
-
                 <Route path="*" element={<NotFound404 />} />
+
+                {/* доступно для не авторизованных пользователей*/}
+                <Route path="/login" element={<ProtectedRouteElementNotAuth element={<Login />} />} />
+                <Route path="/register" element={<ProtectedRouteElementNotAuth element={<Register />} />} />
+                <Route path="/forgot-password" element={<ProtectedRouteElementNotAuth element={<ForgotPassword />} />} />
+                <Route path="/reset-password" element={<ProtectedRouteElementNotAuth element={<ResetPassword />} />} />
+
+                {/* доступно для авторизованных пользователей */}
+                <Route path="/profile" element={<ProtectedRouteElementAuth element={<Profile />} />} />
             </Routes>
+
+            {/* Ингредиент*/}
+            {/* <Route path="/ingredients/:id" element={<IngredientPage />} /> */}
+           
+            {background && (
+                <Routes>
+                    <Route path="/ingredients/:id" element={
+                        <Modal handleClose={handleClose}>
+                            <IngredientDetails />
+                        </Modal>
+                    }
+                    />
+                </Routes>
+            )}
+
+
         </>
     );
 }

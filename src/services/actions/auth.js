@@ -101,6 +101,7 @@ export function authorize(email, password) {
   };
 }
 
+
 //пользователь
 export function getUserInfo() {
   return function (dispatch) {
@@ -119,6 +120,7 @@ export function getUserInfo() {
       .catch((err) => console.log(err));
   };
 }
+
 
 //обновление данных о пользователе
 export function updateUserInfo(name, email, password) {
