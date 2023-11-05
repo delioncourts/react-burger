@@ -1,3 +1,5 @@
+import { getCookie } from "./cookie";
+
 //объявляем базовый урл
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
 
