@@ -10,3 +10,5 @@ export const otherInCart = store => store.cart.otherItems;
 
 //номер заказа
 export const receiveOrderNumber = store => store.order.number;
+
+//авторизация

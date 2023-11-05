@@ -44,7 +44,7 @@ export const createOrderRequest = (items) =>
   });
 
 //регистрация
-export const register = (name, email, password) =>
+export const registerRequest = (name, email, password) =>
   request('auth/register', {
     method: 'POST',
     headers: {
@@ -54,7 +54,7 @@ export const register = (name, email, password) =>
   });
 
 //авторизация = login
-export const authorize = (email, password) =>
+export const authorizeRequest = (email, password) =>
   request('auth/login', {
     method: 'POST',
     headers: {
@@ -64,7 +64,7 @@ export const authorize = (email, password) =>
   });
 
 //восстановление пароля по имейлу
-export const forgotPassword = (email) =>
+export const forgotPasswordRequest = (email) =>
   request('password-reset', {
     method: 'POST',
     headers: {
@@ -74,7 +74,7 @@ export const forgotPassword = (email) =>
   });
 
 //сбросить пароль
-export const resetPassword = (password, token) =>
+export const resetPasswordRequest = (password, token) =>
   request('password-reset/reset', {
     method: 'POST',
     headers: {
@@ -84,7 +84,7 @@ export const resetPassword = (password, token) =>
   });
 
 //выйти из профиля
-export const logout = (token) =>
+export const logoutRequest = (token) =>
   request('auth/logout', {
     method: 'POST',
     headers: {
@@ -95,7 +95,7 @@ export const logout = (token) =>
   });
 
 //получить данные пользователя
-export const getUserInfo = (accessToken) =>
+export const getUserInfoRequest = (accessToken) =>
   request('auth/user', {
     method: 'GET',
     headers: {
@@ -105,7 +105,7 @@ export const getUserInfo = (accessToken) =>
   });
 
 //обновить данные пользователя
-export const updateUserInfo = (accessToken, email, password, name) =>
+export const updateUserInfoRequest = (accessToken, email, password, name) =>
   request('auth/user', {
     method: 'GET',
     headers: {
@@ -116,7 +116,7 @@ export const updateUserInfo = (accessToken, email, password, name) =>
   });
 
 //обновить токен
-export const updateToken = (refreshToken) =>
+export const updateTokenRequest = (refreshToken) =>
   request('auth/logout', {
     method: 'POST',
     headers: {
