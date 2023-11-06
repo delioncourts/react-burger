@@ -80,8 +80,8 @@ export function authorize(email, password) {
             name: res.user.name,
             email: res.user.email,
           });
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
+          localStorage.setItem('accessToken');
+          localStorage.setItem('refreshToken');
         } else {
           Promise.reject(`Произошла ошибка: ${res.status}`);
         }

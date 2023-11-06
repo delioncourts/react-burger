@@ -63,7 +63,7 @@ export const refreshToken = () =>
       token: localStorage.getItem('refreshToken'),
     }),
   });
-  
+
 //загрузка списка ингредиентов
 export const loadIngredients = async () => {
   return await request('ingredients');
