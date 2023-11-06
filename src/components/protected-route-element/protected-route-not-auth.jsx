@@ -8,20 +8,6 @@ import { useSelector } from "react-redux";
 import { loggedIn } from '../../services/selectors';
 
 export const ProtectedRouteElementNotAuth = ({ element }) => {
-    /*const location = useLocation();
-    const [user, setUser] = useState('');
-    const isAuthChecked = true;
-    if (onlyUnAuth && user) {
-        const { from } = location.state || { from: { pathname: '/' } }
-        return <Navigate to={from} />
-
-    }
-    if (!onlyUnAuth && !user) {
-        return <Navigate to={'/'} state={{ from: location }} />
-    }
-
-    return children;*/
-
     const isLoggedIn = useSelector(loggedIn);
 
     if (!isLoggedIn) {

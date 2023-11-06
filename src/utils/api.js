@@ -1,7 +1,9 @@
-import { getCookie } from './cookie';
-
-//объявляем базовый урл
+import { getCookie, setCookie } from "./cookie";//объявляем базовый урл
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
+
+
+//получаем данные о пользователе
+export const USER_INFO_URL = 'https://norma.nomoreparties.space/api/auth/user';
 
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
@@ -26,6 +28,41 @@ const checkSuccess = (res) => {
 const request = (endpoint, options) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
   return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse).then(checkSuccess);
+};
+
+//обновляем токен
+export const refreshToken = () =>
+  request('auth/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem("refreshToken"),
+    }),
+  });
+
+//проверяем что токен не истек и если истек, то тогда мы его обновляем
+const fetchWithRefresh = async (url, options) => {
+  try {
+    const res = await fetch(url, options);
+    return await checkResponse(res);
+  } catch (err) {
+    if (err.message === "jwt expired") {
+      console.log("jwt expired");
+      const refreshData = await refreshToken(); //обновляем токен
+      if (!refreshData.success) {
+        return Promise.reject(refreshData);
+      }
+      localStorage.setItem("refreshToken", refreshData.refreshToken);
+      localStorage.setItem("accessToken", refreshData.accessToken);
+      options.headers.authorization = refreshData.accessToken;
+      const res = await fetch(url, options); //повторяем запрос
+      return await checkResponse(res);
+    } else {
+      return Promise.reject(err);
+    }
+  }
 };
 
 //загрузка списка ингредиентов
@@ -84,43 +121,34 @@ export const resetPasswordRequest = (password, token) =>
   });
 
 //выйти из профиля
-export const logoutRequest = (token) =>
+export const logoutRequest = () =>
   request('auth/logout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      Authorization: 'Bearer ' + getCookie('accessToken'),
     },
-    body: JSON.stringify({ token }),
+    body: JSON.stringify({ token: localStorage.getItem("refreshToken"), }),
   });
 
 //получить данные пользователя
-export const getUserInfoRequest = (accessToken) =>
-  request('auth/user', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: accessToken,
-    },
-  });
+export const getUserInfoRequest = () =>{
+  return fetchWithRefresh(USER_INFO_URL, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          'authorization': localStorage.getItem("accessToken")
+      }
+  })
+}
 
 //обновить данные пользователя
-export const updateUserInfoRequest = (accessToken, email, password, name) =>
-  request('auth/user', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: accessToken,
-    },
-    body: JSON.stringify({ email, password, name }),
-  });
-
-//обновить токен
-export const updateTokenRequest = (refreshToken) =>
-  request('auth/logout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify({ token: refreshToken }),
-  });
+export const updateUserInfoRequest = (email, password, name) =>  {
+  return fetchWithRefresh(USER_INFO_URL, {
+      method: 'PATCH',
+      headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          'authorization': localStorage.getItem("accessToken")
+      },
+      body: JSON.stringify({ email, password, name })
+  })
+}

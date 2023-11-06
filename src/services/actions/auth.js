@@ -51,11 +51,8 @@ export function register(name, email, password) {
             name: res.user.name,
             email: res.user.email,
           });
-          let accessToken, refreshToken;
-          accessToken = res.accessToken.split('Bearer ')[1];
-          refreshToken = res.refreshToken;
-          setCookie('accessToken', accessToken);
-          setCookie('refreshToken', refreshToken);
+          localStorage.setItem('accessToken', res.accessToken);
+          localStorage.setItem('refreshToken', res.refreshToken);
         } else {
           Promise.reject(`Произошла ошибка: ${res.status}`);
         }
@@ -83,11 +80,8 @@ export function authorize(email, password) {
             name: res.user.name,
             email: res.user.email,
           });
-          let accessToken, refreshToken;
-          accessToken = res.accessToken.split('Bearer ')[1];
-          refreshToken = res.refreshToken;
-          setCookie('accessToken', accessToken);
-          setCookie('refreshToken', refreshToken);
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
         } else {
           Promise.reject(`Произошла ошибка: ${res.status}`);
         }
@@ -100,7 +94,6 @@ export function authorize(email, password) {
       });
   };
 }
-
 
 //пользователь
 export function getUserInfo() {
@@ -121,7 +114,6 @@ export function getUserInfo() {
   };
 }
 
-
 //обновление данных о пользователе
 export function updateUserInfo(name, email, password) {
   return function (dispatch) {
@@ -138,6 +130,8 @@ export function updateUserInfo(name, email, password) {
             name: res.user.name,
             email: res.user.email,
           });
+          localStorage.setItem('accessToken', res.accessToken);
+          localStorage.setItem('refreshToken', res.refreshToken);
         } else {
           Promise.reject(`Произошла ошибка: ${res.status}`);
         }
@@ -155,8 +149,8 @@ export function signout() {
           dispatch({
             type: SIGNOUT_SUCCESS,
           });
-          deleteCookie('accessToken');
-          deleteCookie('refreshToken');
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
         } else {
           Promise.reject(`Произошла ошибка: ${res.status}`);
         }

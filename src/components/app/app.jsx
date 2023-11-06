@@ -22,6 +22,8 @@ import { useEffect } from 'react';
 
 import { ProtectedRouteElementAuth } from '../protected-route-element/protected-route-auth';
 import { ProtectedRouteElementNotAuth } from '../protected-route-element/protected-route-not-auth';
+import ProtectedRoute from '../protected-route-element/protected-route';
+
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 function App() {
@@ -50,13 +52,13 @@ function App() {
                 <Route path="*" element={<NotFound404 />} />
 
                 {/* доступно для не авторизованных пользователей*/}
-                <Route path="/login" element={<ProtectedRouteElementNotAuth element={<Login />} />} />
-                <Route path="/register" element={<ProtectedRouteElementNotAuth element={<Register />} />} />
-                <Route path="/forgot-password" element={<ProtectedRouteElementNotAuth element={<ForgotPassword />} />} />
-                <Route path="/reset-password" element={<ProtectedRouteElementNotAuth element={<ResetPassword />} />} />
+                <Route path="/login" element={<ProtectedRoute element={<Login />} />} />
+                <Route path="/register" element={<ProtectedRoute element={<Register />} />} />
+                <Route path="/forgot-password" element={<ProtectedRoute element={<ForgotPassword />} />} />
+                <Route path="/reset-password" element={<ProtectedRoute element={<ResetPassword />} />} />
 
                 {/* доступно для авторизованных пользователей */}
-                <Route path="/profile" element={<ProtectedRouteElementAuth element={<Profile />} />} />
+                <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
             </Routes>
 
             {/* Ингредиент*/}

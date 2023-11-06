@@ -11,5 +11,5 @@ export const rootReducer = combineReducers({
   order: orderDetailsReducer,
   ingredients: burgerIngredientsReducer,
   cart: burgerConstructorReducer,
-  auth: authReducer
+  user: authReducer
 });
