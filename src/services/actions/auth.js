@@ -57,8 +57,7 @@ export function register(name, email, password) {
           Promise.reject(`Произошла ошибка: ${res.status}`);
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         dispatch({
           type: REGISTER_ERROR,
         });
@@ -80,14 +79,13 @@ export function authorize(email, password) {
             name: res.user.name,
             email: res.user.email,
           });
-          localStorage.setItem('accessToken');
-          localStorage.setItem('refreshToken');
+          localStorage.setItem('accessToken', res.accessToken);
+          localStorage.setItem('refreshToken', res.refreshToken);
         } else {
           Promise.reject(`Произошла ошибка: ${res.status}`);
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         dispatch({
           type: LOGIN_ERROR,
         });

@@ -18,10 +18,6 @@ export const Profile = () => {
 
     const form = useForm({ name: userNameInfo, email: userEmailInfo, password: '' });
 
-    const onChange = (evt) => {
-        evt.preventDefault();
-    };
-
     function handleSignOut() {
         dispatch(signout());
     }
@@ -78,6 +74,7 @@ export const Profile = () => {
                             size={'default'}
                             onChange={form.handleChange}
                             value={form.values.name}
+                            autoComplete="username"
                         />
                         <EmailInput
                             name={'email'}
@@ -87,6 +84,7 @@ export const Profile = () => {
                             isIcon={true}
                             onChange={form.handleChange}
                             value={form.values.email}
+                            autoComplete="email"
                         />
                         <PasswordInput
                             name={'password'}
@@ -94,6 +92,7 @@ export const Profile = () => {
                             extraClass="mt-6"
                             onChange={form.handleChange}
                             value={form.values.password}
+                            autoComplete="current-password"
                         />
 
                         <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6">Сохранить</Button>

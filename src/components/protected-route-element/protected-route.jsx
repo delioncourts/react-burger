@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { loggedIn } from "../../services/selectors";
 
-export default function ProtectedRoute({ onlyUnAuth = false, children }) {
+export default function ProtectedRoute({ onlyUnAuth = false, element }) {
     const isLoggedIn = useSelector(loggedIn);
 
     const location = useLocation();
@@ -19,5 +19,5 @@ export default function ProtectedRoute({ onlyUnAuth = false, children }) {
         return <Navigate to="/login" state={{ from: location }} />;
     }
     
-    return children;
+    return element;
 }

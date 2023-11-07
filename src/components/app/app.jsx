@@ -52,10 +52,10 @@ function App() {
                 <Route path="*" element={<NotFound404 />} />
 
                 {/* доступно для не авторизованных пользователей*/}
-                <Route path="/login" element={<ProtectedRoute element={<Login />} />} />
-                <Route path="/register" element={<ProtectedRoute element={<Register />} />} />
-                <Route path="/forgot-password" element={<ProtectedRoute element={<ForgotPassword />} />} />
-                <Route path="/reset-password" element={<ProtectedRoute element={<ResetPassword />} />} />
+                <Route path="/login" element={<ProtectedRoute onlyUnAuth element={<Login />} />} />
+                <Route path="/register" element={<ProtectedRoute onlyUnAuth element={<Register />} />} />
+                <Route path="/forgot-password" element={<ProtectedRoute onlyUnAuth element={<ForgotPassword />} />} />
+                <Route path="/reset-password" element={<ProtectedRoute onlyUnAuth element={<ResetPassword />} />} />
 
                 {/* доступно для авторизованных пользователей */}
                 <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
