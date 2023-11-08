@@ -20,8 +20,6 @@ import Modal from '../modal/modal';
 import { getUserInfo } from '../../services/actions/auth';
 import { useEffect } from 'react';
 
-import { ProtectedRouteElementAuth } from '../protected-route-element/protected-route-auth';
-import { ProtectedRouteElementNotAuth } from '../protected-route-element/protected-route-not-auth';
 import ProtectedRoute from '../protected-route-element/protected-route';
 
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -67,7 +65,7 @@ function App() {
             {background && (
                 <Routes>
                     <Route path="/ingredients/:id" element={
-                        <Modal handleClose={handleClose}>
+                        <Modal title={"Детали ингредиента"} handleClose={handleClose}>
                             <IngredientDetails />
                         </Modal>
                     }

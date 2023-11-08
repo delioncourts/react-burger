@@ -13,16 +13,12 @@ export const ResetPassword = () => {
     const navigate = useNavigate();
     const { values, handleChange, setValues } = useForm({});
 
-    const userData = useSelector(passwordForgot);
-
-    const form = useForm({
-        password: '',
-        token: '',
-    });
-
-    useEffect(() => {
-        !userData && navigate('/');
-    }, [])
+    //страница только для тех, кто забыл свой пароль 
+    //но, к сожалению, постоянно происходит редирект на главную
+    /*const userData = useSelector(passwordForgot);
+     useEffect(() => {
+         !userData && navigate('/');
+     }, [])*/
 
 
     function handleSubmit(evt) {
@@ -37,7 +33,7 @@ export const ResetPassword = () => {
             <form className={styles.form} onSubmit={handleSubmit}>
 
                 <PasswordInput
-                    onChange={form.handleChange}
+                    onChange={handleChange}
                     value={values.password}
                     name={"reset-password"}
                     placeholder={"Введите новый пароль"}
@@ -45,7 +41,7 @@ export const ResetPassword = () => {
                 />
 
                 <Input
-                    onChange={form.handleChange}
+                    onChange={handleChange}
                     value={values.token}
                     name={"password"}
                     placeholder={"Введите код из письма"}

@@ -6,9 +6,11 @@ import styles from './burger-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { bunsInCart, otherInCart } from '../../services/selectors';
+import { Link, useLocation } from 'react-router-dom';
 
 const BurgerCard = ({ card, onIngredientClick }) => {
     const { name, image, price } = card;
+    const location = useLocation();
 
     //булочки и начинки с соусами
     const buns = useSelector(bunsInCart);
@@ -29,9 +31,6 @@ const BurgerCard = ({ card, onIngredientClick }) => {
         return count;
     }, [ingredientsInConstructor]);
 
-    function handleIngredientClick() {
-        onIngredientClick();
-    }
 
     //перенос ингредиента
     const [{ opacity }, dragRef] = useDrag({
@@ -42,8 +41,14 @@ const BurgerCard = ({ card, onIngredientClick }) => {
         })
     });
 
+   {/*onClick={handleIngredientClick}
+    function handleIngredientClick() {
+        onIngredientClick();
+    }*/}
+
     return (
-        <li ref={dragRef} className={styles.card} onClick={handleIngredientClick} style={{ opacity }}>
+        <li ref={dragRef}>
+        <Link className={styles.card} to={`/ingredients/${card._id}`} style={{ opacity }}>
             <Counter count={countingItems} size="default" extraClass="m-1" />
             <img className={styles.img} src={image} alt={name} />
             <div className={`${styles.container} pt-1`}>
@@ -51,6 +56,7 @@ const BurgerCard = ({ card, onIngredientClick }) => {
                 <CurrencyIcon type="primary" />
             </div>
             <p className="text text_type_main-default pt-1">{name}</p>
+        </Link>
         </li>
     )
 }

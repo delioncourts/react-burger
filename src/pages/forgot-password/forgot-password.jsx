@@ -8,12 +8,8 @@ import { useForm } from "../../hooks/useForm";
 import styles from "./forgot-password.module.css";
 
 export const ForgotPassword = () => {
-    const dispatch = useDispatch
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const form = useForm({
-        email: "",
-      });
 
     const { values, handleChange, setValues } = useForm({});
 
@@ -27,7 +23,7 @@ export const ForgotPassword = () => {
         <main className={styles.main}>
             <h1 className={'text text_type_main-medium'}>Восстановление пароля</h1>
             <form className={styles.form} onSubmit={handleSubmit}>
-            <EmailInput
+                <EmailInput
                     onChange={handleChange}
                     name={"email"}
                     placeholder={"Укажите e-mail"}
@@ -37,9 +33,9 @@ export const ForgotPassword = () => {
                 />
 
 
-{values.email && (<div className={styles.button}>
+                {values.email && (<div className={styles.button}>
                     <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6">
-                    Восстановить
+                        Восстановить
                     </Button>
                 </div>)}
             </form>

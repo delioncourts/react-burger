@@ -35,14 +35,14 @@ const fetchWithRefresh = async (url, options) => {
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (err) {
-    if (err.message === "jwt expired") {
+    if (err.message === 'jwt expired') {
       console.log('jwt expired');
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      localStorage.setItem("refreshToken", refreshData.refreshToken);
-      localStorage.setItem("accessToken", refreshData.accessToken);
+      localStorage.setItem('refreshToken', refreshData.refreshToken);
+      localStorage.setItem('accessToken', refreshData.accessToken);
       options.headers.authorization = refreshData.accessToken;
       const res = await fetch(url, options); //повторяем запрос
       return await checkResponse(res);
@@ -104,24 +104,26 @@ export const authorizeRequest = async (email, password) => {
 };
 
 //восстановление пароля по имейлу
-export const forgotPasswordRequest = async (email) =>{
- return await request('password-reset', {
+export const forgotPasswordRequest = async (email) => {
+  return await request('password-reset', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
-    body: JSON.stringify(email),
-  });}
+    body: JSON.stringify({ email }),
+  });
+};
 
 //сбросить пароль
-export const resetPasswordRequest = async (password, token) =>{
+export const resetPasswordRequest = async (password, token) => {
   return await request('password-reset/reset', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify({ password, token }),
-  });}
+  });
+};
 
 //выйти из профиля
 export const logoutRequest = async () => {
@@ -140,7 +142,7 @@ export const getUserInfoRequest = () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      'authorization': localStorage.getItem('accessToken'),
+      authorization: localStorage.getItem('accessToken'),
     },
   });
 };
@@ -151,7 +153,7 @@ export const updateUserInfoRequest = async (email, password, name) => {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      'authorization': localStorage.getItem('accessToken'),
+      authorization: localStorage.getItem('accessToken'),
     },
     body: JSON.stringify({ email, password, name }),
   });

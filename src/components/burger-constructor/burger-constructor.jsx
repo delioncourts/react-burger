@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,22 +16,18 @@ import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { ADD_INGREDIENT } from "../../services/actions/burger-constructor";
 import { bunsInCart, otherInCart, receiveOrderNumber } from '../../services/selectors';
 import { sendOrder } from '../../services/actions/order-details';
+import { loggedIn } from '../../services/selectors';
 
 const BurgerConstructor = () => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
     const dispatch = useDispatch();
-
+    const isLoggedIn = useSelector(loggedIn);
+    const navigate = useNavigate();
 
     const orderNumber = useSelector(receiveOrderNumber);
 
     const buns = useSelector(bunsInCart);
     const other = useSelector(otherInCart);
-    console.log(buns);
-    console.log(other);
-
-    /*function handleButtonClick() {
-        setOrderModalOpen(true);
-    }*/
 
     function handleCloseModal() {
         setOrderModalOpen(false);
@@ -78,9 +75,12 @@ const BurgerConstructor = () => {
     const handleButtonClick = () => {
         //создаем массив булочек и ингредиентов 
         //проверяем есть ли булочки - если да, то совмещаем булочки с начинками и соусами 
-        const arrBunsAndOther = buns ? [buns, ...other, buns] : [...other];
-        dispatch(sendOrder(arrBunsAndOther));
-        setOrderModalOpen(true);
+        //если полльзователь залогинен, то создаем заказ. иначе отправляем на страницу регистрации
+        if (isLoggedIn) {
+            const arrBunsAndOther = buns ? [buns, ...other, buns] : [...other];
+            dispatch(sendOrder(arrBunsAndOther));
+            setOrderModalOpen(true);
+        } else navigate('/login')
     }
 
     return (

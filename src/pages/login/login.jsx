@@ -15,10 +15,6 @@ export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    /*const onChange = (evt) => {
-        evt.preventDefault();
-    };*/
-
     const onChangeEmail = (evt) => {
         setEmail(evt.target.value)
     }
@@ -31,7 +27,6 @@ export const Login = () => {
         evt.preventDefault();
         dispatch(authorize(email, password));
     }
-
 
     return (
         <main className={styles.main}>
