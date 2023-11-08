@@ -10,12 +10,16 @@ import styles from "./forgot-password.module.css";
 export const ForgotPassword = () => {
     const dispatch = useDispatch
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
+
+    const form = useForm({
+        email: "",
+      });
+
     const { values, handleChange, setValues } = useForm({});
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        dispatch(forgotPassword(email));
+        dispatch(forgotPassword(values.email));
         navigate('/reset-password');
     }
 

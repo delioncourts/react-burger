@@ -15,6 +15,8 @@ import { getIngregients } from '../../services/actions/burger-ingredients';
 import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/actions/modal';
 import {AllIngredients, currentIngredientModal} from '../../services/selectors.js'
 
+import { useLocation, useNavigate } from 'react-router';
+
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
 
@@ -90,6 +92,9 @@ const BurgerIngredients = () => {
         })
         setOpenModal(false);
     }
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     return (
         <section ref={containerRef} id="order-line" className={styles.section}>

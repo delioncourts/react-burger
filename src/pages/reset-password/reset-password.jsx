@@ -2,34 +2,43 @@ import { Link } from 'react-router-dom';
 import { Button, PasswordInput, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./reset-password.module.css";
 import { useForm } from '../../hooks/useForm';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { resetPassword } from '../../services/actions/auth';
+import { passwordForgot } from '../../services/selectors';
+import { useEffect } from 'react';
 
 export const ResetPassword = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { values, handleChange, setValues } = useForm({});
+
+    const userData = useSelector(passwordForgot);
 
     const form = useForm({
         password: '',
         token: '',
     });
 
+    useEffect(() => {
+        !userData && navigate('/');
+    }, [])
+
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        dispatch(resetPassword(form.values.password, form.values.token));
+        dispatch(resetPassword(values.password, values.token));
         navigate('/login');
     }
 
     return (
         <main className={styles.main}>
             <h1 className={'text text_type_main-medium'}>Восстановление пароля</h1>
-            <form className={styles.form} nSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={handleSubmit}>
 
                 <PasswordInput
                     onChange={form.handleChange}
-                    value={form.values.password}
+                    value={values.password}
                     name={"reset-password"}
                     placeholder={"Введите новый пароль"}
                     extraClass="mt-6"
@@ -37,7 +46,7 @@ export const ResetPassword = () => {
 
                 <Input
                     onChange={form.handleChange}
-                    value={form.values.token}
+                    value={values.token}
                     name={"password"}
                     placeholder={"Введите код из письма"}
                     extraClass="mt-6"

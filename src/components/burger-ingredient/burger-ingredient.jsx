@@ -7,7 +7,9 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 
 import { MOVE_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions/burger-constructor';
 
-import styles from './burger-ingredient.module.css'
+import styles from './burger-ingredient.module.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
 
 //элемент в burger constructor - начинки и соусы
 const BurgerIngredient = ({ item, index, idtd }) => {
@@ -67,8 +69,18 @@ const BurgerIngredient = ({ item, index, idtd }) => {
 
     dragRef(dropRef(ref));
 
+    //открыть модалку 
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const openModal = useCallback(() => {
+        navigate(`/ingredients/${item._id}`, {
+            state: { background: location }
+        });
+    }, [dispatch, item._id, navigate, location]);
+
     return (
-        <li className={styles.list} ref={ref}>
+        <li className={styles.list} ref={ref} onClick={openModal}>
             <DragIcon type="primary" />
             <ConstructorElement
                 text={name}
@@ -83,7 +95,7 @@ const BurgerIngredient = ({ item, index, idtd }) => {
 
 BurgerIngredient.propTypes = {
     item: PropTypes.object.isRequired,
-    index: PropTypes.number, 
+    index: PropTypes.number,
     idtd: PropTypes.number
 };
 
