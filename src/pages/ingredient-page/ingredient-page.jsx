@@ -6,7 +6,7 @@ import IngredientDetails from "../../components/ingredient-details/ingredient-de
 export const IngredientPage = () => {
     return (
         <main className={styles.main}>
-            <IngredientDetails />
+            <IngredientDetails/>
         </main>
     );
 }; 

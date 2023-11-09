@@ -26,8 +26,8 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 function App() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const location = useLocation();
 
     const background = location.state && location.state.background;
@@ -66,7 +66,7 @@ function App() {
             {background && (
                 <Routes>
                     <Route path="/ingredients/:id" element={
-                        <Modal title={"Детали ингредиента"} handleClose={handleClose}>
+                        <Modal title={"Детали ингредиента"} onCloseModal={handleClose}>
                             <IngredientDetails />
                         </Modal>
                     }

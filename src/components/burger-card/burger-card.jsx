@@ -46,9 +46,10 @@ const BurgerCard = ({ card, onIngredientClick }) => {
         onIngredientClick();
     }*/}
 
+    //если убрать state в link, то тогда происходит редирект на страницу элемента
     return (
         <li ref={dragRef}>
-        <Link className={styles.card} to={`/ingredients/${card._id}`} style={{ opacity }}>
+        <Link className={styles.card} to={`/ingredients/${card._id}`} style={{ opacity }} state={{ background: location, card: card }}>
             <Counter count={countingItems} size="default" extraClass="m-1" />
             <img className={styles.img} src={image} alt={name} />
             <div className={`${styles.container} pt-1`}>
