@@ -19,8 +19,8 @@ const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
 
     //модальное окно
-    const [openModal, setOpenModal] = useState(false);
-    const [activeIngredient, setActiveIngredient] = useState(null);
+    //const [openModal, setOpenModal] = useState(false);
+    //const [activeIngredient, setActiveIngredient] = useState(null);
 
     //loader пока не загрузились данные 
     //if (!data) {
@@ -75,7 +75,7 @@ const BurgerIngredients = () => {
     }, [bunsInView, mainsInView, saucesInView])
 
     function handleIngredientClick(item) {
-        setOpenModal(true);
+        //setOpenModal(true);
 
         dispatch({
             type: GET_VIEWED_INGREDIENT,
@@ -87,7 +87,7 @@ const BurgerIngredients = () => {
         dispatch({
             type: REMOVE_VIEWED_INGREDIENT
         })
-        setOpenModal(false);
+        //setOpenModal(false);
     }
 
     return (

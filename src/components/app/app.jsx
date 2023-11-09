@@ -58,11 +58,11 @@ function App() {
                 {/* доступно для авторизованных пользователей */}
                 <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
 
-                            {/* Ингредиент*/}
-            <Route path="/ingredients/:id" element={<IngredientPage />} />
+                {/* Ингредиент*/}
+                <Route path="/ingredients/:id" element={<IngredientPage />} />
             </Routes>
 
-           
+
             {background && (
                 <Routes>
                     <Route path="/ingredients/:id" element={
