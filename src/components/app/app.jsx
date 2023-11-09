@@ -23,11 +23,10 @@ import { useEffect } from 'react';
 import ProtectedRoute from '../protected-route-element/protected-route';
 
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { useParams } from "react-router-dom";
-import { currentIngredientModal } from '../../services/selectors';
+import { getIngregients } from '../../services/actions/burger-ingredients';
+
 function App() {
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -41,8 +40,12 @@ function App() {
         dispatch(getUserInfo());
     }, [dispatch]);
 
-   const currentIngr = location.state && location.state.card;
-   console.log(currentIngr);
+
+    //получаем все ингредиенты для отображения на странице ингредиента 
+    useEffect(() => {
+        dispatch(getIngregients());
+    }, [dispatch]);
+
 
     return (
         <>
@@ -62,7 +65,7 @@ function App() {
                 <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
 
                 {/* Ингредиент*/}
-                <Route path="/ingredients/:id" element={<IngredientPage card={currentIngr}/>} />
+                <Route path="/ingredients/:id" element={<IngredientPage />} />
             </Routes>
 
 
@@ -70,7 +73,7 @@ function App() {
                 <Routes>
                     <Route path="/ingredients/:id" element={
                         <Modal title={"Детали ингредиента"} onCloseModal={handleClose}>
-                            <IngredientDetails card={currentIngr}/>
+                            <IngredientDetails />
                         </Modal>
                     }
                     />

@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { ingredientPropTypes } from '../../utils/types';
 import { useParams } from "react-router-dom";
-//import { AllIngredients } from "../../services/selectors";
+import { AllIngredients } from "../../services/selectors";
 import styles from "./ingredient-details.module.css";
 import Loader from "../loader/loader";
 
 const IngredientDetails = (props) => {
-    //const { image_large, name, calories, fat, proteins, carbohydrates } = item;
     const { id } = useParams();
 
-    const AllIngredients = store => store.ingredients.ingredients;
     const ingredients = useSelector(AllIngredients);
     const ingredient = ingredients.find((ingredient) => ingredient._id === id);
 

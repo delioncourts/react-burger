@@ -18,15 +18,6 @@ import { AllIngredients, currentIngredientModal } from '../../services/selectors
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
 
-    //модальное окно
-    //const [openModal, setOpenModal] = useState(false);
-    //const [activeIngredient, setActiveIngredient] = useState(null);
-
-    //loader пока не загрузились данные 
-    //if (!data) {
-    // return <Loader />;
-    // }
-
     //получение ингредиентов из стора 
     const ingredients = useSelector(AllIngredients);
     //получаем текущий выбранный элемент из стора для модального окна
@@ -75,8 +66,6 @@ const BurgerIngredients = () => {
     }, [bunsInView, mainsInView, saucesInView])
 
     function handleIngredientClick(item) {
-        //setOpenModal(true);
-
         dispatch({
             type: GET_VIEWED_INGREDIENT,
             currentIngredient: item
@@ -87,7 +76,6 @@ const BurgerIngredients = () => {
         dispatch({
             type: REMOVE_VIEWED_INGREDIENT
         })
-        //setOpenModal(false);
     }
 
     return (
