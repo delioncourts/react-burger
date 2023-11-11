@@ -1,0 +1,33 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px);
+    gap: 60px;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+}
+
+.linkpanel {
+    text-decoration: none;
+    max-width: 320px; 
+    width: 100%;
+}
+.inputpanel{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.link {
+    text-decoration: none;
+    height: 64px;
+}
+
+.link:hover {
+    color: white;
+    text-shadow: 0px 4px 32px rgba(51, 51, 255, 0.50), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 0px 16px rgba(51, 51, 255, 0.25);
+}

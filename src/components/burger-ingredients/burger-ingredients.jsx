@@ -13,19 +13,10 @@ import Loader from '../loader/loader'
 
 import { getIngregients } from '../../services/actions/burger-ingredients';
 import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/actions/modal';
-import {AllIngredients, currentIngredientModal} from '../../services/selectors.js'
+import { AllIngredients, currentIngredientModal } from '../../services/selectors.js'
 
 const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun');
-
-    //модальное окно
-    const [openModal, setOpenModal] = useState(false);
-    const [activeIngredient, setActiveIngredient] = useState(null);
-
-    //loader пока не загрузились данные 
-    //if (!data) {
-    // return <Loader />;
-    // }
 
     //получение ингредиентов из стора 
     const ingredients = useSelector(AllIngredients);
@@ -75,9 +66,6 @@ const BurgerIngredients = () => {
     }, [bunsInView, mainsInView, saucesInView])
 
     function handleIngredientClick(item) {
-        console.log(item);
-        setOpenModal(true);
-
         dispatch({
             type: GET_VIEWED_INGREDIENT,
             currentIngredient: item
@@ -88,7 +76,6 @@ const BurgerIngredients = () => {
         dispatch({
             type: REMOVE_VIEWED_INGREDIENT
         })
-        setOpenModal(false);
     }
 
     return (
@@ -127,11 +114,11 @@ const BurgerIngredients = () => {
                     ))}
                 </ul>
 
-                {currentIngr && (
+                {/*{currentIngr && (
                     <Modal title={"Детали ингредиента"} onCloseModal={handleCloseModal}>
                         <IngredientDetails item={currentIngr} />
                     </Modal>
-                )}
+                )}*/}
             </ul>
         </section>
     )

@@ -3,6 +3,7 @@ import { modalIngredientsReducer } from './modal';
 import { orderDetailsReducer } from './order-details';
 import { burgerIngredientsReducer } from './burger-ingredients';
 import { burgerConstructorReducer } from './burger-constructor';
+import { authReducer } from './auth';
 
 //ключ-значение
 export const rootReducer = combineReducers({
@@ -10,4 +11,5 @@ export const rootReducer = combineReducers({
   order: orderDetailsReducer,
   ingredients: burgerIngredientsReducer,
   cart: burgerConstructorReducer,
+  user: authReducer
 });

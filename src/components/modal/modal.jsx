@@ -14,7 +14,6 @@ const Modal = ({ title, onCloseModal, children }) => {
     useEffect(() => {
         const closeEsc = (evt) => {
             if (evt.key === 'Escape') {
-                console.log('close by Esc');
                 onCloseModal();
             }
         }

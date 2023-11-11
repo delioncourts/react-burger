@@ -1,0 +1,23 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px);
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+    margin-left: 8px;
+}
+
+.link:hover {
+    color: white;
+    text-shadow: 0px 4px 32px rgba(51, 51, 255, 0.50), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 0px 16px rgba(51, 51, 255, 0.25);
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+}
