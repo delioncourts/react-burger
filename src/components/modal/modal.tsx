@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { useEffect } from "react";
@@ -7,12 +7,17 @@ import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const modalsRoot = document.getElementById("modals");
+const modalsRoot = document.getElementById("modals") as HTMLElement;
 
-const Modal = ({ title, onCloseModal, children }) => {
+interface IModal {
+    title: string;
+    onCloseModal: () => void;
+    children: ReactNode;
+}
+const Modal: React.FC<IModal> = ({ title, onCloseModal, children }) => {
 
     useEffect(() => {
-        const closeEsc = (evt) => {
+        const closeEsc = (evt: KeyboardEvent) => {
             if (evt.key === 'Escape') {
                 onCloseModal();
             }
@@ -40,12 +45,6 @@ const Modal = ({ title, onCloseModal, children }) => {
                 </article>
             </ModalOverlay>, modalsRoot)
     )
-}
-
-Modal.propTypes = {
-    children: PropTypes.node,
-    title: PropTypes.string,
-    closeModal: PropTypes.func,
 }
 
 export default Modal;

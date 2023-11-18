@@ -50,8 +50,4 @@ const IngredientDetails = (props) => {
     )
 }
 
-IngredientDetails.propTypes = {
-    item: PropTypes.shape(ingredientPropTypes).isRequired
-}
-
 export default IngredientDetails;
