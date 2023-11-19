@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, PropsWithChildren } from "react";
 import ReactDOM from 'react-dom'
 
 import { useEffect } from "react";
@@ -14,7 +14,7 @@ interface IModal {
     onCloseModal: () => void;
     children: ReactNode;
 }
-const Modal: React.FC<IModal> = ({ title, onCloseModal, children }) => {
+const Modal: React.FC<PropsWithChildren<IModal>> = ({ title, onCloseModal, children }) => {
 
     useEffect(() => {
         const closeEsc = (evt: KeyboardEvent) => {
