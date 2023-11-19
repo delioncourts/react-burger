@@ -1,11 +1,12 @@
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { FormEvent, useState } from "react";
+
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../../services/actions/auth";
 import { useForm } from "../../hooks/useForm";
 import styles from "./forgot-password.module.css";
+import React, { FormEvent } from 'react';
 
 export const ForgotPassword = () => {
     const dispatch: any = useDispatch();

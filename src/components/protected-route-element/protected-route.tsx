@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { loggedIn } from "../../services/selectors";
 import { useState } from "react";
 import React, { FC, ReactElement } from "react";
+import PropTypes from 'prop-types';
 
-
-interface IProtectedRoute{
+interface IProtectedRoute {
     onlyUnAuth?: boolean;
     element: ReactElement;
 }
@@ -28,7 +28,7 @@ const ProtectedRoute: FC<IProtectedRoute> = ({ onlyUnAuth = false, element }) =>
     if (!onlyUnAuth && !isLoggedIn) {
         return <Navigate to="/login" state={{ from: location }} />;
     }
-    
+
     return element;
 }
 

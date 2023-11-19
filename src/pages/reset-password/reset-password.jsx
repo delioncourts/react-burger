@@ -13,14 +13,6 @@ export const ResetPassword = () => {
     const navigate = useNavigate();
     const { values, handleChange, setValues } = useForm({});
 
-    //страница только для тех, кто забыл свой пароль 
-    //но, к сожалению, постоянно происходит редирект на главную
-    /*const userData = useSelector(passwordForgot);
-     useEffect(() => {
-         !userData && navigate('/');
-     }, [])*/
-
-
     function handleSubmit(evt) {
         evt.preventDefault();
         dispatch(resetPassword(values.password, values.token));
