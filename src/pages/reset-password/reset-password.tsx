@@ -6,16 +6,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { resetPassword } from '../../services/actions/auth';
 import { passwordForgot } from '../../services/selectors';
-import { useEffect } from 'react';
+import { useEffect, FormEvent } from 'react';
 
 export const ResetPassword = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { values, handleChange, setValues } = useForm({});
 
-    function handleSubmit(evt) {
+    function handleSubmit(evt: FormEvent) {
         evt.preventDefault();
-        dispatch(resetPassword(values.password, values.token));
+        dispatch<any>(resetPassword(values.password, values.token));
         navigate('/login');
     }
 
