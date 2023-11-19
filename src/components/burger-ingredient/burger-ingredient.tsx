@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
-import { FC, useRef } from 'react';
+import React, { FC, RefObject, useRef } from 'react';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -30,7 +30,7 @@ const BurgerIngredient: FC< IBurgerIngredient> = ({ item, index, idtd }) => {
     const { name, price, image } = item;
 
     const dispatch = useDispatch();
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLLIElement>(null);
 
     function handleDeleteIngredient(id:string) {
         dispatch({
@@ -60,9 +60,9 @@ const BurgerIngredient: FC< IBurgerIngredient> = ({ item, index, idtd }) => {
             }
 
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            const hoverMiddleY = (hoverBoundingRect!.bottom - hoverBoundingRect!.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
+            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect!.top;
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
