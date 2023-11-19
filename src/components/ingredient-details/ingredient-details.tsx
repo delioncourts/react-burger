@@ -1,17 +1,17 @@
 import React from "react";
-import PropTypes from 'prop-types';
+
 import { useSelector } from 'react-redux';
-import { ingredientPropTypes } from '../../utils/types';
+
 import { useParams } from "react-router-dom";
 import { AllIngredients } from "../../services/selectors";
 import styles from "./ingredient-details.module.css";
 import Loader from "../loader/loader";
 
-const IngredientDetails = (props) => {
+const IngredientDetails = () => {
     const { id } = useParams();
 
     const ingredients = useSelector(AllIngredients);
-    const ingredient = ingredients.find((ingredient) => ingredient._id === id);
+    const ingredient = ingredients.find((ingredient: { _id: string | undefined; }) => ingredient._id === id);
 
     if (!ingredient) {
         return <Loader />
