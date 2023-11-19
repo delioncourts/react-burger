@@ -37,6 +37,7 @@ export const Profile = () => {
             password: ''
         })
     }
+
     return (
         <main className={styles.main}>
             <div className={styles.container}>

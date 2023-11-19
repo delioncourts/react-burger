@@ -4,9 +4,18 @@ export const BASE_URL = 'https://norma.nomoreparties.space/api/';
 //получаем данные о пользователе
 export const USER_INFO_URL = 'https://norma.nomoreparties.space/api/auth/user';
 
+type TServerResponse<T> = {
+  success: boolean
+} & T;
+
+type TRefreshResponse = TServerResponse<{
+  refreshToken: string;
+  accessToken: string;
+}>
+
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
-const checkResponse = (res) => {
+const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
     return res.json();
   }
@@ -15,27 +24,27 @@ const checkResponse = (res) => {
 
 // создаем функцию проверки на `success`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
-const checkSuccess = (res) => {
-  if (res && res.success) {
-    return res;
+const checkSuccess = <T extends { success?: boolean }>(res: T): Promise<T> => {
+  if (res?.success) {
+    return Promise.resolve(res)
   }
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
-const request = (endpoint, options) => {
+const request = <T extends { success?: boolean }>(endpoint: string, options: RequestInit) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
   return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse).then(checkSuccess);
 };
 
 //проверяем что токен не истек и если истек, то тогда мы его обновляем
-const fetchWithRefresh = async (url, options) => {
+const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
   try {
     const res = await fetch(url, options);
-    return await checkResponse(res);
-  } catch (err) {
-    if (err.message === 'jwt expired') {
+    return await checkResponse<T>(res);
+  } catch (err: any) {
+    if ((err as { message: string }).message === 'jwt expired') {
       console.log('jwt expired');
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {
@@ -43,9 +52,13 @@ const fetchWithRefresh = async (url, options) => {
       }
       localStorage.setItem('refreshToken', refreshData.refreshToken);
       localStorage.setItem('accessToken', refreshData.accessToken);
-      options.headers.authorization = refreshData.accessToken;
+      if (options.headers) {
+        (options.headers as { [key: string]: string }).authorization =
+          refreshData.accessToken
+      }
+      //options.headers.authorization = refreshData.accessToken;
       const res = await fetch(url, options); //повторяем запрос
-      return await checkResponse(res);
+      return await checkResponse<T>(res);
     } else {
       return Promise.reject(err);
     }
@@ -53,8 +66,19 @@ const fetchWithRefresh = async (url, options) => {
 };
 
 //обновляем токен
-export const refreshToken = () =>
-  request('auth/token', {
+// export const refreshToken = ():Promise<TRefreshResponse> =>
+//   request('auth/token', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json;charset=utf-8',
+//     },
+//     body: JSON.stringify({
+//       token: localStorage.getItem('refreshToken'),
+//     }),
+//   });
+
+export const refreshToken = (): Promise<TRefreshResponse> => {
+  return fetch(`${BASE_URL}/auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -62,11 +86,12 @@ export const refreshToken = () =>
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken'),
     }),
-  });
+  }).then((res) => checkResponse<TRefreshResponse>(res))
+}
 
 //загрузка списка ингредиентов
 export const loadIngredients = async () => {
-  return await request('ingredients');
+  return await request('ingredients', {});
 };
 
 //создание заказа
@@ -136,14 +161,21 @@ export const logoutRequest = async () => {
   });
 };
 
+export type TUser = {
+  email: string;
+  name: string;
+}
+
+type TUserResponse = TServerResponse<{ user: TUser }>;
+
 //получить данные пользователя
 export const getUserInfoRequest = () => {
-  return fetchWithRefresh(USER_INFO_URL, {
+  return fetchWithRefresh<TUserResponse>(USER_INFO_URL, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       authorization: localStorage.getItem('accessToken'),
-    },
+    } as HeadersInit,
   });
 };
 
