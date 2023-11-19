@@ -12,6 +12,10 @@ import { TIngredient } from '../../utils/types';
 
 interface IBurgerCard {
     card: TIngredient;
+    name: string;
+    price: number;
+    image: string;
+    onIngredientClick: () => void;
 }
 const BurgerCard: FC<IBurgerCard> = ({ card }) => {
     const { name, image, price } = card;
