@@ -8,12 +8,12 @@ import { useForm } from "../../hooks/useForm";
 import styles from "./forgot-password.module.css";
 
 export const ForgotPassword = () => {
-    const dispatch:any = useDispatch();
+    const dispatch: any = useDispatch();
     const navigate = useNavigate();
 
     const { values, handleChange, setValues } = useForm({});
 
-    const handleSubmit = (event: FormEvent ) => {
+    const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         dispatch(forgotPassword(values.email));
         navigate('/reset-password');

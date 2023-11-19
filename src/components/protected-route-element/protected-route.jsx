@@ -14,11 +14,6 @@ export default function ProtectedRoute({ onlyUnAuth = false, element }) {
 
     const [isLoading, setIsLoading] = useState(true);
 
-
-    /*if(isLoading && !isLoggedIn) {
-        return <Loader />
-    }*/
-
     // Пользователь авторизован + не нужна авторизация => отправляем на предыдущую страницу
     if (onlyUnAuth && isLoggedIn) {
         return <Navigate to={from} />;

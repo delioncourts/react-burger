@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
-import { useRef } from 'react';
-import PropTypes from 'prop-types';
+import { FC, useRef } from 'react';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -9,14 +8,31 @@ import { MOVE_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions/burge
 
 import styles from './burger-ingredient.module.css'
 
+import { TIngredient } from '../../utils/types';
+import type { XYCoord } from 'dnd-core'
+interface IBurgerIngredient {
+    item: TIngredient;
+    id?: string;
+    key: string;
+    index: number;
+    idtd: string;
+  }
+
+  type TDndIngredient =  {
+    name: string; 
+    price: number; 
+    image: string; 
+    idtd: string; 
+    index: number;
+}
 //элемент в burger constructor - начинки и соусы
-const BurgerIngredient = ({ item, index, idtd }) => {
+const BurgerIngredient: FC< IBurgerIngredient> = ({ item, index, idtd }) => {
     const { name, price, image } = item;
 
     const dispatch = useDispatch();
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement>(null);
 
-    function handleDeleteIngredient(id) {
+    function handleDeleteIngredient(id:string) {
         dispatch({
             type: REMOVE_INGREDIENT,
             idtd: id
@@ -26,7 +42,7 @@ const BurgerIngredient = ({ item, index, idtd }) => {
     const [{ opacity }, dragRef] = useDrag({
         type: 'sorting',
         item: { index },
-        collect: (monitor) => {
+        collect: (monitor: any) => {
             return {
                 opacity: monitor.isDragging() ? .5 : 1
             }
@@ -36,7 +52,7 @@ const BurgerIngredient = ({ item, index, idtd }) => {
     //сортировка ингредиентов 
     const [, dropRef] = useDrop({
         accept: 'sorting',
-        hover(itemToPush, monitor) {
+        hover(itemToPush: TDndIngredient, monitor) {
             const hoverIndex = index;
             const dragIndex = itemToPush.index;
             if (dragIndex === hoverIndex) {
@@ -46,7 +62,7 @@ const BurgerIngredient = ({ item, index, idtd }) => {
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
@@ -67,6 +83,7 @@ const BurgerIngredient = ({ item, index, idtd }) => {
 
     dragRef(dropRef(ref));
 
+
     return (
         <li className={styles.list} ref={ref}>
             <DragIcon type="primary" />
@@ -80,12 +97,6 @@ const BurgerIngredient = ({ item, index, idtd }) => {
         </li>
     )
 }
-
-BurgerIngredient.propTypes = {
-    item: PropTypes.object.isRequired,
-    index: PropTypes.number, 
-    idtd: PropTypes.number
-};
 
 
 export default BurgerIngredient;

@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import styles from "./profile.module.css";
 import { Button, EmailInput, PasswordInput, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 
-import { userNameData, userPasswordData, userEmailData } from '../../services/selectors';
+import { userNameData, userEmailData } from '../../services/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 
