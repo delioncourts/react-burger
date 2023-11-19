@@ -1,4 +1,3 @@
-import { getCookie, setCookie } from './cookie';
 import { TIngredient } from './types';
 //объявляем базовый урл
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
@@ -69,18 +68,6 @@ const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
     }
   }
 };
-
-//обновляем токен
-// export const refreshToken = ():Promise<TRefreshResponse> =>
-//   request('auth/token', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json;charset=utf-8',
-//     },
-//     body: JSON.stringify({
-//       token: localStorage.getItem('refreshToken'),
-//     }),
-//   });
 
 export const refreshToken = (): Promise<TRefreshResponse> => {
   return fetch(`${BASE_URL}/auth/token`, {
