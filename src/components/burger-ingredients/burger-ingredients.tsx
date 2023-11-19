@@ -13,37 +13,35 @@ import Loader from '../loader/loader'
 
 import { getIngregients } from '../../services/actions/burger-ingredients';
 import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/actions/modal';
-import { AllIngredients, currentIngredientModal } from '../../services/selectors.js'
-
+import { AllIngredients, currentIngredientModal } from '../../services/selectors'
+import { TIngredient } from '../../utils/types';
 const BurgerIngredients = () => {
-    const [current, setCurrent] = useState('bun');
+    const [current, setCurrent] = useState<string>('bun');
 
     //получение ингредиентов из стора 
     const ingredients = useSelector(AllIngredients);
-    //получаем текущий выбранный элемент из стора для модального окна
-    const currentIngr = useSelector(currentIngredientModal);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getIngregients());
+        dispatch<any>(getIngregients());
     }, [dispatch]);
 
-    const buns = useMemo(() => ingredients.filter((item) => item.type === 'bun'), [ingredients]);
-    const sauces = useMemo(() => ingredients.filter((item) => item.type === 'sauce'), [ingredients]);
-    const mains = useMemo(() => ingredients.filter((item) => item.type === 'main'), [ingredients]);
+    const buns: TIngredient[] = useMemo(() => ingredients.filter((item: TIngredient) => item.type === 'bun'), [ingredients]);
+    const sauces: TIngredient[] = useMemo(() => ingredients.filter((item: TIngredient) => item.type === 'sauce'), [ingredients]);
+    const mains:  TIngredient[] = useMemo(() => ingredients.filter((item: TIngredient) => item.type === 'main'), [ingredients]);
 
     //из предыдущего спринта - плавный скролл до раздела по клику по табу
     //в этом спринте, к сожалению, сломался и не знаю как починить :(
     //скролл приисходит, но черточка только по второму клику доезжает до активного таба
-    const onClickTabElement = (tab) => {
+    const onClickTabElement = (tab: string) => {
         setCurrent(tab);
-        const element = document.getElementById(tab);
+        const element = document.getElementById(tab) as HTMLElement;;
         if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
 
     //При помощи observer меняется таб при прокрутке 
-    const containerRef = useRef(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const [bunsRef, bunsInView] = useInView({
         threshold: 0,
         root: containerRef.current
@@ -65,16 +63,10 @@ const BurgerIngredients = () => {
                 : setCurrent('main')
     }, [bunsInView, mainsInView, saucesInView])
 
-    function handleIngredientClick(item) {
-        dispatch({
+    function handleIngredientClick(item: any) {
+        dispatch<any>({
             type: GET_VIEWED_INGREDIENT,
             currentIngredient: item
-        })
-    }
-
-    function handleCloseModal() {
-        dispatch({
-            type: REMOVE_VIEWED_INGREDIENT
         })
     }
 
@@ -98,27 +90,21 @@ const BurgerIngredients = () => {
                 <h2 id="bun" className="text text_type_main-medium pt-10 pb-6">Булки</h2>
                 <ul ref={bunsRef} className={`${styles.list} pr-3`}>
                     {buns.map((item) => (
-                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
+                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
                 </ul>
                 <h2 id="sauce" className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
                 <ul ref={saucesRef} className={`${styles.list} pr-3`}>
                     {sauces.map((item) => (
-                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
+                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
                 </ul>
                 <h2 id="main" className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
                 <ul ref={mainsRef} className={`${styles.list} pr-3`}>
                     {mains.map((item) => (
-                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} __v={item.__V} onIngredientClick={() => handleIngredientClick(item)} />
+                        <BurgerCard card={item} name={item.name} price={item.price} image={item.image} key={item._id} onIngredientClick={() => handleIngredientClick(item)} />
                     ))}
                 </ul>
-
-                {/*{currentIngr && (
-                    <Modal title={"Детали ингредиента"} onCloseModal={handleCloseModal}>
-                        <IngredientDetails item={currentIngr} />
-                    </Modal>
-                )}*/}
             </ul>
         </section>
     )

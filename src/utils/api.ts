@@ -1,4 +1,6 @@
-import { getCookie, setCookie } from './cookie'; //объявляем базовый урл
+import { getCookie, setCookie } from './cookie';
+import { TIngredient } from './types';
+//объявляем базовый урл
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
 
 //получаем данные о пользователе
@@ -13,6 +15,9 @@ type TRefreshResponse = TServerResponse<{
   accessToken: string;
 }>
 
+interface IBaseResponse {
+  success: boolean;
+}
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
 const checkResponse = <T>(res: Response): Promise<T> => {
@@ -24,7 +29,7 @@ const checkResponse = <T>(res: Response): Promise<T> => {
 
 // создаем функцию проверки на `success`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
-const checkSuccess = <T extends { success?: boolean }>(res: T): Promise<T> => {
+const checkSuccess = <T extends IBaseResponse>(res: T): Promise<T> => {
   if (res?.success) {
     return Promise.resolve(res)
   }
@@ -33,9 +38,9 @@ const checkSuccess = <T extends { success?: boolean }>(res: T): Promise<T> => {
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
-const request = <T extends { success?: boolean }>(endpoint: string, options: RequestInit) => {
+const request = <T extends IBaseResponse>(endpoint: string, options: RequestInit) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
-  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse).then(checkSuccess);
+  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
 };
 
 //проверяем что токен не истек и если истек, то тогда мы его обновляем
@@ -52,11 +57,11 @@ const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
       }
       localStorage.setItem('refreshToken', refreshData.refreshToken);
       localStorage.setItem('accessToken', refreshData.accessToken);
+      //options.headers.authorization = refreshData.accessToken;
       if (options.headers) {
         (options.headers as { [key: string]: string }).authorization =
           refreshData.accessToken
       }
-      //options.headers.authorization = refreshData.accessToken;
       const res = await fetch(url, options); //повторяем запрос
       return await checkResponse<T>(res);
     } else {
@@ -95,7 +100,7 @@ export const loadIngredients = async () => {
 };
 
 //создание заказа
-export const createOrderRequest = async (items) => {
+export const createOrderRequest = async (items: TIngredient[]) => {
   return await request('orders', {
     method: 'POST',
     headers: {
@@ -108,7 +113,7 @@ export const createOrderRequest = async (items) => {
 };
 
 //регистрация
-export const registerRequest = (name, email, password) =>
+export const registerRequest = (name?: string, email?: string, password?: string) =>
   request('auth/register', {
     method: 'POST',
     headers: {
@@ -118,7 +123,7 @@ export const registerRequest = (name, email, password) =>
   });
 
 //авторизация = login
-export const authorizeRequest = async (email, password) => {
+export const authorizeRequest = async (email?: string, password?: string) => {
   return await request('auth/login', {
     method: 'POST',
     headers: {
@@ -129,7 +134,7 @@ export const authorizeRequest = async (email, password) => {
 };
 
 //восстановление пароля по имейлу
-export const forgotPasswordRequest = async (email) => {
+export const forgotPasswordRequest = async (email?: string) => {
   return await request('password-reset', {
     method: 'POST',
     headers: {
@@ -140,7 +145,7 @@ export const forgotPasswordRequest = async (email) => {
 };
 
 //сбросить пароль
-export const resetPasswordRequest = async (password, token) => {
+export const resetPasswordRequest = async (password?: string, token?: string) => {
   return await request('password-reset/reset', {
     method: 'POST',
     headers: {
@@ -180,13 +185,13 @@ export const getUserInfoRequest = () => {
 };
 
 //обновить данные пользователя
-export const updateUserInfoRequest = async (email, password, name) => {
+export const updateUserInfoRequest = async (email?: string, password?: string, name?: string) => {
   return await request(USER_INFO_URL, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       authorization: localStorage.getItem('accessToken'),
-    },
+    } as HeadersInit,
     body: JSON.stringify({ email, password, name }),
   });
 };
