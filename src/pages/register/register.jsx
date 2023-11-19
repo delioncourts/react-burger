@@ -24,10 +24,6 @@ export const Register = () => {
         setPassword(evt.target.value)
     }
 
-    /*const onChange = (evt) => {
-        evt.preventDefault();
-    };*/
-
     function handleSubmit(evt) {
         evt.preventDefault();
         try {

@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { useDrag } from "react-dnd";
 
 import styles from './burger-card.module.css';
@@ -8,16 +7,22 @@ import { useSelector } from 'react-redux';
 import { bunsInCart, otherInCart } from '../../services/selectors';
 import { Link, useLocation } from 'react-router-dom';
 
-const BurgerCard = ({ card, onIngredientClick }) => {
+import { FC } from 'react';
+import { TIngredient } from '../../utils/types';
+
+interface IBurgerCard {
+    card: TIngredient;
+}
+const BurgerCard: FC<IBurgerCard> = ({ card }) => {
     const { name, image, price } = card;
     const location = useLocation();
 
     //булочки и начинки с соусами
-    const buns = useSelector(bunsInCart);
-    const other = useSelector(otherInCart);
+    const buns: TIngredient = useSelector(bunsInCart);
+    const other: TIngredient[] = useSelector(otherInCart);
 
     //объединяем массив объектов булочек и начинок и соусов в один массив методом concat
-    const ingredientsInConstructor = other.concat(buns, buns);
+    const ingredientsInConstructor: TIngredient[] = other.concat(buns, buns);
 
     //используем цикл for..of, чтобы пройти обойти каждый элемент в массиве ingredientsInConstructor.
     //сравниваем id элемента и id card, если они равны, то добавляем 1
@@ -41,12 +46,6 @@ const BurgerCard = ({ card, onIngredientClick }) => {
         })
     });
 
-   {/*onClick={handleIngredientClick}
-    function handleIngredientClick() {
-        onIngredientClick();
-    }*/}
-
-    //если убрать state в link, то тогда происходит редирект на страницу элемента
     return (
         <li ref={dragRef}>
         <Link className={styles.card} to={`/ingredients/${card._id}`} style={{ opacity }} state={{ background: location, card: card }}>
@@ -61,12 +60,5 @@ const BurgerCard = ({ card, onIngredientClick }) => {
         </li>
     )
 }
-
-BurgerCard.propTypes = {
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    onIngredientClick: PropTypes.func.isRequired,
-};
 
 export default BurgerCard;
