@@ -29,18 +29,13 @@ const BurgerIngredients = () => {
     dispatch<any>(getIngregients());
   }, [dispatch]);
 
-  const buns: TIngredient[] = useMemo(
-    () => ingredients.filter((item: TIngredient) => item.type === 'bun'),
-    [ingredients],
-  );
-  const sauces: TIngredient[] = useMemo(
-    () => ingredients.filter((item: TIngredient) => item.type === 'sauce'),
-    [ingredients],
-  );
-  const mains: TIngredient[] = useMemo(
-    () => ingredients.filter((item: TIngredient) => item.type === 'main'),
-    [ingredients],
-  );
+  const [buns, sauces, mains] = useMemo<TIngredient[][]>(() => [
+      ingredients.filter((item: { type: string; }) => item.type === 'bun'),
+      ingredients.filter((item: { type: string; }) => item.type === 'sauce'),
+      ingredients.filter((item: { type: string; }) => item.type === 'main')
+    ]
+    , [ingredients])
+
 
   //из предыдущего спринта - плавный скролл до раздела по клику по табу
   //в этом спринте, к сожалению, сломался и не знаю как починить :(
