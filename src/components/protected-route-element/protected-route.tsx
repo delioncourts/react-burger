@@ -2,22 +2,22 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { loggedIn } from "../../services/selectors";
-import PropTypes from 'prop-types';
 import { useState } from "react";
-import Loader from "../loader/loader";
+import React, { FC, ReactElement } from "react";
+import PropTypes from 'prop-types';
 
-export default function ProtectedRoute({ onlyUnAuth = false, element }) {
+interface IProtectedRoute {
+    onlyUnAuth?: boolean;
+    element: ReactElement;
+}
+
+const ProtectedRoute: FC<IProtectedRoute> = ({ onlyUnAuth = false, element }) => {
     const isLoggedIn = useSelector(loggedIn);
 
     const location = useLocation();
     const from = location.state?.from || '/';
 
     const [isLoading, setIsLoading] = useState(true);
-
-
-    /*if(isLoading && !isLoggedIn) {
-        return <Loader />
-    }*/
 
     // Пользователь авторизован + не нужна авторизация => отправляем на предыдущую страницу
     if (onlyUnAuth && isLoggedIn) {
@@ -28,11 +28,8 @@ export default function ProtectedRoute({ onlyUnAuth = false, element }) {
     if (!onlyUnAuth && !isLoggedIn) {
         return <Navigate to="/login" state={{ from: location }} />;
     }
-    
+
     return element;
 }
 
-ProtectedRoute.propTypes = {
-    element: PropTypes.node.isRequired,
-    onlyUnAuth: PropTypes.bool
-  };
+export default ProtectedRoute;

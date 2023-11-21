@@ -1,3 +1,4 @@
+import React, { ChangeEvent, FormEvent } from 'react';
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useState } from "react";
@@ -10,20 +11,20 @@ import styles from "./login.module.css";
 import { authorize } from "../../services/actions/auth";
 
 export const Login = () => {
-    const dispatch = useDispatch();
+    const dispatch:any = useDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const onChangeEmail = (evt) => {
+    const onChangeEmail = (evt: ChangeEvent<HTMLInputElement>) => {
         setEmail(evt.target.value)
     }
 
-    const onChangePassword = (evt) => {
+    const onChangePassword = (evt: ChangeEvent<HTMLInputElement>) => {
         setPassword(evt.target.value)
     }
 
-    function handleSubmit(evt) {
+    function handleSubmit(evt: FormEvent) {
         evt.preventDefault();
         dispatch(authorize(email, password));
     }

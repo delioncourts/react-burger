@@ -9,7 +9,6 @@ import { receiveOrderNumber } from "../../services/selectors";
 const OrderDetails = ({ }) => {
 
     const orderNumber = useSelector(receiveOrderNumber);
-    console.log(orderNumber)
     
     return (
         <div className={`${styles.popup} pt-15 pb-25`}>

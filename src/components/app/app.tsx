@@ -24,26 +24,29 @@ import ProtectedRoute from '../protected-route-element/protected-route';
 
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { getIngregients } from '../../services/actions/burger-ingredients';
+import { Location } from 'react-router-dom';
 
 function App() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
 
-    const background = location.state && location.state.background;
+    const location = useLocation();
+    const locationState = location.state as { background: Location };
+    const background = locationState && locationState.background;
 
     const handleClose = () => {
         navigate(-1);
     };
 
+    //отключить типизацию можно также правилом 
     useEffect(() => {
-        dispatch(getUserInfo());
+        dispatch<any>(getUserInfo());
     }, [dispatch]);
 
 
     //получаем все ингредиенты для отображения на странице ингредиента 
     useEffect(() => {
-        dispatch(getIngregients());
+        dispatch<any>(getIngregients());
     }, [dispatch]);
 
 

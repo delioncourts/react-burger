@@ -1,12 +1,25 @@
-import { getCookie, setCookie } from './cookie'; //объявляем базовый урл
+import { TIngredient } from './types';
+//объявляем базовый урл
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
 
 //получаем данные о пользователе
 export const USER_INFO_URL = 'https://norma.nomoreparties.space/api/auth/user';
 
+type TServerResponse<T> = {
+  success: boolean
+} & T;
+
+type TRefreshResponse = TServerResponse<{
+  refreshToken: string;
+  accessToken: string;
+}>
+
+interface IBaseResponse {
+  success: boolean;
+}
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
-const checkResponse = (res) => {
+const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
     return res.json();
   }
@@ -15,27 +28,27 @@ const checkResponse = (res) => {
 
 // создаем функцию проверки на `success`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
-const checkSuccess = (res) => {
-  if (res && res.success) {
-    return res;
+const checkSuccess = <T extends IBaseResponse>(res: T): Promise<T> => {
+  if (res?.success) {
+    return Promise.resolve(res)
   }
   return Promise.reject(`Ответ не success: ${res}`);
 };
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
-const request = (endpoint, options) => {
+const request = <T extends IBaseResponse>(endpoint: string, options: RequestInit) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
-  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse).then(checkSuccess);
+  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
 };
 
 //проверяем что токен не истек и если истек, то тогда мы его обновляем
-const fetchWithRefresh = async (url, options) => {
+const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
   try {
     const res = await fetch(url, options);
-    return await checkResponse(res);
-  } catch (err) {
-    if (err.message === 'jwt expired') {
+    return await checkResponse<T>(res);
+  } catch (err: any) {
+    if ((err as { message: string }).message === 'jwt expired') {
       console.log('jwt expired');
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {
@@ -43,18 +56,21 @@ const fetchWithRefresh = async (url, options) => {
       }
       localStorage.setItem('refreshToken', refreshData.refreshToken);
       localStorage.setItem('accessToken', refreshData.accessToken);
-      options.headers.authorization = refreshData.accessToken;
+      //options.headers.authorization = refreshData.accessToken;
+      if (options.headers) {
+        (options.headers as { [key: string]: string }).authorization =
+          refreshData.accessToken
+      }
       const res = await fetch(url, options); //повторяем запрос
-      return await checkResponse(res);
+      return await checkResponse<T>(res);
     } else {
       return Promise.reject(err);
     }
   }
 };
 
-//обновляем токен
-export const refreshToken = () =>
-  request('auth/token', {
+export const refreshToken = (): Promise<TRefreshResponse> => {
+  return fetch(`${BASE_URL}/auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -62,15 +78,16 @@ export const refreshToken = () =>
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken'),
     }),
-  });
+  }).then((res) => checkResponse<TRefreshResponse>(res))
+}
 
 //загрузка списка ингредиентов
 export const loadIngredients = async () => {
-  return await request('ingredients');
+  return await request('ingredients', {});
 };
 
 //создание заказа
-export const createOrderRequest = async (items) => {
+export const createOrderRequest = async (items: TIngredient[]) => {
   return await request('orders', {
     method: 'POST',
     headers: {
@@ -83,7 +100,7 @@ export const createOrderRequest = async (items) => {
 };
 
 //регистрация
-export const registerRequest = (name, email, password) =>
+export const registerRequest = (name?: string, email?: string, password?: string) =>
   request('auth/register', {
     method: 'POST',
     headers: {
@@ -93,7 +110,7 @@ export const registerRequest = (name, email, password) =>
   });
 
 //авторизация = login
-export const authorizeRequest = async (email, password) => {
+export const authorizeRequest = async (email?: string, password?: string) => {
   return await request('auth/login', {
     method: 'POST',
     headers: {
@@ -104,7 +121,7 @@ export const authorizeRequest = async (email, password) => {
 };
 
 //восстановление пароля по имейлу
-export const forgotPasswordRequest = async (email) => {
+export const forgotPasswordRequest = async (email?: string) => {
   return await request('password-reset', {
     method: 'POST',
     headers: {
@@ -115,7 +132,7 @@ export const forgotPasswordRequest = async (email) => {
 };
 
 //сбросить пароль
-export const resetPasswordRequest = async (password, token) => {
+export const resetPasswordRequest = async (password?: string, token?: string) => {
   return await request('password-reset/reset', {
     method: 'POST',
     headers: {
@@ -136,25 +153,32 @@ export const logoutRequest = async () => {
   });
 };
 
+export type TUser = {
+  email: string;
+  name: string;
+}
+
+type TUserResponse = TServerResponse<{ user: TUser }>;
+
 //получить данные пользователя
 export const getUserInfoRequest = () => {
-  return fetchWithRefresh(USER_INFO_URL, {
+  return fetchWithRefresh<TUserResponse>(USER_INFO_URL, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       authorization: localStorage.getItem('accessToken'),
-    },
+    } as HeadersInit,
   });
 };
 
 //обновить данные пользователя
-export const updateUserInfoRequest = async (email, password, name) => {
+export const updateUserInfoRequest = async (email?: string, password?: string, name?: string) => {
   return await request(USER_INFO_URL, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       authorization: localStorage.getItem('accessToken'),
-    },
+    } as HeadersInit,
     body: JSON.stringify({ email, password, name }),
   });
 };

@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import styles from "./profile.module.css";
 import { Button, EmailInput, PasswordInput, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 
-import { userNameData, userPasswordData, userEmailData } from '../../services/selectors';
+import { userNameData, userEmailData } from '../../services/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 
@@ -19,7 +18,7 @@ export const Profile = () => {
     const form = useForm({ name: userNameInfo, email: userEmailInfo, password: '' });
 
     function handleSignOut() {
-        dispatch(signout());
+        dispatch<any>(signout());
     }
 
     //сброс данных
@@ -28,14 +27,16 @@ export const Profile = () => {
     }
 
     //обновить данные 
-    function handleUpdate(evt) {
+    //evt: FormEvent<HTMLFormElement>
+    function handleUpdate(evt: React.SyntheticEvent ) {
         evt.preventDefault();
-        dispatch(updateUserInfo(form.values.name, form.values.email, form.values.password))
+        dispatch<any>(updateUserInfo(form.values.name, form.values.email, form.values.password))
         form.setValues({
             ...form.values,
             password: ''
         })
     }
+
     return (
         <main className={styles.main}>
             <div className={styles.container}>
@@ -78,7 +79,6 @@ export const Profile = () => {
                         />
                         <EmailInput
                             name={'email'}
-                            icon="EditIcon"
                             extraClass="mt-6"
                             placeholder="E-mail"
                             isIcon={true}
