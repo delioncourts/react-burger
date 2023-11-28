@@ -13,10 +13,10 @@ import Modal from "../modal/modal";
 import OrderDetails from '../order-details/order-details';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 
-import { ADD_INGREDIENT } from "../../services/actions/burger-constructor";
 import { bunsInCart, otherInCart, receiveOrderNumber } from '../../services/selectors';
 import { sendOrder } from '../../services/actions/order-details';
 import { loggedIn } from '../../services/selectors';
+import { ADD_INGREDIENT } from '../../services/constant/const';
 
 const BurgerConstructor = () => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);

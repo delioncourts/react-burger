@@ -1,6 +1,6 @@
 //редьюсер должен быть чистой функцией
 
-import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../actions/burger-constructor';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../constant/const';
 
 const defaultState = {
   buns: null,

@@ -5,7 +5,7 @@ import {
   GET_ORDER_ERROR,
   GET_ORDER_SUCCESS,
   UPDATE_ORDER_NUMBER,
-} from '../actions/order-details';
+} from '../constant/const';
 
 const defaultState = {
   number: null,

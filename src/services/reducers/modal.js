@@ -1,4 +1,4 @@
-import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../actions/modal';
+import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../constant/const';
 
 const defaultState = {
   currentIngredient: null,

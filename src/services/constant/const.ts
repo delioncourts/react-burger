@@ -1,0 +1,54 @@
+// actions - auth
+
+//устанавливаем пользователя и выходим из профиля
+export const SET_USER = 'SET_USER';
+export const SET_USER_SIGNOUT = 'SET_USER_SIGNOUT';
+
+//регистрация
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';
+export const REGISTER_ERROR = 'REGISTER_ERROR';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+
+//логин
+export const LOGIN_REQUEST: 'LOGIN_REQUEST' = 'LOGIN_REQUEST';
+export const LOGIN_ERROR: 'LOGIN_ERROR' = 'LOGIN_ERROR';
+export const LOGIN_SUCCESS: 'LOGIN_SUCCESS' = 'LOGIN_SUCCESS';
+
+//выход из профиля
+export const SIGNOUT_REQUEST: 'SIGNOUT_REQUEST' = 'SIGNOUT_REQUEST';
+export const SIGNOUT_ERROR: 'SIGNOUT_ERROR' = 'SIGNOUT_ERROR';
+export const SIGNOUT_SUCCESS: 'SIGNOUT_SUCCESS' = 'SIGNOUT_SUCCESS';
+
+//восстановление пароля из имейла
+export const FORGOT_PASSWORD_REQUEST: 'FORGOT_PASSWORD_REQUEST' = 'FORGOT_PASSWORD_REQUEST';
+export const FORGOT_PASSWORD_ERROR: 'FORGOT_PASSWORD_ERROR' = 'FORGOT_PASSWORD_ERROR';
+export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
+
+//новый пароль
+export const RESET_PASSWORD_REQUEST: 'RESET_PASSWORD_REQUEST' = 'RESET_PASSWORD_REQUEST';
+export const RESET_PASSWORD_ERROR: 'RESET_PASSWORD_ERROR' = 'RESET_PASSWORD_ERROR';
+export const RESET_PASSWORD_SUCCESS: 'RESET_PASSWORD_SUCCESS' = 'RESET_PASSWORD_SUCCESS';
+
+// actions - burger-constructor 
+//Получение списка ингредиентов для конструктора бургера
+//Добавить ингредиент, получить текущий ингредиент, убрать ингредиент, переместить ингредиент 
+export const ADD_INGREDIENT: "ADD_INGREDIENT" = "ADD_INGREDIENT";
+export const GET_CURRENT_INGREDIENT: "GET_CURRENT_INGREDIENT" = "GET_CURRENT_INGREDIENT";
+export const REMOVE_INGREDIENT: "REMOVE_INGREDIENT" = "REMOVE_INGREDIENT";
+export const MOVE_INGREDIENT: "MOVE_INGREDIENT" = "MOVE_INGREDIENT";
+
+// actions - burger-ingredients
+//Получение списка ингредиентов от API.
+export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
+export const GET_INGREDIENTS_ERROR: 'GET_INGREDIENTS_ERROR' = 'GET_INGREDIENTS_ERROR';
+export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
+
+// actions - modal 
+export const GET_VIEWED_INGREDIENT: 'GET_VIEWED_INGREDIENT' = 'GET_VIEWED_INGREDIENT';
+export const REMOVE_VIEWED_INGREDIENT: 'REMOVE_VIEWED_INGREDIENT' = 'REMOVE_VIEWED_INGREDIENT';
+
+//actions - order details
+
+export const GET_ORDER_REQUEST: 'SEND_ORDER_REQUEST' = 'SEND_ORDER_REQUEST';
+export const GET_ORDER_ERROR: 'SEND_ORDER_ERROR' = 'SEND_ORDER_ERROR';
+export const GET_ORDER_SUCCESS: 'SEND_ORDER_SUCCESS' = 'SEND_ORDER_SUCCESS';

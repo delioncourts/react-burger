@@ -12,10 +12,10 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Loader from '../loader/loader';
 
 import { getIngregients } from '../../services/actions/burger-ingredients';
-import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/actions/modal';
 import { AllIngredients, currentIngredientModal } from '../../services/selectors';
 import { TIngredient } from '../../utils/types';
 
+import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/constant/const';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState<string>('bun');

@@ -5,7 +5,7 @@ import {
   SIGNOUT_SUCCESS,
   REGISTER_SUCCESS,
   RESET_PASSWORD_SUCCESS,
-} from '../actions/auth';
+} from '../constant/const';
 
 const defaultState = {
   name: '',

@@ -4,12 +4,12 @@ import React, { FC, RefObject, useRef } from 'react';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { MOVE_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions/burger-constructor';
-
+import { MOVE_INGREDIENT, REMOVE_INGREDIENT } from '../../services/constant/const';
 import styles from './burger-ingredient.module.css'
 
 import { TIngredient } from '../../utils/types';
-import type { XYCoord } from 'dnd-core'
+import type { XYCoord } from 'dnd-core';
+
 interface IBurgerIngredient {
     item: TIngredient;
     id?: string;
