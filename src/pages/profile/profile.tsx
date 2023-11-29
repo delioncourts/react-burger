@@ -1,12 +1,10 @@
 import styles from "./profile.module.css";
 import { Button, EmailInput, PasswordInput, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink } from "react-router-dom";
 
 import { userNameData, userEmailData } from '../../services/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 
-import { signout } from '../../services/actions/auth';
 import { updateUserInfo } from '../../services/actions/auth';
 
 import ProfileNavigation from "../../components/profile-navigation/profile-navigation";
@@ -18,10 +16,6 @@ export const Profile = () => {
     const userEmailInfo = useSelector(userEmailData);
 
     const form = useForm({ name: userNameInfo, email: userEmailInfo, password: '' });
-
-    function handleSignOut() {
-        dispatch<any>(signout());
-    }
 
     //сброс данных
     function handleReset() {
@@ -42,7 +36,7 @@ export const Profile = () => {
     return (
         <main className={styles.main}>
             <div className={styles.container}>
-                
+
                 <ProfileNavigation />
 
                 <section className={styles.inputpanel}>

@@ -1,7 +1,7 @@
 import styles from "./profile-navigation.module.css";
 import { NavLink } from "react-router-dom";
 import { signout } from '../../services/actions/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 
 const ProfileNavigation = ({ }) => {
     const dispatch = useDispatch();
@@ -9,6 +9,7 @@ const ProfileNavigation = ({ }) => {
     function handleSignOut() {
         dispatch<any>(signout());
     }
+    
     return (
         <section className={styles.linkpanel}>
         <NavLink to="/profile" style={({ isActive }) => {

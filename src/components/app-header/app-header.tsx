@@ -23,7 +23,7 @@ const AppHeader = () => {
                         )}
                     </NavLink>
 
-                    <NavLink to="/orders" className={`${styles.link} pt-4 pr-5 pb-4 pl-5`} style={({ isActive }) => {
+                    <NavLink to="/feed" className={`${styles.link} pt-4 pr-5 pb-4 pl-5`} style={({ isActive }) => {
                         return {
                             color: isActive ? "#f2f2f3" : "#8585AD",
                         };

@@ -16,6 +16,8 @@ import { ResetPassword } from '../../pages/reset-password/reset-password';
 import { Profile } from '../../pages/profile/profile';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
 import Modal from '../modal/modal';
+import { Feed } from '../../pages/feed/feed';
+import { ProfileOrders } from '../../pages/profile-orders/profile-orders';
 
 import { getUserInfo } from '../../services/actions/auth';
 import { useEffect } from 'react';
@@ -57,6 +59,7 @@ function App() {
             <Routes location={background || location}>
                 <Route path="/" element={<MainPage />} />
                 <Route path="*" element={<NotFound404 />} />
+                <Route path="/feed" element={<Feed />} />
 
                 {/* доступно для не авторизованных пользователей*/}
                 <Route path="/login" element={<ProtectedRoute onlyUnAuth element={<Login />} />} />
@@ -66,6 +69,7 @@ function App() {
 
                 {/* доступно для авторизованных пользователей */}
                 <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
+                <Route path="/profile/orders" element={<ProtectedRoute element={<ProfileOrders />} />} />
 
                 {/* Ингредиент*/}
                 <Route path="/ingredients/:id" element={<IngredientPage />} />
