@@ -2,9 +2,7 @@
 
 import { loadIngredients } from '../../utils/api';
 
-export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
-export const GET_INGREDIENTS_ERROR = 'GET_INGREDIENTS_ERROR';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
+import { GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_ERROR, GET_INGREDIENTS_SUCCESS } from '../constant/const';
 
 export function getIngregients() {
   return function (dispatch) {

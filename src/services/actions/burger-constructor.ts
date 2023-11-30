@@ -10,24 +10,24 @@ import {
 
 import { TIngredientFull } from '../../utils/types';
 
-export interface IAddIngredient {
+export interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT;
   item: TIngredientFull
 }
 
-export interface IGetCurrentIngredient {
+export interface IGetCurrentIngredientAction {
   readonly type: typeof GET_CURRENT_INGREDIENT
 }
 
-export interface IRemoveIngredient {
+export interface IRemoveIngredientAction {
   readonly type: typeof REMOVE_INGREDIENT;
   readonly item: TIngredientFull
 }
 
-export interface IMoveIngredient {
+export interface IMoveIngredientAction {
   readonly type: typeof MOVE_INGREDIENT;
   readonly dragIndex: number;
   readonly hoverIndex: number;
 }
 
-export type TBurgerConstructor = IAddIngredient | IGetCurrentIngredient | IRemoveIngredient | IMoveIngredient;
+export type TBurgerConstructor = IAddIngredientAction | IGetCurrentIngredientAction | IRemoveIngredientAction | IMoveIngredientAction;

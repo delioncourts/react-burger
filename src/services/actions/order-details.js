@@ -2,12 +2,7 @@
 
 import { createOrderRequest } from '../../utils/api';
 
-export const GET_ORDER_REQUEST = 'SEND_ORDER_REQUEST';
-export const GET_ORDER_ERROR = 'SEND_ORDER_ERROR';
-export const GET_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
-
-//обновить номер заказа
-export const UPDATE_ORDER_NUMBER = 'UPDATE_ORDER_NUMBER';
+import { GET_ORDER_REQUEST, GET_ORDER_ERROR, GET_ORDER_SUCCESS, UPDATE_ORDER_NUMBER } from '../constant/const';
 
 export function sendOrder(arr) {
   return function (dispatch) {

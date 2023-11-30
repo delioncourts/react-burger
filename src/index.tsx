@@ -15,6 +15,11 @@ const store = configureStore({
   reducer: rootReducer
 })
 
+
+/*
+
+middleware: getDefaultMiddleware => getDefaultMiddleware().concat(),
+*/
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
