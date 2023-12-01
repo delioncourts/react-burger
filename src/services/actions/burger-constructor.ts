@@ -12,7 +12,7 @@ import { TIngredientFull } from '../../utils/types';
 
 export interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT;
-  item: TIngredientFull
+  item: TIngredientFull;
 }
 
 export interface IGetCurrentIngredientAction {
@@ -21,7 +21,7 @@ export interface IGetCurrentIngredientAction {
 
 export interface IRemoveIngredientAction {
   readonly type: typeof REMOVE_INGREDIENT;
-  readonly item: TIngredientFull
+  readonly item: TIngredientFull;
 }
 
 export interface IMoveIngredientAction {
@@ -30,4 +30,4 @@ export interface IMoveIngredientAction {
   readonly hoverIndex: number;
 }
 
-export type TBurgerConstructor = IAddIngredientAction | IGetCurrentIngredientAction | IRemoveIngredientAction | IMoveIngredientAction;
+export type TBurgerConstructorActions = IAddIngredientAction | IGetCurrentIngredientAction | IRemoveIngredientAction | IMoveIngredientAction;
