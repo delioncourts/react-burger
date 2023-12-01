@@ -1,4 +1,5 @@
- //получение ингредиентов из стора 
+import { RootState } from "../index";
+//получение ингредиентов из стора 
 export const AllIngredients = (store: { ingredients: { ingredients: any; }; })=> store.ingredients.ingredients;
 
 //получаем текущий выбранный элемент из стора для модального окна

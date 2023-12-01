@@ -28,7 +28,7 @@ export const getIngregients = (): AppThunk => (dispatch: AppDispatch) => {
     type: GET_INGREDIENTS_REQUEST,
   });
   loadIngredients()
-    .then((res:any) => {
+    .then((res) => {
       if (res.success) {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,

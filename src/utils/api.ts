@@ -1,4 +1,4 @@
-import { TIngredient } from './types';
+import { TIngredient, TIngredientFull } from './types';
 //объявляем базовый урл
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
 
@@ -17,6 +17,13 @@ type TRefreshResponse = TServerResponse<{
 interface IBaseResponse {
   success: boolean;
 }
+
+interface TIngredietnsRequest {
+  status: number;
+  data: TIngredient[];
+  success: boolean;
+}
+
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
 const checkResponse = <T>(res: Response): Promise<T> => {
@@ -39,7 +46,7 @@ const checkSuccess = <T extends IBaseResponse>(res: T): Promise<T> => {
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
 const request = <T extends IBaseResponse>(endpoint: string, options: RequestInit) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
-  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
+  return fetch(`${BASE_URL}${endpoint}`, options).then(res => checkResponse<T>(res));
 };
 
 //проверяем что токен не истек и если истек, то тогда мы его обновляем
@@ -83,7 +90,7 @@ export const refreshToken = (): Promise<TRefreshResponse> => {
 
 //загрузка списка ингредиентов
 export const loadIngredients = async () => {
-  return await request('ingredients', {});
+  return await request<TIngredietnsRequest>('ingredients', {});
 };
 
 //создание заказа

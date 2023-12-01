@@ -10,10 +10,12 @@ export type TIngredient = {
   image: string,
   image_mobile: string,
   image_large: string,
+  id?: string,
 }
 
 export type TIngredientFull = {
   _id: string,
+  id?: string,
   name: string,
   type: string,
   proteins: number,
