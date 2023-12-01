@@ -7,7 +7,6 @@ import {
   logoutRequest,
   getUserInfoRequest,
   updateUserInfoRequest,
-  updateTokenRequest,
 } from '../../utils/api';
 
 //устанавливаем пользователя и выходим из профиля
