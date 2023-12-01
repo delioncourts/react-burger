@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-
+//import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from '../../index';
 import styles from './app.module.css';
 
 import AppHeader from '../app-header/app-header';

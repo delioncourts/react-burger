@@ -1,7 +1,8 @@
 import styles from "./profile-navigation.module.css";
 import { NavLink } from "react-router-dom";
 import { signout } from '../../services/actions/auth';
-import { useDispatch} from 'react-redux';
+//import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../index';
 
 const ProfileNavigation = ({ }) => {
     const dispatch = useDispatch();

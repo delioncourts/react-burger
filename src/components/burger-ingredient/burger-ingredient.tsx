@@ -1,4 +1,5 @@
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../index';
 import { useDrag, useDrop } from 'react-dnd';
 import React, { FC, RefObject, useRef } from 'react';
 
@@ -16,23 +17,23 @@ interface IBurgerIngredient {
     key: string;
     index: number;
     idtd: string;
-  }
+}
 
-  type TDndIngredient =  {
-    name: string; 
-    price: number; 
-    image: string; 
-    idtd: string; 
+type TDndIngredient = {
+    name: string;
+    price: number;
+    image: string;
+    idtd: string;
     index: number;
 }
 //элемент в burger constructor - начинки и соусы
-const BurgerIngredient: FC< IBurgerIngredient> = ({ item, index, idtd }) => {
+const BurgerIngredient: FC<IBurgerIngredient> = ({ item, index, idtd }) => {
     const { name, price, image } = item;
 
     const dispatch = useDispatch();
     const ref = useRef<HTMLLIElement>(null);
 
-    function handleDeleteIngredient(id:string) {
+    function handleDeleteIngredient(id: string) {
         dispatch({
             type: REMOVE_INGREDIENT,
             idtd: id

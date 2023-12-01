@@ -1,6 +1,7 @@
 import React from "react";
 
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
+import { useSelector } from '../../index';
 
 import { useParams } from "react-router-dom";
 import { AllIngredients } from "../../services/selectors";

@@ -1,6 +1,9 @@
 import React from 'react';
 import { useState, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../index';
+
+
 import { useNavigate } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';

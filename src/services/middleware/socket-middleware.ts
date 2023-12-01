@@ -1,64 +1,86 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import type { Middleware, MiddlewareAPI } from 'redux';
-
-// import type {
-//   AppActions,
-//   TWSStoreActions,
-//   IMessage,
-//   AppDispatch,
-//   RootState,
-//   IMessageResponse,
-// } from '../types';
-
-// import { getCurrentTimestamp } from '../../utils/datetime';
+import { RootState } from '../../index';
 
 export type TwsActionTypes = {
-    wsConnect: ActionCreatorWithPayload<string>,
-    wsDisconnsect: ActionCreatorWithoutPayload,
-    wsSendMessage?: ActionCreatorWithPayload<any>,
-    wsConnecting: ActionCreatorWithoutPayload,
-    onOpen: ActionCreatorWithoutPayload,
-    onClose: ActionCreatorWithoutPayload,
-    onError: ActionCreatorWithPayload<string>,
-    onMessage: ActionCreatorWithPayload<any>,
+  // outside actions
+  wsConnect: ActionCreatorWithPayload<string>,
+  wsDisconnect: ActionCreatorWithoutPayload,
+  wsSendMessage?: ActionCreatorWithPayload<any>,
+  wsConnecting: ActionCreatorWithoutPayload,
+
+  // websocket
+  onOpen: ActionCreatorWithoutPayload,
+  onClose: ActionCreatorWithoutPayload,
+  onError: ActionCreatorWithPayload<string>,
+  onMessage: ActionCreatorWithPayload<any>,
 }
-export const socketMiddleware = (wsActions:any): Middleware => {
+
+//генератор миддлвер
+export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, RootState> => {
   return ((store: MiddlewareAPI) => {
     let socket: WebSocket | null = null;
 
+    //создаем таймер, который будет переподключать соединение
+    let isConnected = false;
+    let reconnectTimer = 0;
+    let url = '';
+
     return next => (action) => {
-      const { dispatch, getState } = store;
-      const { type } = action;
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
-      const { user } = getState().user;
-      if (type === wsInit && user) {
-        socket = new WebSocket(`${wsUrl}?token=${user.token}`);
+      const { dispatch } = store;
+      //const { type } = action;
+      const { wsConnect, wsSendMessage, onOpen, onClose, onError, onMessage, wsConnecting, wsDisconnect } = wsActions;
+
+      if (wsConnect.match(action)) {
+        url = action.payload;
+        //socket = new WebSocket(`${wsUrl}?token=${user.token}`);
+        socket = new WebSocket(url);
       }
       if (socket) {
-        socket.onopen = event => {
-          dispatch({ type: onOpen, payload: event });
+        socket.onopen = () => {
+          dispatch(wsConnecting());
+          dispatch(onOpen());
+          isConnected = true;
+
         };
 
         socket.onerror = event => {
-          dispatch({ type: onError, payload: event });
+          dispatch(onError(event.type));
         };
 
         socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          const { success, ...restParsedData } = parsedData;
-
-          dispatch({ type: onMessage, payload: { ...restParsedData } });
+          dispatch(onMessage(parsedData));
         };
 
         socket.onclose = event => {
-          dispatch({ type: onClose, payload: event });
+          //закрытие произошло правильно есои код не равен 1000
+          if (event.code !== 1000) {
+            dispatch(onError(event.code.toString()))
+          }
+          dispatch(onClose());
+
+          if (isConnected) {
+            dispatch(wsConnecting())
+            reconnectTimer = window.setTimeout(() => {
+              dispatch(wsConnect(url))
+            }, 3000)
+          }
         };
 
-        if (type === wsSendMessage) {
+        if (wsSendMessage?.match) {
           const payload = action.payload;
-          const message = { ...(payload), token: user?.token };
+          const message = { ...(payload) };
           socket.send(JSON.stringify(message));
+        }
+
+        if (wsDisconnect.match(action)) {
+          clearTimeout(reconnectTimer);
+          isConnected = false;
+          reconnectTimer = 0;
+          socket.close();
+          dispatch(onClose)
         }
       }
 

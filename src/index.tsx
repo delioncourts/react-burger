@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Provider } from "react-redux";
+import { Provider, TypedUseSelectorHook } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit'
-
+import { useDispatch as dispatchHook, useSelector as selectorHook } from 'react-redux';
 import './index.css';
 
 import App from './components/app/app';
@@ -12,17 +12,21 @@ import { rootReducer } from './services/reducers/rootreducer';
 
 //в configureStore devTools дефолтно true
 const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(),
 })
 
+export type RootState = ReturnType<typeof rootReducer>;
 
-/*
+//Dispatch & Selector
+export type AppDispatch = typeof store.dispatch;
+export const useDispatch = () => dispatchHook<AppDispatch>();
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
-middleware: getDefaultMiddleware => getDefaultMiddleware().concat(),
-*/
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 //BrowserRouter должен быть выше React.StrictMode иначе могут появиться ошибки
 root.render(
   <React.StrictMode>
