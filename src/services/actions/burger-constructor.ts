@@ -21,7 +21,7 @@ export interface IGetCurrentIngredientAction {
 
 export interface IRemoveIngredientAction {
   readonly type: typeof REMOVE_INGREDIENT;
-  readonly item: TIngredient;
+  item: TIngredient;
   idtd: string;
 }
 

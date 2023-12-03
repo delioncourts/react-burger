@@ -6,11 +6,14 @@ import { TIngredient } from "../../utils/types";
 
 export interface IGetViewedIngredientAction {
     readonly type: typeof GET_VIEWED_INGREDIENT;
+    isOpen: true;
+    currentIngredient: TIngredient[] | null;
 }
 
 export interface IRemoveViewedIngredientAction {
     readonly type: typeof REMOVE_VIEWED_INGREDIENT;
-    readonly ingredient: TIngredient[];
+    currentIngredient: TIngredient[] | null;
+    isOpen: false;
 }
 
 
