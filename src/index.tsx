@@ -12,7 +12,7 @@ import App from './components/app/app';
 import { rootReducer } from './services/reducers/rootreducer';
 import { TBurgerConstructorActions } from './services/actions/burger-constructor';
 import { TGetIngredientsActions } from './services/actions/burger-ingredients';
-
+import { TOrderActions } from './services/actions/order-details';
 //в configureStore devTools дефолтно true
 const store = configureStore({
   reducer: rootReducer,
@@ -27,7 +27,7 @@ export type AppDispatch = ThunkDispatch<RootState, unknown, TAppActions>;
 export const useDispatch = () => dispatchHook<AppDispatch>();
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
-export type TAppActions = TBurgerConstructorActions |  TGetIngredientsActions ;
+export type TAppActions = TBurgerConstructorActions |  TGetIngredientsActions | TOrderActions;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TAppActions>;
 

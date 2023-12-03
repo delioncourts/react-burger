@@ -13,7 +13,7 @@ const defaultState = {
   orderError: false,
 };
 
-export const orderDetailsReducer = (state = defaultState, action) => {
+export const orderDetailsReducer = (state = defaultState, action: { type: any; orderNumber: number; }) => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {

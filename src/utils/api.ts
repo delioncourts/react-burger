@@ -18,28 +18,23 @@ interface IBaseResponse {
   success: boolean;
 }
 
-interface TIngredietnsRequest {
-  status: number;
-  data: TIngredient[];
-  success: boolean;
+type TIngredientsRequest = {
+  success: any;
+  data: any;
+  status: any;
+
 }
 
+type TOrderRequest = {
+  order: any;
+  success: any;
+  status: any;
+}
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
 const checkResponse = <T>(res: Response): Promise<T> => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`);
-};
-
-// создаем функцию проверки на `success`
-// добавляем проверку на ошибку, чтобы она попала в `catch`
-const checkSuccess = <T extends IBaseResponse>(res: T): Promise<T> => {
-  if (res?.success) {
-    return Promise.resolve(res)
-  }
-  return Promise.reject(`Ответ не success: ${res}`);
+  return res.ok ? res.json() : res.json()
+  .then((err) => Promise.reject(err));
 };
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
@@ -90,12 +85,12 @@ export const refreshToken = (): Promise<TRefreshResponse> => {
 
 //загрузка списка ингредиентов
 export const loadIngredients = async () => {
-  return await request<TIngredietnsRequest>('ingredients', {});
+  return await request<TIngredientsRequest>('ingredients', {});
 };
 
 //создание заказа
 export const createOrderRequest = async (items: TIngredient[]) => {
-  return await request('orders', {
+  return await request<TOrderRequest>('orders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
