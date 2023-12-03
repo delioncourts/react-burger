@@ -1,4 +1,30 @@
-.main{
+.main {
     max-width: 640px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.orders_status {
+    display: flex;
+    gap: 36px;
+}
+
+.counting {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, auto);
+    gap: 8px;
+    padding: 0;
+    list-style-type: none;
+}
+
+.counting-final {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, auto);
+    gap: 8px;
+    padding: 0;
+    list-style-type: none;
+    color: aqua;
 }

@@ -27,7 +27,7 @@ import ProtectedRoute from '../protected-route-element/protected-route';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { getIngregients } from '../../services/actions/burger-ingredients';
 import { Location } from 'react-router-dom';
-
+import OrderModalDetails from '../order-modal-details/order-modal-details';
 function App() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -81,6 +81,18 @@ function App() {
                     <Route path="/ingredients/:id" element={
                         <Modal title={"Детали ингредиента"} onCloseModal={handleClose}>
                             <IngredientDetails />
+                        </Modal>
+                    }
+                    />
+                    <Route path="/profile/orders/:id" element={<ProtectedRoute onlyUnAuth element={
+                    <Modal title={"Детали заказа"} onCloseModal={handleClose}>
+                        <OrderModalDetails />
+                    </Modal>} />
+                    }
+                    />
+                    <Route path="/feed/:id" element={
+                        <Modal title={"Детали заказа"} onCloseModal={handleClose}>
+                            <OrderModalDetails />
                         </Modal>
                     }
                     />
