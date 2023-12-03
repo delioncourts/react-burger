@@ -8,11 +8,11 @@ import {
   MOVE_INGREDIENT,
 } from '../constant/const';
 
-import { TIngredientFull } from '../../utils/types';
+import { TIngredient } from '../../utils/types';
 
 export interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT;
-  item: TIngredientFull;
+  item: TIngredient;
 }
 
 export interface IGetCurrentIngredientAction {
@@ -21,7 +21,8 @@ export interface IGetCurrentIngredientAction {
 
 export interface IRemoveIngredientAction {
   readonly type: typeof REMOVE_INGREDIENT;
-  item: TIngredientFull;
+  readonly item: TIngredient;
+  idtd: string;
 }
 
 export interface IMoveIngredientAction {
