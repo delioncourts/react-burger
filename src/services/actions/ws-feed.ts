@@ -13,27 +13,27 @@ export const WS_FEED_CONNECTION_SUCCESS: 'WS_FEED_CONNECTION_SUCCESS' = 'WS_FEED
 export const WS_FEED_CONNECTION_ERROR: 'WS_FEED_CONNECTION_ERROR' = 'WS_FEED_CONNECTION_ERROR';
 export const WS_FEED_SEND_MESSAGE: 'WS_FEED_SEND_MESSAGE' = 'WS_FEED_SEND_MESSAGE';
 
-export interface IWSFeedConnentionStart {
+export interface IWSFeedConnectionStart {
     readonly type: typeof WS_FEED_CONNECTION_START;
 }
 
-export interface IWSFeedConnentionClosed {
+export interface IWSFeedConnectionClosed {
     readonly type: typeof WS_FEED_CONNECTION_CLOSED;
 }
 
-export interface IWSFeedConnentionSuccess {
+export interface IWSFeedConnectionSuccess {
     readonly type: typeof WS_FEED_CONNECTION_SUCCESS;
 }
 
 //payload https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent
-export interface IWSFeedConnentionError {
+export interface IWSFeedConnectionError {
     readonly type: typeof WS_FEED_CONNECTION_ERROR;
     payload: MessageEvent
 }
 
-export interface IWSFeedConnentionSendMessage {
+export interface IWSFeedConnectionSendMessage {
     readonly type: typeof WS_FEED_SEND_MESSAGE;
     readonly payload: TOrderResponse;
 }
 
-export type TWSFeed = IWSFeedConnentionStart | IWSFeedConnentionClosed | IWSFeedConnentionSuccess | IWSFeedConnentionSendMessage;
+export type TWSFeed = IWSFeedConnectionStart | IWSFeedConnectionClosed | IWSFeedConnectionSuccess | IWSFeedConnectionSendMessage | IWSFeedConnectionError;
