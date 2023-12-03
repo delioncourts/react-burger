@@ -1,13 +1,20 @@
 //редьюсер должен быть чистой функцией
 
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../constant/const';
+import { TBurgerConstructorActions } from '../actions/burger-constructor';
+import { TIngredient } from '../../utils/types';
 
-const defaultState = {
+type TConstructorState = {
+  buns: TIngredient | undefined | null; 
+  otherItems: TIngredient[],
+}
+
+const defaultState:TConstructorState = {
   buns: null,
   otherItems: [],
 };
 
-export const burgerConstructorReducer = (state = defaultState, action) => {
+export const burgerConstructorReducer = (state = defaultState, action: TBurgerConstructorActions): TConstructorState => {
   switch (action.type) {
     case ADD_INGREDIENT: {
       if (action.item.type === "bun") {

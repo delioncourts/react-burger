@@ -7,13 +7,21 @@ import {
   UPDATE_ORDER_NUMBER,
 } from '../constant/const';
 
-const defaultState = {
+import { TOrderActions } from '../actions/order-details';
+
+type TOrderState = {
+  number: number | undefined | null;
+  orderRequest: boolean;
+  orderError: boolean;
+}
+
+const defaultState:TOrderState = {
   number: null,
   orderRequest: false,
   orderError: false,
 };
 
-export const orderDetailsReducer = (state = defaultState, action: { type: any; orderNumber: number; }) => {
+export const orderDetailsReducer = (state = defaultState, action: TOrderActions): TOrderState => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {
