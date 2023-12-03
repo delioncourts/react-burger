@@ -21,6 +21,7 @@ export const Feed = () => {
         }
     }, [dispatch]);
 
+    //заказы готовятся
     const inProcess = useMemo(() => {
         if (feedOrders) {
             return feedOrders.orders.filter((order: TOrderFeed) => order.status !== 'done');
@@ -29,6 +30,7 @@ export const Feed = () => {
         }
     }, [feedOrders]);
 
+    //заказы готовы
     const final = useMemo(() => {
         if (feedOrders) {
             return feedOrders.orders.filter((order: TOrderFeed) => order.status === 'done');
@@ -42,6 +44,10 @@ export const Feed = () => {
 
             <section className={styles.feed}>
                 <p className="text text_type_main-medium">Лента заказов</p>
+
+                <section>
+                    
+                </section>
             </section>
 
             <section className={styles.orders}>

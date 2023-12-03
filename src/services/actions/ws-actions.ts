@@ -16,27 +16,27 @@ export const WS_ORDERS_CONNECTION_ERROR: 'WS_ORDERS_CONNECTION_ERROR' = 'WS_ORDE
 export const WS_ORDERS_SEND_MESSAGE: 'WS_ORDERS_SEND_MESSAGE' = 'WS_ORDERS_SEND_MESSAGE';
 
 
-export interface IWSOrdersConnentionStart {
+export interface IWSOrdersConnectionStart {
     readonly type: typeof WS_ORDERS_CONNECTION_START;
 }
 
-export interface IWSOrdersConnentionClosed {
+export interface IWSOrdersConnectionClosed {
     readonly type: typeof WS_ORDERS_CONNECTION_CLOSED;
 }
 
-export interface IWSOrdersConnentionSuccess {
+export interface IWSOrdersConnectionSuccess {
     readonly type: typeof WS_ORDERS_CONNECTION_SUCCESS;
 }
 
 //payload https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent
-export interface IWSOrdersConnentionError {
+export interface IWSOrdersConnectionError {
     readonly type: typeof WS_ORDERS_CONNECTION_ERROR;
     payload: MessageEvent
 }
 
-export interface IWSOrdersConnentionSendMessage {
+export interface IWSOrdersConnectionSendMessage {
     readonly type: typeof WS_ORDERS_SEND_MESSAGE;
     readonly payload: TOrderResponse;
 }
 
-export type TWSOrders = IWSOrdersConnentionStart | IWSOrdersConnentionClosed | IWSOrdersConnentionSuccess | IWSOrdersConnentionSendMessage | IWSOrdersConnentionError;
+export type TWSOrders = IWSOrdersConnectionStart | IWSOrdersConnectionClosed | IWSOrdersConnectionSuccess | IWSOrdersConnectionSendMessage | IWSOrdersConnectionError;

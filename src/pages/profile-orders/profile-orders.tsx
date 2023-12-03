@@ -1,20 +1,21 @@
 import ProfileNavigation from "../../components/profile-navigation/profile-navigation";
 import styles from "./profile-orders.module.css";
+import { WS_ORDERS_CONNECTION_START, WS_ORDERS_CONNECTION_CLOSED } from "../../services/actions/ws-actions";
+import { useDispatch } from "../../index";
+import { useEffect } from "react";
 
 export const ProfileOrders = () => {
+    useEffect(() => {
+        dispatch({
+            type: WS_ORDERS_CONNECTION_START,
+            url: 'wss://norma.nomoreparties.space/orders',
+        });
 
-    const showStatus = (status: string) => {
-        switch (status) {
-            case "done":
-                return "Выполнен";
-            case "pending":
-                return "Готовится";
-            case "created":
-                return "Создан";
-            default:
-                return "Выполнен";
+        return () => {
+            dispatch({ 
+                type: WS_ORDERS_CONNECTION_CLOSED  });
         }
-    };
+    }, [dispatch]);
 
     return (
         <main className={styles.main}>
@@ -25,4 +26,8 @@ export const ProfileOrders = () => {
             </div>
         </main>
     )
+}
+
+function dispatch(arg0: { type: "WS_ORDERS_CONNECTION_START"; url: string; }) {
+    throw new Error("Function not implemented.");
 }
