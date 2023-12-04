@@ -51,12 +51,12 @@ export const Feed = () => {
             </section>
 
             <section className={styles.orders}>
-                <div className={styles.orders_status}></div>
+                <div className={styles.orders_status}>
                 <article>
                     <h2 className='text text_type_main-medium'>Готовы</h2>
-                    <ul className={`mt-6 ${styles.counting} ${styles.numbers_ready}`}>
+                    <ul className={`mt-6 ${styles.counting}`}>
                         {final?.slice(0, 10).map((card: TOrderFeed) => (
-                            <li className='text text_type_digits-default' key={card._id}>{card.number}</li>
+                            <li className={`text text_type_digits-default ${styles.numbers_ready}`} key={card._id}>{card.number}</li>
                         ))}
                     </ul>
                 </article>
@@ -69,15 +69,15 @@ export const Feed = () => {
                         ))}
                     </ul>
                 </article>
-
+                </div>
                 <article className='mt-15'>
                     <h2 className='text text_type_main-medium'>Выполнено за все время:</h2>
-                    <p className='text text_type_digits-large'>{feedOrders?.total}</p>
+                    <p className={`${styles.glow} text text_type_digits-large`}>{feedOrders?.total}</p>
                 </article>
 
                 <article className='mt-15'>
                     <h2 className='text text_type_main-medium'>Выполнено за сегодня:</h2>
-                    <p className='text text_type_digits-large'>{feedOrders?.totalToday}</p>
+                    <p className={`${styles.glow} text text_type_digits-large`}>{feedOrders?.totalToday}</p>
                 </article>
             </section>
 
