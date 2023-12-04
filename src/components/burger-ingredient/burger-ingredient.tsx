@@ -37,8 +37,8 @@ const BurgerIngredient: FC<IBurgerIngredient> = ({ item, index, idtd }) => {
         dispatch({
             type: REMOVE_INGREDIENT,
             idtd: id
-        })
-    }
+        }) 
+    } 
 
     const [{ opacity }, dragRef] = useDrag({
         type: 'sorting',

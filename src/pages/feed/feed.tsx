@@ -72,12 +72,12 @@ export const Feed = () => {
 
                 <article className='mt-15'>
                     <h2 className='text text_type_main-medium'>Выполнено за все время:</h2>
-                    <p className='text text_type_digits-large'>{feedOrders.total}</p>
+                    <p className='text text_type_digits-large'>{feedOrders?.total}</p>
                 </article>
 
                 <article className='mt-15'>
                     <h2 className='text text_type_main-medium'>Выполнено за сегодня:</h2>
-                    <p className='text text_type_digits-large'>{feedOrders.totalToday}</p>
+                    <p className='text text_type_digits-large'>{feedOrders?.totalToday}</p>
                 </article>
             </section>
 

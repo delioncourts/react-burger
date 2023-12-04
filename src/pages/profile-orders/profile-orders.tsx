@@ -5,6 +5,8 @@ import { useDispatch } from "../../index";
 import { useEffect } from "react";
 
 export const ProfileOrders = () => {
+    const dispatch = useDispatch();
+    
     useEffect(() => {
         dispatch({
             type: WS_ORDERS_CONNECTION_START,
@@ -28,6 +30,4 @@ export const ProfileOrders = () => {
     )
 }
 
-function dispatch(arg0: { type: "WS_ORDERS_CONNECTION_START"; url: string; }) {
-    throw new Error("Function not implemented.");
-}
+

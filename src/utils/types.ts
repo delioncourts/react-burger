@@ -11,6 +11,7 @@ export type TIngredient = {
   image_mobile: string,
   image_large: string,
   id?: string,
+  idtd?: string;
 }
 
 export type TIngredientFull = {
