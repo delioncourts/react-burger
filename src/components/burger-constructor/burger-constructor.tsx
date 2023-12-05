@@ -23,13 +23,13 @@ import { loggedIn } from '../../services/selectors';
 import { ADD_INGREDIENT } from '../../services/constant/const';
 import { TIngredient, TIngredientFull } from '../../utils/types';
 
-const BurgerConstructor: React.FC = () => {
+const BurgerConstructor: React.FC  = () => {
     const [orderModalOpen, setOrderModalOpen] = useState(false);
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(loggedIn);
     const navigate = useNavigate();
 
-    const orderNumber = useSelector(receiveOrderNumber);
+   const orderNumber = useSelector(receiveOrderNumber);
 
     const buns = useSelector(bunsInCart);
     const other = useSelector(otherInCart);

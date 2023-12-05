@@ -126,7 +126,7 @@ export const createOrderRequest = async (items: TIngredient[]) => {
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       //"Authorization": JSON.parse(localStorage.getItem('accessToken')!) и headers {} as HeadersInit
-     // Authorization: 'Bearer ' + getCookie('accessToken')
+     //Authorization: 'Bearer ' + getCookie('accessToken')
      Authorization: localStorage.getItem('accessToken'),
     } as HeadersInit,
     body: JSON.stringify({
@@ -192,10 +192,10 @@ export const logoutRequest = async (token: string | undefined ) => {
 export type TUser = {
   email: string;
   name: string;
-  status: boolean;
+  
 }
 
-type TUserResponse = TServerResponse<{ user: TUser }>;
+type TUserResponse = TServerResponse<{ user: TUser, status: boolean }>;
 
 //получить данные пользователя
 export const getUserInfoRequest = () => {

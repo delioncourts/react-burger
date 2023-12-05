@@ -6,9 +6,9 @@ import done from '../../images/done.svg';
 
 import { receiveOrderNumber } from "../../services/selectors";
 
-const OrderDetails: React.FC = () => {
+const OrderDetails = ({orderNumber}: {orderNumber: number | null | undefined }) => {
 
-    const orderNumber = useSelector(receiveOrderNumber);
+    //const orderNumber = useSelector(receiveOrderNumber);
     console.log(orderNumber)
     
     return (
