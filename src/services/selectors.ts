@@ -10,7 +10,8 @@ export const bunsInCart = (store: { cart: { buns: any; }; }) => store.cart.buns;
 export const otherInCart = (store: { cart: { otherItems: any; }; }) => store.cart.otherItems;
 
 //номер заказа
-export const receiveOrderNumber = (store: { order: { number: any; }; }) => store.order.number;
+//export const receiveOrderNumber = (store: { order: { number: any; }; }) => store.order.number;
+export const receiveOrderNumber = (store: RootState) => store.order.number;
 
 //авторизация
 export const loggedIn = (store: { user: { isLoggedIn: any; }; }) => store.user.isLoggedIn;

@@ -137,7 +137,7 @@ const BurgerConstructor: React.FC = () => {
                 </div>
 
                 {orderModalOpen && (<Modal onCloseModal={handleCloseModal} title={''}>
-                    <OrderDetails orderNubmer={orderNumber} />
+                    <OrderDetails orderNumber={orderNumber} />
                 </Modal>
                 )}
                 <Button htmlType="button" type="primary" size="large" onClick={handleButtonClick} disabled={!checkDisabled()} >

@@ -27,7 +27,7 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch<any>(getIngregients());
+    dispatch(getIngregients());
   }, [dispatch]);
 
   const [buns, sauces, mains] = useMemo<TIngredient[][]>(() => [

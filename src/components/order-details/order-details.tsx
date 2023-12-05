@@ -1,14 +1,15 @@
 import React from "react";
-
+import { FC } from "react";
 import { useSelector } from '../../index';
 import styles from "./order-details.module.css";
 import done from '../../images/done.svg';
 
 import { receiveOrderNumber } from "../../services/selectors";
 
-const OrderDetails = ({orderNubmer}: {orderNubmer: number}) => {
+const OrderDetails: React.FC = () => {
 
     const orderNumber = useSelector(receiveOrderNumber);
+    console.log(orderNumber)
     
     return (
         <div className={`${styles.popup} pt-15 pb-25`}>

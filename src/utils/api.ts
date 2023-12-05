@@ -1,4 +1,5 @@
 import { TIngredient, TIngredientFull } from './types';
+import { getCookie } from './cookie';
 //объявляем базовый урл
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
 
@@ -91,7 +92,7 @@ const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
       //options.headers.authorization = refreshData.accessToken;
       if (options.headers) {
         (options.headers as { [key: string]: string }).authorization =
-          refreshData.accessToken
+          refreshData.accessToken?.split('Bearer ')[1];
       }
       const res = await fetch(url, options); //повторяем запрос
       return await checkResponse<T>(res);
@@ -124,8 +125,9 @@ export const createOrderRequest = async (items: TIngredient[]) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      //"Authorization": JSON.parse(localStorage.getItem('accessToken')!)
-      authorization: localStorage.getItem('accessToken'),
+      //"Authorization": JSON.parse(localStorage.getItem('accessToken')!) и headers {} as HeadersInit
+     // Authorization: 'Bearer ' + getCookie('accessToken')
+     Authorization: localStorage.getItem('accessToken'),
     } as HeadersInit,
     body: JSON.stringify({
       ingredients: items.map((item) => item._id),
@@ -177,7 +179,7 @@ export const resetPasswordRequest = async (password?: string, token?: string) =>
 };
 
 //выйти из профиля
-export const logoutRequest = async () => {
+export const logoutRequest = async (token: string | undefined ) => {
   return await request<TLogoutRequest>('auth/logout', {
     method: 'POST',
     headers: {
@@ -201,8 +203,8 @@ export const getUserInfoRequest = () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      Authorization: localStorage.getItem('accessToken'),
-    } as HeadersInit,
+      Authorization: 'Bearer ' + getCookie('accessToken')
+    }
   });
 };
 
@@ -212,8 +214,8 @@ export const updateUserInfoRequest = async (email?: string, password?: string, n
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      authorization: localStorage.getItem('accessToken'),
-    } as HeadersInit,
+      Authorization: 'Bearer ' + getCookie('accessToken')
+    },
     body: JSON.stringify({ email, password, name }),
   });
 };
