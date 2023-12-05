@@ -60,7 +60,8 @@ function App() {
                 <Route path="/" element={<MainPage />} />
                 <Route path="*" element={<NotFound404 />} />
                 <Route path="/feed" element={<Feed />} />
-
+                <Route path="/feed/:id" element={<OrderModalDetails />} />
+                
                 {/* доступно для не авторизованных пользователей*/}
                 <Route path="/login" element={<ProtectedRoute onlyUnAuth element={<Login />} />} />
                 <Route path="/register" element={<ProtectedRoute onlyUnAuth element={<Register />} />} />

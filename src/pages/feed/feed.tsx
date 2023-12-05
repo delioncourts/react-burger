@@ -1,14 +1,17 @@
 import styles from "./feed.module.css";
 import { useDispatch, useSelector } from "../../index";
 import { WS_FEED_CONNECTION_START, WS_FEED_CONNECTION_CLOSED } from "../../services/actions/ws-feed";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useMemo } from "react";
 import { TOrderFeed } from "../../utils/types";
 import { RootState } from "../../index";
+import OrderCard from "../../components/order-card/order-card";
+import { useParams } from "react-router";
 
-export const Feed = () => {
+export const Feed:FC = () => {
     const dispatch = useDispatch();
-    const feedOrders = useSelector((store: RootState) => store.feedOrders.orders);
+    const feedOrders = useSelector((store) => store.feedOrders.orders);
+    const { id } = useParams();
 
     useEffect(() => {
         dispatch({
@@ -46,6 +49,12 @@ export const Feed = () => {
             
             <section className={styles.content}>
             <section className={styles.feed}>
+
+            {feedOrders?.orders.map((order:TOrderFeed) => {
+                        return (
+                            <OrderCard key={order._id} order={order} status={false}/>
+                        );
+                    })}
             </section>
 
             <section className={styles.orders}>

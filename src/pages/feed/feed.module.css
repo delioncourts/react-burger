@@ -8,7 +8,9 @@
     gap: 20px;
 }
 
-
+.feed {
+    list-style-type: none;
+}
 .content {
     max-width: 1280px;
     width: 100%;
