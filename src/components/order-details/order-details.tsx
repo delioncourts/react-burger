@@ -1,12 +1,12 @@
 import React from "react";
-//import { useSelector } from "react-redux";
+
 import { useSelector } from '../../index';
 import styles from "./order-details.module.css";
 import done from '../../images/done.svg';
 
 import { receiveOrderNumber } from "../../services/selectors";
 
-const OrderDetails = ({ }) => {
+const OrderDetails = ({orderNubmer}: {orderNubmer: number}) => {
 
     const orderNumber = useSelector(receiveOrderNumber);
     

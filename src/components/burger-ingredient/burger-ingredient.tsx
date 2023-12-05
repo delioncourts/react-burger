@@ -16,7 +16,7 @@ interface IBurgerIngredient {
     id?: string;
     key: string;
     index: number;
-    idtd: string;
+    idtd?: string | undefined;
 }
 
 type TDndIngredient = {
@@ -93,7 +93,7 @@ const BurgerIngredient: FC<IBurgerIngredient> = ({ item, index, idtd }) => {
                 price={price}
                 thumbnail={image}
                 extraClass="ml-1"
-                handleClose={(() => handleDeleteIngredient(idtd))}
+                handleClose={(() => handleDeleteIngredient(idtd as string))}
             />
         </li>
     )

@@ -1,0 +1,33 @@
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px);
+}
+
+.container {
+    max-width: 640px;
+}
+
+.number {
+    display: flex; 
+    justify-content: center;
+}
+
+.status {}
+
+.ingredients{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 312px;
+}
+
+.timeandmoney{
+    display: flex; 
+    justify-content: space-between;
+}

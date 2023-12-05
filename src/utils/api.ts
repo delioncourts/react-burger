@@ -53,12 +53,12 @@ type TLogoutRequest= {
 
 type TResetRequest = {
   [x: string]: any;
-
+  success: boolean;
 }
 
 type TForgotRequest = {
   [x: string]: any;
-
+  success: boolean;
 }
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
