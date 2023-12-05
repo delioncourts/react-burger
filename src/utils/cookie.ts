@@ -13,7 +13,7 @@ export function setCookie(name: string, val: string) {
 
 //получаем нужную куки
 export function getCookie(name: string) {
- return new RegExp(`${name}=([^;]+);`).exec(document.cookie)?.[1];
+ return localStorage.getItem(name);
 }
 
 //удаляем

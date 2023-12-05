@@ -41,11 +41,30 @@ type TRegisterRequest = {
   success: boolean;
 }
 
+type TUpdateRequest = {
+  [x: string]: any;
+  success: boolean;
+}
+
+type TLogoutRequest= {
+  status: any;
+  success: boolean;
+}
+
+type TResetRequest = {
+  [x: string]: any;
+
+}
+
+type TForgotRequest = {
+  [x: string]: any;
+
+}
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
 const checkResponse = <T>(res: Response): Promise<T> => {
   return res.ok ? res.json() : res.json()
-  .then((err) => Promise.reject(err));
+    .then((err) => Promise.reject(err));
 };
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
@@ -137,7 +156,7 @@ export const authorizeRequest = async (email?: string, password?: string) => {
 
 //восстановление пароля по имейлу
 export const forgotPasswordRequest = async (email?: string) => {
-  return await request('password-reset', {
+  return await request<TForgotRequest>('password-reset', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -148,7 +167,7 @@ export const forgotPasswordRequest = async (email?: string) => {
 
 //сбросить пароль
 export const resetPasswordRequest = async (password?: string, token?: string) => {
-  return await request('password-reset/reset', {
+  return await request<TResetRequest>('password-reset/reset', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -159,7 +178,7 @@ export const resetPasswordRequest = async (password?: string, token?: string) =>
 
 //выйти из профиля
 export const logoutRequest = async () => {
-  return await request('auth/logout', {
+  return await request<TLogoutRequest>('auth/logout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -171,7 +190,7 @@ export const logoutRequest = async () => {
 export type TUser = {
   email: string;
   name: string;
-
+  status: boolean;
 }
 
 type TUserResponse = TServerResponse<{ user: TUser }>;
@@ -189,7 +208,7 @@ export const getUserInfoRequest = () => {
 
 //обновить данные пользователя
 export const updateUserInfoRequest = async (email?: string, password?: string, name?: string) => {
-  return await request(USER_INFO_URL, {
+  return await request<TUpdateRequest>(USER_INFO_URL, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
