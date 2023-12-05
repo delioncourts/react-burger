@@ -17,8 +17,6 @@
     justify-content: center;
 }
 
-.status {}
-
 .ingredients{
     display: flex;
     flex-direction: column;
