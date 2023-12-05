@@ -36,7 +36,8 @@ const BurgerIngredient: FC<IBurgerIngredient> = ({ item, index, idtd }) => {
     function handleDeleteIngredient(id: string) {
         dispatch({
             type: REMOVE_INGREDIENT,
-            idtd: id
+            idtd: id,
+            item
         }) 
     } 
 

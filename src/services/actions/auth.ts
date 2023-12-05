@@ -179,7 +179,7 @@ export const updateUserInfo = (name: string, email: string, password: string): A
     name,
     email,
   };
-  updateUserInfoRequest(newInfo)
+  updateUserInfoRequest(newInfo as unknown as string)
     .then((res) => {
       if (res.success) {
         dispatch({
@@ -199,7 +199,7 @@ export const updateUserInfo = (name: string, email: string, password: string): A
 
 //выход из профиля
 export const signout = () => (dispatch: AppDispatch) => {
-  logoutRequest(getCookie('refreshToken') as string)
+  logoutRequest(getCookie('refreshToken'))
     .then((res) => {
       if (res.success) {
         dispatch({
@@ -234,7 +234,7 @@ export const forgotPassword = (email: string): AppThunk => (dispatch: AppDispatc
 }
 
 //обновление пароля
-export const resetPassword = (email: string, token: string): AppThunk => (dispatch: AppDispatch) => {
+export const resetPassword = (email: string, token: string | undefined): AppThunk => (dispatch: AppDispatch) => {
   resetPasswordRequest(email, token)
     .then((res) => {
       if (res.success) {

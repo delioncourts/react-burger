@@ -9,6 +9,7 @@
 
 .container {
     max-width: 640px;
+    width: 100%;
 }
 
 .number {
@@ -30,4 +31,10 @@
 .timeandmoney{
     display: flex; 
     justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    display: flex;
+    align-items: center;
 }
