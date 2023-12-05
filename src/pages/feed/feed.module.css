@@ -2,10 +2,19 @@
     max-width: 1280px;
     width: 100%;
     margin: 0 auto;
-    /*display: grid;
-    grid-template-columns: 1fr 1fr;*/
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    gap: 20px;
+}
+
+
+.content {
+    max-width: 1280px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
 }
 
 .orders_status {

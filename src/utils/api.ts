@@ -94,6 +94,7 @@ export const createOrderRequest = async (items: TIngredient[]) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
+      "Authorization": JSON.parse(localStorage.getItem('accessToken')!)
     },
     body: JSON.stringify({
       ingredients: items.map((item) => item._id),

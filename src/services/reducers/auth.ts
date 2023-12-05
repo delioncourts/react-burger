@@ -7,7 +7,14 @@ import {
   RESET_PASSWORD_SUCCESS,
 } from '../constant/const';
 
-const defaultState = {
+type TAuthState = {
+  name: string;
+  email: string;
+  isLoggedIn: boolean;
+  isPasswordReset: boolean;
+}
+
+const defaultState: TAuthState = {
   name: '',
   email: '',
   isLoggedIn: false,

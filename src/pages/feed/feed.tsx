@@ -8,7 +8,7 @@ import { RootState } from "../../index";
 
 export const Feed = () => {
     const dispatch = useDispatch();
-    const feedOrders = useSelector((store:RootState) => store.feedOrders.orders);
+    const feedOrders = useSelector((store: RootState) => store.feedOrders.orders);
 
     useEffect(() => {
         dispatch({
@@ -41,34 +41,32 @@ export const Feed = () => {
 
     return (
         <main className={styles.main}>
+            <p className="text text_type_main-medium pt-4">Лента заказов</p>
 
+            
+            <section className={styles.content}>
             <section className={styles.feed}>
-                <p className="text text_type_main-medium">Лента заказов</p>
-
-                <section>
-                    
-                </section>
             </section>
 
             <section className={styles.orders}>
                 <div className={styles.orders_status}>
-                <article>
-                    <h2 className='text text_type_main-medium'>Готовы</h2>
-                    <ul className={`mt-6 ${styles.counting}`}>
-                        {final?.slice(0, 10).map((card: TOrderFeed) => (
-                            <li className={`text text_type_digits-default ${styles.numbers_ready}`} key={card._id}>{card.number}</li>
-                        ))}
-                    </ul>
-                </article>
+                    <article>
+                        <h2 className='text text_type_main-medium'>Готовы</h2>
+                        <ul className={`mt-6 ${styles.counting}`}>
+                            {final?.slice(0, 10).map((card: TOrderFeed) => (
+                                <li className={`text text_type_digits-default ${styles.numbers_ready}`} key={card._id}>{card.number}</li>
+                            ))}
+                        </ul>
+                    </article>
 
-                <article>
-                    <h2 className='text text_type_main-medium'>В работе:</h2>
-                    <ul className={`mt-6 ${styles.counting_final}`}>
-                        {inProcess?.slice(0, 10).map((card: TOrderFeed) => (
-                            <li className='text text_type_digits-default' key={card._id}>{card.number}</li>
-                        ))}
-                    </ul>
-                </article>
+                    <article>
+                        <h2 className='text text_type_main-medium'>В работе:</h2>
+                        <ul className={`mt-6 ${styles.counting_final}`}>
+                            {inProcess?.slice(0, 10).map((card: TOrderFeed) => (
+                                <li className='text text_type_digits-default' key={card._id}>{card.number}</li>
+                            ))}
+                        </ul>
+                    </article>
                 </div>
                 <article className='mt-15'>
                     <h2 className='text text_type_main-medium'>Выполнено за все время:</h2>
@@ -81,7 +79,7 @@ export const Feed = () => {
                 </article>
             </section>
 
-
+            </section>
         </main>
     );
 }; 
