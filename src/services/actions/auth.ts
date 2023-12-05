@@ -1,4 +1,5 @@
 import { setCookie, getCookie, deleteCookie } from '../../utils/cookie';
+import { AppThunk, AppDispatch } from '../../index';
 import {
   registerRequest,
   authorizeRequest,
@@ -29,6 +30,8 @@ import {
   RESET_PASSWORD_SUCCESS
 } from '../constant/const';
 
+
+//регистрация
 export interface IRegisterRequestAction {
   readonly type: typeof REGISTER_REQUEST;
 }
@@ -43,10 +46,66 @@ export interface IRegisterSuccessAction {
   readonly email: string;
 }
 
+//авторизация (логин)
+export interface ILoginRequestAction {
+  readonly type: typeof LOGIN_REQUEST;
+}
+
+export interface ILoginErrorAction {
+  readonly type: typeof LOGIN_ERROR;
+}
+
+export interface ILoginSuccessAction {
+  readonly type: typeof LOGIN_SUCCESS;
+  readonly name: string;
+  readonly email: string;
+}
+
+//пользователь
+export interface ISetUserAction {
+  readonly type: typeof SET_USER;
+  readonly name: string;
+  readonly email: string
+};
+
+//выход из профиля
+export interface ISignoutSuccessAction {
+  readonly type: typeof SIGNOUT_SUCCESS;
+}
+
+//восстановление пароля из имейла
+export interface IForgotPasswordErrorAction {
+  readonly type: typeof FORGOT_PASSWORD_ERROR;
+}
+
+export interface IForgotPasswordSuccessAction {
+  readonly type: typeof FORGOT_PASSWORD_SUCCESS;
+}
+
+//обновление пароля
+export interface IResetPasswordErrorAction {
+  readonly type: typeof RESET_PASSWORD_ERROR;
+}
+
+export interface IResetPasswordSuccessAction {
+  readonly type: typeof RESET_PASSWORD_SUCCESS;
+}
+
+export type TAuthActions = IRegisterRequestAction |
+  IRegisterErrorAction |
+  IRegisterSuccessAction |
+  ILoginRequestAction |
+  ILoginErrorAction |
+  ILoginSuccessAction |
+  ISetUserAction |
+  ISignoutSuccessAction |
+  IForgotPasswordErrorAction |
+  IForgotPasswordSuccessAction |
+  IResetPasswordErrorAction |
+  IResetPasswordSuccessAction;
 
 //регистрация
-export function register(name:string, email:string, password:string) {
-  return function (dispatch) {
+export const register = (name: string, email: string, password: string):AppThunk => (dispatch: AppDispatch) => {
     dispatch({ type: REGISTER_REQUEST });
     registerRequest(name, email, password)
       .then((res) => {
@@ -67,12 +126,10 @@ export function register(name:string, email:string, password:string) {
           type: REGISTER_ERROR,
         });
       });
-  };
 }
 
 //авторизация (логин)
-export function authorize(email:string, password:string) {
-  return function (dispatch) {
+export const authorize = (email: string, password: string):AppThunk => (dispatch: AppDispatch) => {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -95,12 +152,11 @@ export function authorize(email:string, password:string) {
           type: LOGIN_ERROR,
         });
       });
-  };
+
 }
 
 //пользователь
-export function getUserInfo() {
-  return function (dispatch) {
+export const getUserInfo =() => (dispatch: AppDispatch) => {
     getUserInfoRequest()
       .then((res) => {
         if (res.success) {
@@ -114,12 +170,10 @@ export function getUserInfo() {
         }
       })
       .catch((err) => console.log(err));
-  };
 }
 
 //обновление данных о пользователе
-export function updateUserInfo(name:string, email:string, password:string) {
-  return function (dispatch) {
+export const updateUserInfo = (name: string, email: string, password: string): AppThunk => (dispatch: AppDispatch) => {
     const newInfo = {
       ...(!!password && { password }),
       name,
@@ -140,12 +194,11 @@ export function updateUserInfo(name:string, email:string, password:string) {
         }
       })
       .catch((err) => console.log(err));
-  };
+
 }
 
 //выход из профиля
-export function signout() {
-  return function (dispatch) {
+export const signout = ()=> (dispatch: AppDispatch) => {
     logoutRequest(getCookie('refreshToken'))
       .then((res) => {
         if (res.success) {
@@ -160,11 +213,10 @@ export function signout() {
       })
       .catch((err) => console.log(err));
   };
-}
+
 
 //восстановление пароля из имейла
-export function forgotPassword(email:string) {
-  return function (dispatch) {
+export const forgotPassword = (email: string):AppThunk => (dispatch: AppDispatch) => {
     forgotPasswordRequest(email)
       .then((res) => {
         if (res.success) {
@@ -179,12 +231,11 @@ export function forgotPassword(email:string) {
         }
       })
       .catch((err) => console.log(err));
-  };
 }
 
 //обновление пароля
-export function resetPassword(email:string, token) {
-  return function (dispatch) {
+export const resetPassword = (email: string, token):AppThunk => (dispatch: AppDispatch) => {
+
     resetPasswordRequest(email, token)
       .then((res) => {
         if (res.success) {
@@ -199,5 +250,5 @@ export function resetPassword(email:string, token) {
         }
       })
       .catch((err) => console.log(err));
-  };
+  
 }

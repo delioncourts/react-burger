@@ -27,9 +27,20 @@ type TIngredientsRequest = {
 
 type TOrderRequest = {
   order: any;
-  success: any;
+  success: boolean;
   status: any;
 }
+
+type TAuthRequest = {
+  [x: string]: any;
+  success: boolean;
+}
+
+type TRegisterRequest = {
+  [x: string]: any;
+  success: boolean;
+}
+
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
 const checkResponse = <T>(res: Response): Promise<T> => {
@@ -94,8 +105,9 @@ export const createOrderRequest = async (items: TIngredient[]) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      "Authorization": JSON.parse(localStorage.getItem('accessToken')!)
-    },
+      //"Authorization": JSON.parse(localStorage.getItem('accessToken')!)
+      authorization: localStorage.getItem('accessToken'),
+    } as HeadersInit,
     body: JSON.stringify({
       ingredients: items.map((item) => item._id),
     }),
@@ -104,7 +116,7 @@ export const createOrderRequest = async (items: TIngredient[]) => {
 
 //регистрация
 export const registerRequest = (name?: string, email?: string, password?: string) =>
-  request('auth/register', {
+  request<TRegisterRequest>('auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -114,7 +126,7 @@ export const registerRequest = (name?: string, email?: string, password?: string
 
 //авторизация = login
 export const authorizeRequest = async (email?: string, password?: string) => {
-  return await request('auth/login', {
+  return await request<TAuthRequest>('auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -159,6 +171,7 @@ export const logoutRequest = async () => {
 export type TUser = {
   email: string;
   name: string;
+
 }
 
 type TUserResponse = TServerResponse<{ user: TUser }>;
