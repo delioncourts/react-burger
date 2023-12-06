@@ -5,9 +5,9 @@ import { RootState } from '../../index';
 export type TwsActionTypes = {
   // outside actions
   wsConnect: ActionCreatorWithPayload<string>,
-  wsDisconnect: ActionCreatorWithoutPayload,
+  //wsDisconnect: ActionCreatorWithoutPayload,
   wsSendMessage?: ActionCreatorWithPayload<any>,
-  wsConnecting: ActionCreatorWithoutPayload,
+  //wsConnecting: ActionCreatorWithoutPayload,
 
   // websocket
   onOpen: ActionCreatorWithoutPayload,
@@ -29,7 +29,7 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, Root
     return next => (action) => {
       const { dispatch } = store;
       //const { type } = action;
-      const { wsConnect, wsSendMessage, onOpen, onClose, onError, onMessage, wsConnecting, wsDisconnect } = wsActions;
+      const { wsConnect, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
 
       if (wsConnect.match(action)) {
         url = action.payload;
@@ -38,7 +38,7 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, Root
       }
       if (socket) {
         socket.onopen = () => {
-          dispatch(wsConnecting());
+          //dispatch(wsConnecting());
           dispatch(onOpen());
           isConnected = true;
 
@@ -62,7 +62,7 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, Root
           dispatch(onClose());
 
           if (isConnected) {
-            dispatch(wsConnecting())
+            //dispatch(wsConnecting())
             reconnectTimer = window.setTimeout(() => {
               dispatch(wsConnect(url))
             }, 3000)
@@ -75,13 +75,13 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, Root
           socket.send(JSON.stringify(message));
         }
 
-        if (wsDisconnect.match(action)) {
+        /*if (wsDisconnect.match(action)) {
           clearTimeout(reconnectTimer);
           isConnected = false;
           reconnectTimer = 0;
           socket.close();
           dispatch(onClose)
-        }
+        }*/
       }
 
       next(action);

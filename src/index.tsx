@@ -19,36 +19,39 @@ import { TAuthActions } from './services/actions/auth';
 import { socketMiddleware } from './services/middleware/socket-middleware';
 
 import {
-  IWSFeedConnectionClosed as FeedClose,
-  IWSFeedConnectionSendMessage as FeedSendMessage,
-  IWSFeedConnectionError as FeedError,
-  IWSFeedConnectionStart as FeedConnect,
-  IWSFeedConnectionSuccess as FeedSuccess
+  WS_FEED_CONNECTION_CLOSED,
+  WS_FEED_CONNECTION_ERROR,
+  WS_FEED_CONNECTION_START,
+  WS_FEED_CONNECTION_SUCCESS,
+  WS_FEED_SEND_MESSAGE
 } from './services/actions/ws-feed';
 
 import {
-  IWSOrdersConnectionClosed as OrderClose,
-  IWSOrdersConnectionError as OrderError,
-  IWSOrdersConnectionSendMessage as OrderSendMessage,
-  IWSOrdersConnectionStart as OrderConnect,
-  IWSOrdersConnectionSuccess as OrderSuccess
+  WS_ORDERS_CONNECTION_CLOSED,
+  WS_ORDERS_CONNECTION_ERROR,
+  WS_ORDERS_CONNECTION_START,
+  WS_ORDERS_CONNECTION_SUCCESS,
+  WS_ORDERS_SEND_MESSAGE
 } from './services/actions/ws-actions';
+
 const wsFeed = {
-  wsConnect: FeedConnect,
-  //wsDisconnect: FeedDisconnect,
-  onOpen: FeedSuccess,
-  onClose: FeedClose,
-  onError: FeedError,
-  onMessage: FeedSendMessage,
+  //wsConnecting: WS_FEED_CONNECTION_START,
+  wsConnect: WS_FEED_CONNECTION_START,
+  //wsDisconnect: WS_FEED_CONNECTION_CLOSED,
+  onOpen: WS_FEED_CONNECTION_SUCCESS,
+  onClose: WS_FEED_CONNECTION_CLOSED,
+  onError: WS_FEED_CONNECTION_ERROR,
+  onMessage: WS_FEED_SEND_MESSAGE,
 }
 
 const wsOrder = {
-  wsConnect: OrderConnect,
-  //wsDisconnect: OrderDisconnect,
-  onOpen: OrderSuccess,
-  onClose: OrderClose,
-  onError: OrderError,
-  onMessage: OrderSendMessage,
+  //wsConnecting: WS_FEED_CONNECTION_START,
+  wsConnect: WS_ORDERS_CONNECTION_START,
+  //wsDisconnect: WS_FEED_CONNECTION_CLOSED,
+  onOpen: WS_ORDERS_CONNECTION_SUCCESS,
+  onClose: WS_ORDERS_CONNECTION_CLOSED,
+  onError: WS_ORDERS_CONNECTION_ERROR,
+  onMessage: WS_ORDERS_SEND_MESSAGE,
 }
 
 const orderMiddleware = socketMiddleware(wsFeed);
