@@ -26,20 +26,13 @@ export const Feed:FC = () => {
 
     //заказы готовятся
     const inProcess = useMemo(() => {
-        if (feedOrders) {
-            return feedOrders.orders.filter((order: TOrderFeed) => order.status !== 'done');
-        } else {
-            return [];
-        }
+            return feedOrders?.orders.filter((order: TOrderFeed) => order.status !== 'done') || [];
     }, [feedOrders]);
 
     //заказы готовы
     const final = useMemo(() => {
-        if (feedOrders) {
-            return feedOrders.orders.filter((order: TOrderFeed) => order.status === 'done');
-        } else {
-            return [];
-        }
+            return feedOrders?.orders.filter((order: TOrderFeed) => order.status === 'done') || [];
+
     }, [feedOrders]);
 
     return (
@@ -48,14 +41,14 @@ export const Feed:FC = () => {
 
             
             <section className={styles.content}>
-            <section className={styles.feed}>
+            <div className={styles.feed}>
 
             {feedOrders?.orders.map((order:TOrderFeed) => {
                         return (
                             <OrderCard key={order._id} order={order} status={false}/>
                         );
                     })}
-            </section>
+            </div>
 
             <section className={styles.orders}>
                 <div className={styles.orders_status}>
