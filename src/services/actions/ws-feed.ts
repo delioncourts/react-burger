@@ -36,4 +36,8 @@ export interface IWSFeedConnectionSendMessage {
     readonly payload: TOrderResponse;
 }
 
-export type TWSFeed = IWSFeedConnectionStart | IWSFeedConnectionClosed | IWSFeedConnectionSuccess | IWSFeedConnectionSendMessage | IWSFeedConnectionError;
+export type TWSFeed = IWSFeedConnectionStart |
+    IWSFeedConnectionClosed |
+    IWSFeedConnectionSuccess |
+    IWSFeedConnectionSendMessage |
+    IWSFeedConnectionError;

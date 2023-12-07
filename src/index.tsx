@@ -17,7 +17,7 @@ import { TWSOrders } from './services/actions/ws-actions';
 import { TWSFeed } from './services/actions/ws-feed';
 import { TAuthActions } from './services/actions/auth';
 import { socketMiddleware } from './services/middleware/socket-middleware';
-//import { TwsActionTypes } from './services/middleware/socket-middleware';
+import { TwsActionTypes } from './services/middleware/socket-middleware';
 import {
   WS_FEED_CONNECTION_CLOSED,
   WS_FEED_CONNECTION_ERROR,
@@ -34,36 +34,29 @@ import {
   WS_ORDERS_SEND_MESSAGE
 } from './services/actions/ws-actions';
 
-export type TWActionsTypes = {
-  wsConnect: typeof WS_FEED_CONNECTION_SUCCESS | typeof WS_ORDERS_CONNECTION_SUCCESS,
-  onOpen: typeof WS_FEED_CONNECTION_START | typeof WS_ORDERS_CONNECTION_START,
-  onClose: typeof WS_FEED_CONNECTION_CLOSED | typeof WS_ORDERS_CONNECTION_CLOSED,
-  onError: typeof WS_FEED_CONNECTION_ERROR | typeof WS_ORDERS_CONNECTION_ERROR,
-  onMessage: typeof WS_FEED_SEND_MESSAGE | typeof WS_ORDERS_SEND_MESSAGE;
-}
-
-const wsFeed: TWActionsTypes = {
-  //wsConnecting: WS_FEED_CONNECTION_START,
-  wsConnect: WS_FEED_CONNECTION_SUCCESS,
-  //wsDisconnect: WS_FEED_CONNECTION_CLOSED,
-  onOpen: WS_FEED_CONNECTION_START,
+const wsFeed: TwsActionTypes = {
+  wsInit: WS_FEED_CONNECTION_START,
+  onOpen: WS_FEED_CONNECTION_SUCCESS,
   onClose: WS_FEED_CONNECTION_CLOSED,
   onError: WS_FEED_CONNECTION_ERROR,
   onMessage: WS_FEED_SEND_MESSAGE,
 }
 
-const wsOrder: TWActionsTypes = {
-  //wsConnecting: WS_FEED_CONNECTION_START,
-  wsConnect: WS_ORDERS_CONNECTION_SUCCESS,
-  //wsDisconnect: WS_FEED_CONNECTION_CLOSED,
-  onOpen: WS_ORDERS_CONNECTION_START,
+const wsOrder: TwsActionTypes = {
+  wsInit: WS_ORDERS_CONNECTION_START,
+  onOpen: WS_ORDERS_CONNECTION_SUCCESS,
   onClose: WS_ORDERS_CONNECTION_CLOSED,
   onError: WS_ORDERS_CONNECTION_ERROR,
   onMessage: WS_ORDERS_SEND_MESSAGE,
 }
 
-const orderMiddleware = socketMiddleware(wsFeed);
-const feedMiddleware = socketMiddleware(wsOrder);
+
+const wsFeedUrl = "wss://norma.nomoreparties.space/orders/all";
+const wsOrdersUrl = "wss://norma.nomoreparties.space/orders";
+
+
+const orderMiddleware = socketMiddleware(wsOrdersUrl, wsFeed, false);
+const feedMiddleware = socketMiddleware(wsFeedUrl, wsOrder, true);
 
 //в configureStore devTools дефолтно true
 const store = configureStore({

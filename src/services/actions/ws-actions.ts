@@ -38,4 +38,8 @@ export interface IWSOrdersConnectionSendMessage {
     readonly payload: TOrderResponse;
 }
 
-export type TWSOrders = IWSOrdersConnectionStart | IWSOrdersConnectionClosed | IWSOrdersConnectionSuccess | IWSOrdersConnectionSendMessage | IWSOrdersConnectionError;
+export type TWSOrders = IWSOrdersConnectionStart |
+    IWSOrdersConnectionClosed |
+    IWSOrdersConnectionSuccess |
+    IWSOrdersConnectionSendMessage |
+    IWSOrdersConnectionError;

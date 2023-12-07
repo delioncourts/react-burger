@@ -1,87 +1,59 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import type { Middleware, MiddlewareAPI } from 'redux';
 import { RootState } from '../../index';
+import { getCookie } from '../../utils/cookie';
 
 export type TwsActionTypes = {
-  // outside actions
-  wsConnect: ActionCreatorWithPayload<string>,
-  //wsDisconnect: ActionCreatorWithoutPayload,
-  wsSendMessage?: ActionCreatorWithPayload<any>,
-  //wsConnecting: ActionCreatorWithoutPayload,
-
-  // websocket
-  onOpen: ActionCreatorWithoutPayload,
-  onClose: ActionCreatorWithoutPayload,
-  onError: ActionCreatorWithPayload<string>,
-  onMessage: ActionCreatorWithPayload<any>,
-}
+  wsInit: string;
+  onClose: string;
+  onOpen: string;
+  onError: string;
+  onMessage: string;
+};
 
 //генератор миддлвер
-export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, RootState> => {
+export const socketMiddleware = (wsUrl: string, wsActions: TwsActionTypes, auth: boolean): Middleware<{}, RootState> => {
   return ((store: MiddlewareAPI) => {
     let socket: WebSocket | null = null;
 
-    //создаем таймер, который будет переподключать соединение
-    let isConnected = false;
-    let reconnectTimer = 0;
-    let url = '';
-
     return next => (action) => {
       const { dispatch } = store;
-      //const { type } = action;
-      const { wsConnect, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+      const { type } = action;
+      const { wsInit, onMessage, onOpen, onClose, onError } = wsActions;
+      const accessToken = localStorage.getItem("accessToken")?.replace("Bearer ", "");
 
-      if (wsConnect.match(action)) {
-        url = action.payload;
-        //socket = new WebSocket(`${wsUrl}?token=${user.token}`);
-        socket = new WebSocket(url);
+      if (type === wsInit) {
+        if (auth) {
+          socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
+        } else {
+          socket = new WebSocket(wsUrl);
+        }
       }
+
       if (socket) {
-        socket.onopen = () => {
-          //dispatch(wsConnecting());
-          dispatch(onOpen());
-          isConnected = true;
 
+        socket.onopen = (event) => {
+          dispatch({ type: onOpen, payload: event });
         };
 
-        socket.onerror = event => {
-          dispatch(onError(event.type));
+        socket.onerror = (event) => {
+          dispatch({ type: onError, payload: event });
         };
 
-        socket.onmessage = event => {
+        socket.onmessage = (event) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          dispatch(onMessage(parsedData));
+          const { success, ...restParsedData } = parsedData;
+          dispatch({ type: onMessage, payload: restParsedData });
         };
 
-        socket.onclose = event => {
-          //закрытие произошло правильно есои код не равен 1000
-          if (event.code !== 1000) {
-            dispatch(onError(event.code.toString()))
-          }
-          dispatch(onClose());
-
-          if (isConnected) {
-            //dispatch(wsConnecting())
-            reconnectTimer = window.setTimeout(() => {
-              dispatch(wsConnect(url))
-            }, 3000)
-          }
-        };
-
-        if (wsSendMessage?.match) {
-          const payload = action.payload;
-          const message = { ...(payload) };
-          socket.send(JSON.stringify(message));
+        if (type === onClose) {
+          socket.close();
         }
 
-        /*if (wsDisconnect.match(action)) {
-          clearTimeout(reconnectTimer);
-          isConnected = false;
-          reconnectTimer = 0;
-          socket.close();
-          dispatch(onClose)
-        }*/
+        socket.onclose = (event) => {
+          dispatch({ type: onClose, payload: event });
+        };
       }
 
       next(action);
