@@ -14,6 +14,7 @@ export const WS_ORDERS_CONNECTION_CLOSED: 'WS_ORDERS_CONNECTION_CLOSED' = 'WS_OR
 export const WS_ORDERS_CONNECTION_SUCCESS: 'WS_ORDERS_CONNECTION_SUCCESS' = 'WS_ORDERS_CONNECTION_SUCCESS';
 export const WS_ORDERS_CONNECTION_ERROR: 'WS_ORDERS_CONNECTION_ERROR' = 'WS_ORDERS_CONNECTION_ERROR';
 export const WS_ORDERS_SEND_MESSAGE: 'WS_ORDERS_SEND_MESSAGE' = 'WS_ORDERS_SEND_MESSAGE';
+export const WS_ORDERS_CONNECTION_DISCONNECT: 'WS_ORDERS_CONNECTION_DISCONNECT' = 'WS_ORDERS_CONNECTION_DISCONNECT';
 
 export interface IWSOrdersConnectionStart {
     readonly type: typeof WS_ORDERS_CONNECTION_START;
@@ -21,6 +22,10 @@ export interface IWSOrdersConnectionStart {
 
 export interface IWSOrdersConnectionClosed {
     readonly type: typeof WS_ORDERS_CONNECTION_CLOSED;
+}
+
+export interface IWSOrdersConnectionDisconnect {
+    readonly type: typeof WS_ORDERS_CONNECTION_DISCONNECT;
 }
 
 export interface IWSOrdersConnectionSuccess {
@@ -40,6 +45,7 @@ export interface IWSOrdersConnectionSendMessage {
 
 export type TWSOrders = IWSOrdersConnectionStart |
     IWSOrdersConnectionClosed |
+    IWSOrdersConnectionDisconnect |
     IWSOrdersConnectionSuccess |
     IWSOrdersConnectionSendMessage |
     IWSOrdersConnectionError;

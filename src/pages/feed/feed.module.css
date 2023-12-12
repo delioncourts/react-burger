@@ -10,7 +10,15 @@
 
 .feed {
     list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 300px);
+    gap: 10px;
 }
+
 .content {
     max-width: 1280px;
     width: 100%;
@@ -33,13 +41,17 @@
     list-style-type: none;
 }
 
-.counting-final {
+.counting_final {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(5, auto);
     gap: 8px;
     padding: 0;
     list-style-type: none;
+    color: aqua;
+}
+
+.numbers_process {
     color: aqua;
 }
 

@@ -37,11 +37,12 @@ export const Feed:FC = () => {
 
     return (
         <main className={styles.main}>
-            <p className="text text_type_main-medium pt-4">Лента заказов</p>
+            <p className="text text_type_main-medium pt-10">Лента заказов</p>
 
             
             <section className={styles.content}>
-            <div className={styles.feed}>
+
+            <div className={`${styles.feed} custom-scroll`}>
 
             {feedOrders?.orders.map((order:TOrderFeed) => {
                         return (
@@ -65,7 +66,7 @@ export const Feed:FC = () => {
                         <h2 className='text text_type_main-medium'>В работе:</h2>
                         <ul className={`mt-6 ${styles.counting_final}`}>
                             {inProcess?.slice(0, 10).map((card: TOrderFeed) => (
-                                <li className='text text_type_digits-default' key={card._id}>{card.number}</li>
+                                <li className={`text text_type_digits-default ${styles.numbers_process}`} key={card._id}>{card.number}</li>
                             ))}
                         </ul>
                     </article>

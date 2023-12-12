@@ -9,6 +9,7 @@ export type TwsActionTypes = {
   onOpen: string;
   onError: string;
   onMessage: string;
+  wsDisconnect: string;
 };
 
 //генератор миддлвер
@@ -19,7 +20,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TwsActionTypes, auth:
     return next => (action) => {
       const { dispatch } = store;
       const { type } = action;
-      const { wsInit, onMessage, onOpen, onClose, onError } = wsActions;
+      const { wsInit, onMessage, onOpen, onClose, onError, wsDisconnect } = wsActions;
       const accessToken = localStorage.getItem("accessToken")?.replace("Bearer ", "");
 
       if (type === wsInit) {
@@ -47,7 +48,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TwsActionTypes, auth:
           dispatch({ type: onMessage, payload: restParsedData });
         };
 
-        if (type === onClose) {
+        if (type === wsDisconnect) {
           socket.close();
         }
 

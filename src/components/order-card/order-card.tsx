@@ -1,6 +1,6 @@
 //карточки для ленты заказа 
 
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 import { TOrderFeed } from "../../utils/types";
 import React from "react";
 import { FC } from "react";
@@ -29,7 +29,12 @@ const OrderCard: FC<IOrderCard> = ({ order, status }) => {
     }*/
 
     return (
-        <>
+        <Link
+        to={`${path}/${order.number}`}
+        className={styles.link}
+        state={{ background: location }}
+        key={order?._id}
+      >
             <div className={`${styles.card} pt-6 pb-6`}>
                 <div className={`${styles.orderdate} pb-6`}>
                     <p className="text text_type_main-small"></p>
@@ -45,7 +50,7 @@ const OrderCard: FC<IOrderCard> = ({ order, status }) => {
                     </div>
                 </div>
             </div>
-        </>
+        </Link>
     )
 }
 

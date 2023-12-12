@@ -12,6 +12,7 @@ export const WS_FEED_CONNECTION_CLOSED: 'WS_FEED_CONNECTION_CLOSED' = 'WS_FEED_C
 export const WS_FEED_CONNECTION_SUCCESS: 'WS_FEED_CONNECTION_SUCCESS' = 'WS_FEED_CONNECTION_SUCCESS';
 export const WS_FEED_CONNECTION_ERROR: 'WS_FEED_CONNECTION_ERROR' = 'WS_FEED_CONNECTION_ERROR';
 export const WS_FEED_SEND_MESSAGE: 'WS_FEED_SEND_MESSAGE' = 'WS_FEED_SEND_MESSAGE';
+export const WS_FEED_CONNECTION_DISCONNECT: 'WS_FEED_CONNECTION_DISCONNECT' = 'WS_FEED_CONNECTION_DISCONNECT';
 
 export interface IWSFeedConnectionStart {
     readonly type: typeof WS_FEED_CONNECTION_START;
@@ -19,6 +20,10 @@ export interface IWSFeedConnectionStart {
 
 export interface IWSFeedConnectionClosed {
     readonly type: typeof WS_FEED_CONNECTION_CLOSED;
+}
+
+export interface IWSFeedConnectionDisconnect {
+    readonly type: typeof WS_FEED_CONNECTION_DISCONNECT;
 }
 
 export interface IWSFeedConnectionSuccess {
@@ -38,6 +43,7 @@ export interface IWSFeedConnectionSendMessage {
 
 export type TWSFeed = IWSFeedConnectionStart |
     IWSFeedConnectionClosed |
+    IWSFeedConnectionDisconnect |
     IWSFeedConnectionSuccess |
     IWSFeedConnectionSendMessage |
     IWSFeedConnectionError;
