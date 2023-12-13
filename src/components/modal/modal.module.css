@@ -12,7 +12,7 @@
     height: max-content;
 
     position: fixed;
-    z-index: 5;
+    z-index: 500;
 }
 
 .heading {

@@ -74,7 +74,7 @@ function App() {
 
                 {/* Ингредиент*/}
                 <Route path="/ingredients/:id" element={<IngredientPage />} />
-                <Route path="/orderexample" element={<OrderModalDetails />} />
+                <Route path="/orderexample" element={<OrderModalDetails/>} />
             </Routes>
 
 

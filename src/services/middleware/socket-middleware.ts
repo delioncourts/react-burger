@@ -34,11 +34,11 @@ export const socketMiddleware = (wsUrl: string, wsActions: TwsActionTypes, auth:
       if (socket) {
 
         socket.onopen = (event) => {
-          dispatch({ type: onOpen, payload: event });
+          dispatch({ type: onOpen, payload: event.toString() });
         };
 
         socket.onerror = (event) => {
-          dispatch({ type: onError, payload: event });
+          dispatch({ type: onError, payload: event.toString() });
         };
 
         socket.onmessage = (event) => {
@@ -53,7 +53,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TwsActionTypes, auth:
         }
 
         socket.onclose = (event) => {
-          dispatch({ type: onClose, payload: event });
+          dispatch({ type: onClose, payload: event.toString() });
         };
       }
 
