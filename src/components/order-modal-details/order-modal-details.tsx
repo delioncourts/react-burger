@@ -3,14 +3,18 @@ import { TOrderFeed } from "../../utils/types";
 
 import styles from "./order-modal-details.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { FC } from "react";
-
-interface IOrderCard {
-    order: TOrderFeed;
-}
-
-const OrderModalDetails = () => {
+import { FC, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "../../index";
+import { AllIngredients } from "../../services/selectors";
+import { sendOrder } from "../../services/actions/order-details";
+const OrderModalDetails: FC = () => {
     //const { number, createdAt, name } = order;
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const { id } = useParams();
+
+
 
     const totalPrice = 7;
     return (

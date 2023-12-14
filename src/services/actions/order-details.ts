@@ -9,6 +9,7 @@ import {
 } from '../constant/const';
 import { AppThunk } from '../../index';
 import { AppDispatch } from '../../index';
+
 export interface IGetOrderRequestAction {
   readonly type: typeof GET_ORDER_REQUEST;
 }

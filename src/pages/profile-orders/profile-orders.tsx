@@ -1,12 +1,17 @@
 import ProfileNavigation from "../../components/profile-navigation/profile-navigation";
 import styles from "./profile-orders.module.css";
 import { WS_ORDERS_CONNECTION_START, WS_ORDERS_CONNECTION_CLOSED } from "../../services/actions/ws-actions";
-import { useDispatch } from "../../index";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "../../index";
+import { useEffect, useMemo } from "react";
+import OrderCard from "../../components/order-card/order-card";
+import { useParams } from "react-router-dom";
+import { TOrderFeed } from "../../utils/types";
 
 export const ProfileOrders = () => {
     const dispatch = useDispatch();
     
+    const profileOrders = useSelector((store) => store.profileOrders.orders);
+
     useEffect(() => {
         dispatch({
             type: WS_ORDERS_CONNECTION_START,
@@ -14,8 +19,9 @@ export const ProfileOrders = () => {
         });
 
         return () => {
-            dispatch({ 
-                type: WS_ORDERS_CONNECTION_CLOSED  });
+            dispatch({
+                type: WS_ORDERS_CONNECTION_CLOSED
+            });
         }
     }, [dispatch]);
 
@@ -24,7 +30,14 @@ export const ProfileOrders = () => {
             <div className={styles.container}>
                 <ProfileNavigation />
 
-                <p>Заказы пользователя</p>
+                <div className={`${styles.feed} custom-scroll`}>
+
+                    {profileOrders?.orders.map((order) => {
+                        return (
+                            <OrderCard key={order._id} order={order} status={true} />
+                        );
+                    })}
+                </div>
             </div>
         </main>
     )
