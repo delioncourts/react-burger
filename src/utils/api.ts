@@ -82,7 +82,6 @@ const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
     return await checkResponse<T>(res);
   } catch (err: any) {
     if ((err as { message: string }).message === 'jwt expired') {
-      console.log('jwt expired');
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {
         return Promise.reject(refreshData);
@@ -90,10 +89,12 @@ const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
       localStorage.setItem('refreshToken', refreshData.refreshToken);
       localStorage.setItem('accessToken', refreshData.accessToken);
       //options.headers.authorization = refreshData.accessToken;
-      if (options.headers) {
-        (options.headers as { [key: string]: string }).authorization =
-          refreshData.accessToken?.split('Bearer ')[1];
-      }
+      //if (options.headers) {
+       // (options.headers as { [key: string]: string }).authorization =
+         // refreshData.accessToken?.split('Bearer ')[1];
+     // }
+     const requestHeaders = new Headers(options.headers);
+     requestHeaders.set("Authorization", refreshData.accessToken);
       const res = await fetch(url, options); //повторяем запрос
       return await checkResponse<T>(res);
     } else {
@@ -125,8 +126,6 @@ export const createOrderRequest = async (items: TIngredient[]) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      //"Authorization": JSON.parse(localStorage.getItem('accessToken')!) и headers {} as HeadersInit
-     //Authorization: 'Bearer ' + getCookie('accessToken')
      Authorization: localStorage.getItem('accessToken'),
     } as HeadersInit,
     body: JSON.stringify({
@@ -199,23 +198,24 @@ type TUserResponse = TServerResponse<{ user: TUser, status: boolean }>;
 
 //получить данные пользователя
 export const getUserInfoRequest = () => {
+  const requestHeaders: HeadersInit = new Headers();
+  requestHeaders.set("Content-Type", "application/json");
+  requestHeaders.set("Authorization", localStorage.getItem("accessToken")!);
+
   return fetchWithRefresh<TUserResponse>(USER_INFO_URL, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: 'Bearer ' + getCookie('accessToken')
-    }
+    headers: requestHeaders,
   });
 };
 
 //обновить данные пользователя
 export const updateUserInfoRequest = async (email?: string, password?: string, name?: string) => {
+  const requestHeaders: HeadersInit = new Headers();
+  requestHeaders.set("Content-Type", "application/json");
+  requestHeaders.set("Authorization", localStorage.getItem("accessToken")!);
   return await request<TUpdateRequest>(USER_INFO_URL, {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: 'Bearer ' + getCookie('accessToken')
-    },
+    headers: requestHeaders,
     body: JSON.stringify({ email, password, name }),
   });
 };
