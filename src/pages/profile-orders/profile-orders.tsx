@@ -4,7 +4,6 @@ import { WS_ORDERS_CONNECTION_START, WS_ORDERS_CONNECTION_CLOSED } from "../../s
 import { useDispatch, useSelector } from "../../index";
 import { useEffect, useMemo } from "react";
 import OrderCard from "../../components/order-card/order-card";
-import { useParams } from "react-router-dom";
 import { TOrderFeed } from "../../utils/types";
 
 export const ProfileOrders = () => {

@@ -71,10 +71,10 @@ function App() {
                 {/* доступно для авторизованных пользователей */}
                 <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
                 <Route path="/profile/orders" element={<ProtectedRoute element={<ProfileOrders />} />} />
+                <Route path="/profile/orders/:id" element={<ProtectedRoute element={<OrderModalDetails  />} />} />
 
                 {/* Ингредиент*/}
                 <Route path="/ingredients/:id" element={<IngredientPage />} />
-                <Route path="/orderexample" element={<OrderModalDetails/>} />
             </Routes>
 
 

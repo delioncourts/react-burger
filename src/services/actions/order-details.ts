@@ -29,7 +29,6 @@ export interface IUpdateOrderNumber {
 }
 
 export const sendOrder = (arr: TIngredientFull[]):AppThunk => (dispatch: AppDispatch) => {
-
     dispatch({
       type: GET_ORDER_REQUEST,
     });

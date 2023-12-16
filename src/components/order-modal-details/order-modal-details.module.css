@@ -1,5 +1,4 @@
-
-.main{
+.main {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,11 +12,11 @@
 }
 
 .number {
-    display: flex; 
+    display: flex;
     justify-content: center;
 }
 
-.ingredients{
+.ingredients {
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -26,13 +25,57 @@
     max-height: 312px;
 }
 
-.timeandmoney{
-    display: flex; 
+.timeandmoney {
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .price {
+    display: flex;
+    align-items: center;
+}
+
+.card_item {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.card_icon {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background:
+        linear-gradient(#1f1f1f 0 0) padding-box,
+        linear-gradient(to right, #801AB2, #4C4CFF) border-box;
+    margin-right: -10px;
+
+
+}
+
+.card_list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.image_name{
+    display: flex;
+    align-items: center;
+}
+
+.counting_order{
     display: flex;
     align-items: center;
 }

@@ -11,7 +11,7 @@ import { useParams } from "react-router";
 export const Feed:FC = () => {
     const dispatch = useDispatch();
     const feedOrders = useSelector((store) => store.feedOrders.orders);
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
 
     useEffect(() => {
         dispatch({

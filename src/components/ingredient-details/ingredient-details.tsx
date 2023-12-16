@@ -9,7 +9,7 @@ import styles from "./ingredient-details.module.css";
 import Loader from "../loader/loader";
 
 const IngredientDetails = () => {
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
 
     const ingredients = useSelector(AllIngredients);
     const ingredient = ingredients.find((ingredient: { _id: string | undefined; }) => ingredient._id === id);

@@ -34,7 +34,7 @@ const OrderCard: FC<IOrderCard> = ({ order, status }) => {
     })
 
     const totalPrice = (ingredientsInConstructor: TIngredient[]) => {
-        return ingredientsInConstructor.reduce((acc, item) => acc + item.price, 0);
+        return ingredientsInConstructor.reduce((acc, item) => acc + item?.price, 0);
     };
 
     //показываем или скрываем статус заказа 
