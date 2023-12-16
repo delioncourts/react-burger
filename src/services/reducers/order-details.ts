@@ -8,14 +8,18 @@ import {
 } from '../constant/const';
 
 import { TOrderActions } from '../actions/order-details';
+import { TIngredient } from '../../utils/types';
+import { TOrderFeed } from '../../utils/types';
 
 type TOrderState = {
+  ingredients:  TOrderFeed;
   number: number | undefined | null;
   orderRequest: boolean;
   orderError: boolean;
 }
 
 const defaultState:TOrderState = {
+  ingredients: {} as TOrderFeed,
   number: null,
   orderRequest: false,
   orderError: false,
