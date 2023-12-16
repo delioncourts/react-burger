@@ -86,7 +86,7 @@ function App() {
                         </Modal>
                     }
                     />
-                    <Route path="/profile/orders/:id" element={<ProtectedRoute onlyUnAuth element={
+                    <Route path="/profile/orders/:id" element={<ProtectedRoute element={
                     <Modal title={"Детали заказа"} onCloseModal={handleClose}>
                         <OrderModalDetails />
                     </Modal>} />

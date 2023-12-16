@@ -24,7 +24,8 @@ import {
   WS_FEED_CONNECTION_START,
   WS_FEED_CONNECTION_SUCCESS,
   WS_FEED_SEND_MESSAGE,
-  WS_FEED_CONNECTION_DISCONNECT
+  WS_FEED_CONNECTION_DISCONNECT,
+  
 } from './services/actions/ws-feed';
 
 import {
@@ -32,7 +33,8 @@ import {
   WS_ORDERS_CONNECTION_ERROR,
   WS_ORDERS_CONNECTION_START,
   WS_ORDERS_CONNECTION_SUCCESS,
-  WS_ORDERS_SEND_MESSAGE
+  WS_ORDERS_SEND_MESSAGE,
+  WS_ORDERS_CONNECTION_DISCONNECT
 } from './services/actions/ws-actions';
 
 const wsFeed: TwsActionTypes = {
@@ -48,15 +50,13 @@ const wsOrder: TwsActionTypes = {
   wsInit: WS_ORDERS_CONNECTION_START,
   onOpen: WS_ORDERS_CONNECTION_SUCCESS,
   onClose: WS_ORDERS_CONNECTION_CLOSED,
-  wsDisconnect: WS_ORDERS_CONNECTION_CLOSED,
+  wsDisconnect: WS_ORDERS_CONNECTION_DISCONNECT,
   onError: WS_ORDERS_CONNECTION_ERROR,
   onMessage: WS_ORDERS_SEND_MESSAGE,
 }
 
-
 const wsFeedUrl = "wss://norma.nomoreparties.space/orders/all";
 const wsOrdersUrl = "wss://norma.nomoreparties.space/orders";
-
 
 //const orderMiddleware = socketMiddleware(wsOrdersUrl, wsFeed, false);
 //const feedMiddleware = socketMiddleware(wsFeedUrl, wsOrder, true);
