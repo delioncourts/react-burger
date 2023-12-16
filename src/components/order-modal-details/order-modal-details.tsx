@@ -11,6 +11,7 @@ import { sendOrder } from "../../services/actions/order-details";
 
 
 const OrderModalDetails: FC = () => {
+    //const OrderModalDetails: FC
     const location = useLocation();
     const dispatch = useDispatch();
 
@@ -27,11 +28,13 @@ const OrderModalDetails: FC = () => {
             : [];
     }, [currentOrder.ingredients, ingredients]);
 
+
     const countedIngredients: TIngredient[] = useMemo(() =>
         currentInredients.reduce((arr: TIngredient[], item) => {
             const currentItem = arr.find((element) => element.name === item.name);
-            if (currentItem) {
-                currentItem.count += 1;
+            console.log(currentItem?.count);
+            if (currentItem.count >= 0) {
+                currentItem.count+= 1;
             } else {
                 arr.push({ ...item, count: 1 });
             }
@@ -39,6 +42,7 @@ const OrderModalDetails: FC = () => {
         }, []),
         [currentInredients]
     );
+
 
     const getCreatedDate = () => {
         const date = currentOrder?.createdAt;
@@ -73,31 +77,28 @@ const OrderModalDetails: FC = () => {
                 <div className={`${styles.ingredients} custom-scroll`}>
 
                     <ul className={styles.card_list}>
-                    {countedIngredients?.map((item) => {
-            return (
-                        <li className={styles.card_item} key={item._id}>
+                        {countedIngredients?.map((item) => {
+                            return (
+                                <li className={styles.card_item} key={item._id}>
 
-                            <div className={styles.image_name}>
-                                <img className={styles.card_icon} src={item?.image} alt={item?.image} />
-                                <p className="text text_type_digits-default pl-4">src={item?.name}</p>
-                            </div>
+                                    <div className={styles.image_name}>
+                                        <img className={styles.card_icon} src={item?.image} alt={item?.image} />
+                                        <p className="text text_type_digits-default pl-4">src={item?.name}</p>
+                                    </div>
 
-                            <div className={styles.counting_order}>
-                                <p className="text text_type_digits-default pr-1">{item?.count}</p>
-                                <p className="text text_type_digits-default pr-1">{item?.price}</p>
-                                <CurrencyIcon type="primary" />
-                            </div>
-                        </li>
-                         );
+                                    <div className={styles.counting_order}>
+                                        <p className="text text_type_digits-default pr-1">{item?.count}</p>
+                                        <p className="text text_type_digits-default pr-1">{item?.price}</p>
+                                        <CurrencyIcon type="primary" />
+                                    </div>
+                                </li>
+                            );
                         })}
                     </ul>
 
                 </div>
 
-
-
                 <div className={`${styles.timeandmoney} pt-10`}>
-
                     <p className="text text_type_main-default text_color_inactive">{getCreatedDate()}</p>
 
                     <div className={styles.price}>
