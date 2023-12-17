@@ -144,11 +144,12 @@ type TOrderNumberRequest = {
 
 //получаем заказы по номеру
 export const getOrdersByNumber = (number?: number) => {
-  request<TOrderNumberRequest>(`orders/${number}`, {
+ return request<TOrderNumberRequest>(`orders/${number}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
+    body: JSON.stringify({ number }),
   })
 }
 

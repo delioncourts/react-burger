@@ -37,12 +37,12 @@ const OrderModalDetails: FC = () => {
         }
     }, [profileOrders, feedOrders])
 
-
-    useEffect(() => {
-        if (!currentOrder) {
-            dispatch(getOrdersByNumber(number))
-        }
-    }, [dispatch, currentOrder, number])
+    //запрашиваем заказ, если его нет в сторе
+    /* useEffect(() => {
+         if (!currentOrder) {
+             dispatch(getOrdersByNumber(number))
+         }
+     }, [dispatch, currentOrder, number])*/
 
     const currentInredients = useMemo(() => {
         return currentOrder?.ingredients
