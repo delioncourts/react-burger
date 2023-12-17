@@ -11,61 +11,8 @@ import { sendOrder } from "../../services/actions/order-details";
 import { getOrdersByNumber } from "../../utils/api";
 
 const OrderModalDetails: FC = () => {
-    const location = useLocation();
+    //const location = useLocation();
     const dispatch = useDispatch();
-
-    //const { id } = useParams<{ id: string }>();
-    // const { number } = useParams<{ number: string }>();
-
-    // const ingredients = useSelector(store => store.ingredients.ingredients);
-    //const currentOrder = useSelector(store => store.order.ingredients);
-
-    /*  const orderData = useSelector((state) => {
-          if (state.profileOrders.isOpen && state.profileOrders.orders.length) {
-              const data = state.profileOrders.data.find((item) => item.number === +number);
-              if (data) return data;
-          }
-  
-          if (state.feedOrders.isOpen && state.feedOrders.orders.length) {
-              const data = state.feedOrders.orders.find((item) => item.number === +number);
-              if (data) return data;
-          }
-  
-          if (state.order.orderByNumber?.number === +number) {
-              return state.order.orderByNumber;
-          }
-  
-          return null;
-      })
-  
-      useEffect(() => {
-          if (!orderData) {
-              dispatch(getOrdersByNumber(+number));
-          }
-      }, [dispatch, orderData, number])
-  
-      const currentInredients = useMemo(() => {
-          return orderData.ingredients
-              ? orderData.ingredients.map((id: string) =>
-                  ingredients.find(item => String(id) === String(item._id)) as TIngredient
-              )
-              : [];
-      }, [orderData.ingredients, ingredients]);
-  
-  
-      const countedIngredients: TIngredient[] = useMemo(() =>
-          orderData.reduce((arr: TIngredient[], item: any) => {
-              const currentItem = arr.find((element) => element.name === item.name);
-              console.log(currentItem?.count);
-              if (currentItem !== undefined && currentItem.count !== undefined) {
-                  currentItem.count += 1;
-              } else {
-                  arr.push({ ...item, count: 1 });
-              }
-              return arr;
-          }, []),
-          [currentInredients]
-      );*/
 
     const { id } = useParams<{ id: string }>();
     const ingredients = useSelector(store => store.ingredients.ingredients);
@@ -90,6 +37,12 @@ const OrderModalDetails: FC = () => {
         }
     }, [profileOrders, feedOrders])
 
+
+    useEffect(() => {
+        if (!currentOrder) {
+            dispatch(getOrdersByNumber(number))
+        }
+    }, [dispatch, currentOrder, number])
 
     const currentInredients = useMemo(() => {
         return currentOrder?.ingredients
@@ -125,7 +78,7 @@ const OrderModalDetails: FC = () => {
     return (
         <main className={styles.main}>
             <div className={styles.container}>
-                <p className={`${styles.number} text text_type_digits-default`}>#{id}</p>
+                <p className={`${styles.number} text text_type_digits-default`}>#{currentOrder?.number}</p>
 
                 <h1 className="text text_type_main-medium pt-10">{currentOrder?.name}</h1>
                 <p className={`${styles.status} text text_type_main-small pt-3`}>{currentOrder?.status === "done"

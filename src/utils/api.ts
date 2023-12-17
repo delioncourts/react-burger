@@ -134,10 +134,17 @@ export const createOrderRequest = async (items: TIngredient[]) => {
   });
 };
 
+type TOrderNumberRequest = {
+  order: any;
+  success: boolean;
+  status: any;
+  number: number;
+}
+
 
 //получаем заказы по номеру
-export const getOrdersByNumber = (number: number) => {
-  request(`orders/${number}`, {
+export const getOrdersByNumber = (number?: number) => {
+  request<TOrderNumberRequest>(`orders/${number}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
