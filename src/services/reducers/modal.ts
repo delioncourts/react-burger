@@ -1,4 +1,4 @@
-import { TIngredient } from '../../utils/types';
+import { TIngredient, TOrderFeed } from '../../utils/types';
 import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../constant/const';
 import { TModalActions } from '../actions/modal';
 
@@ -8,7 +8,7 @@ type TModalState = {
   isOpen: boolean;
 }
 
-const defaultState:TModalState = {
+const defaultState: TModalState = {
   currentIngredient: null,
   isOpen: false,
   type: undefined,

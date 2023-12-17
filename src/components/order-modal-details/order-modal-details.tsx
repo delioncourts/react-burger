@@ -8,33 +8,57 @@ import { useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "../../index";
 import { AllIngredients } from "../../services/selectors";
 import { sendOrder } from "../../services/actions/order-details";
-
+import { getOrdersByNumber } from "../../utils/api";
 
 const OrderModalDetails: FC = () => {
-    //const OrderModalDetails: FC
     const location = useLocation();
     const dispatch = useDispatch();
 
-    const { id } = useParams<{ id: string }>();
+    //const { id } = useParams<{ id: string }>();
+    const { number } = useParams<{ number: string }>();
 
     const ingredients = useSelector(store => store.ingredients.ingredients);
-    const currentOrder = useSelector(store => store.order.ingredients);
+    //const currentOrder = useSelector(store => store.order.ingredients);
+
+    const orderData = useSelector((state) => {
+        if (state.profileOrders.isOpen && state.profileOrders.orders.length) {
+            const data = state.profileOrders.data.find((item) => item.number === +number);
+            if (data) return data;
+        }
+
+        if (state.feedOrders.isOpen && state.feedOrders.orders.length) {
+            const data = state.feedOrders.orders.find((item) => item.number === +number);
+            if (data) return data;
+        }
+
+        if (state.order.orderByNumber?.number === +number) {
+            return state.order.orderByNumber;
+        }
+
+        return null;
+    })
+
+    useEffect(() => {
+        if (!orderData) {
+            dispatch(getOrdersByNumber(+number));
+        }
+    }, [dispatch, orderData, number])
 
     const currentInredients = useMemo(() => {
-        return currentOrder.ingredients
-            ? currentOrder.ingredients.map((id: string) =>
+        return orderData.ingredients
+            ? orderData.ingredients.map((id: string) =>
                 ingredients.find(item => String(id) === String(item._id)) as TIngredient
             )
             : [];
-    }, [currentOrder.ingredients, ingredients]);
+    }, [orderData.ingredients, ingredients]);
 
 
     const countedIngredients: TIngredient[] = useMemo(() =>
-        currentInredients.reduce((arr: TIngredient[], item) => {
+        orderData.reduce((arr: TIngredient[], item: any) => {
             const currentItem = arr.find((element) => element.name === item.name);
             console.log(currentItem?.count);
-            if (currentItem.count >= 0) {
-                currentItem.count+= 1;
+            if (currentItem !== undefined && currentItem.count !== undefined) {
+                currentItem.count += 1;
             } else {
                 arr.push({ ...item, count: 1 });
             }
@@ -43,17 +67,13 @@ const OrderModalDetails: FC = () => {
         [currentInredients]
     );
 
-
     const getCreatedDate = () => {
-        const date = currentOrder?.createdAt;
+        const date = orderData?.createdAt;
         return <FormattedDate date={new Date(date)} />;
     };
 
-
-    //const totalPrice = 9;
-
-    const totalPrice = (currentOrder: TIngredient[]) => {
-        return currentOrder?.reduce((acc, item) => acc + item?.price, 0);
+    const totalPrice = (orderData: TIngredient[]) => {
+        return orderData?.reduce((acc, item) => acc + item?.price, 0);
     };
 
     const showStatus = (status: string) => {
@@ -70,7 +90,7 @@ const OrderModalDetails: FC = () => {
             <div className={styles.container}>
                 <p className={`${styles.number} text text_type_digits-default`}>#{id}</p>
 
-                <h1 className="text text_type_main-medium pt-10">{currentOrder?.name}</h1>
+                <h1 className="text text_type_main-medium pt-10">{orderData?.name}</h1>
                 <p className={`${styles.status} text text_type_main-small pt-3`}>{showStatus(currentOrder?.status)}</p>
 
                 <p className="text text_type_main-medium pt-15 pb-6">Состав:</p>

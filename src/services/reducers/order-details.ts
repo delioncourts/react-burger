@@ -12,10 +12,12 @@ import { TIngredient } from '../../utils/types';
 import { TOrderFeed } from '../../utils/types';
 
 type TOrderState = {
+ //isOpen?: boolean;
   ingredients:  TOrderFeed;
   number: number | undefined | null;
   orderRequest: boolean;
   orderError: boolean;
+  orderByNumber: TOrderFeed;
 }
 
 const defaultState:TOrderState = {
@@ -23,6 +25,7 @@ const defaultState:TOrderState = {
   number: null,
   orderRequest: false,
   orderError: false,
+  orderByNumber: {} as TOrderFeed,
 };
 
 export const orderDetailsReducer = (state = defaultState, action: TOrderActions): TOrderState => {
@@ -38,6 +41,7 @@ export const orderDetailsReducer = (state = defaultState, action: TOrderActions)
       return {
         ...state,
         number: action.orderNumber,
+        orderByNumber:  action.orders[0],
         orderRequest: false,
       };
     }

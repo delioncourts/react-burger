@@ -47,7 +47,7 @@ type TUpdateRequest = {
   success: boolean;
 }
 
-type TLogoutRequest= {
+type TLogoutRequest = {
   status: any;
   success: boolean;
 }
@@ -90,11 +90,11 @@ const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
       localStorage.setItem('accessToken', refreshData.accessToken);
       //options.headers.authorization = refreshData.accessToken;
       //if (options.headers) {
-       // (options.headers as { [key: string]: string }).authorization =
-         // refreshData.accessToken?.split('Bearer ')[1];
-     // }
-     const requestHeaders = new Headers(options.headers);
-     requestHeaders.set("Authorization", refreshData.accessToken);
+      // (options.headers as { [key: string]: string }).authorization =
+      // refreshData.accessToken?.split('Bearer ')[1];
+      // }
+      const requestHeaders = new Headers(options.headers);
+      requestHeaders.set("Authorization", refreshData.accessToken);
       const res = await fetch(url, options); //повторяем запрос
       return await checkResponse<T>(res);
     } else {
@@ -126,13 +126,24 @@ export const createOrderRequest = async (items: TIngredient[]) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-     Authorization: localStorage.getItem('accessToken'),
+      Authorization: localStorage.getItem('accessToken'),
     } as HeadersInit,
     body: JSON.stringify({
       ingredients: items.map((item) => item._id),
     }),
   });
 };
+
+
+//получаем заказы по номеру
+export const getOrdersByNumber = (number: number) => {
+  request(`orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+  })
+}
 
 //регистрация
 export const registerRequest = (name?: string, email?: string, password?: string) =>
@@ -178,7 +189,7 @@ export const resetPasswordRequest = async (password?: string, token?: string) =>
 };
 
 //выйти из профиля
-export const logoutRequest = async (token: string | undefined ) => {
+export const logoutRequest = async (token: string | undefined) => {
   return await request<TLogoutRequest>('auth/logout', {
     method: 'POST',
     headers: {
@@ -191,7 +202,7 @@ export const logoutRequest = async (token: string | undefined ) => {
 export type TUser = {
   email: string;
   name: string;
-  
+
 }
 
 type TUserResponse = TServerResponse<{ user: TUser, status: boolean }>;

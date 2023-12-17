@@ -2,7 +2,7 @@
 //Удаление данных о просматриваемом в модальном окне ингредиенте при закрытии модального окна.
 
 import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from "../constant/const";
-import { TIngredient } from "../../utils/types";
+import { TIngredient, TOrderFeed } from "../../utils/types";
 
 export interface IGetViewedIngredientAction {
     readonly type: typeof GET_VIEWED_INGREDIENT;

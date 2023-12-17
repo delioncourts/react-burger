@@ -1,6 +1,6 @@
 //Получение и обновление номера заказа в модальном окне OrderDetails.
 import { createOrderRequest } from '../../utils/api';
-import { TIngredientFull } from '../../utils/types';
+import { TIngredientFull, TOrderFeed } from '../../utils/types';
 import {
   GET_ORDER_REQUEST,
   GET_ORDER_ERROR,
@@ -20,7 +20,9 @@ export interface IGetOrderErrorAction {
 
 export interface IGetOrderSuccessAction {
   readonly type: typeof GET_ORDER_SUCCESS;
-  readonly orderNumber: number
+  readonly orderNumber: number;
+
+  orders: TOrderFeed
 }
 
 export interface IUpdateOrderNumber {
@@ -37,6 +39,8 @@ export const sendOrder = (arr: TIngredientFull[]):AppThunk => (dispatch: AppDisp
         dispatch({
           type: GET_ORDER_SUCCESS,
           orderNumber: order.order.number,
+        
+          orders: order.order.orders,
         });
       })
       .catch(() => {
