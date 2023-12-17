@@ -12,7 +12,7 @@ import { TIngredient } from "../../utils/types";
 
 interface IOrderCard {
     order: TOrderFeed;
-    status: boolean;
+    status: boolean | undefined;
 }
 
 const OrderCard: FC<IOrderCard> = ({ order, status }) => {

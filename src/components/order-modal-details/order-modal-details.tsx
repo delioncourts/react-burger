@@ -3,9 +3,9 @@ import { TOrderFeed, TIngredient } from "../../utils/types";
 
 import styles from "./order-modal-details.module.css";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "../../index";
+import { useSelector, useDispatch, } from "../../index";
 import { AllIngredients } from "../../services/selectors";
 import { sendOrder } from "../../services/actions/order-details";
 import { getOrdersByNumber } from "../../utils/api";
@@ -15,48 +15,94 @@ const OrderModalDetails: FC = () => {
     const dispatch = useDispatch();
 
     //const { id } = useParams<{ id: string }>();
-    const { number } = useParams<{ number: string }>();
+    // const { number } = useParams<{ number: string }>();
 
-    const ingredients = useSelector(store => store.ingredients.ingredients);
+    // const ingredients = useSelector(store => store.ingredients.ingredients);
     //const currentOrder = useSelector(store => store.order.ingredients);
 
-    const orderData = useSelector((state) => {
-        if (state.profileOrders.isOpen && state.profileOrders.orders.length) {
-            const data = state.profileOrders.data.find((item) => item.number === +number);
-            if (data) return data;
-        }
+    /*  const orderData = useSelector((state) => {
+          if (state.profileOrders.isOpen && state.profileOrders.orders.length) {
+              const data = state.profileOrders.data.find((item) => item.number === +number);
+              if (data) return data;
+          }
+  
+          if (state.feedOrders.isOpen && state.feedOrders.orders.length) {
+              const data = state.feedOrders.orders.find((item) => item.number === +number);
+              if (data) return data;
+          }
+  
+          if (state.order.orderByNumber?.number === +number) {
+              return state.order.orderByNumber;
+          }
+  
+          return null;
+      })
+  
+      useEffect(() => {
+          if (!orderData) {
+              dispatch(getOrdersByNumber(+number));
+          }
+      }, [dispatch, orderData, number])
+  
+      const currentInredients = useMemo(() => {
+          return orderData.ingredients
+              ? orderData.ingredients.map((id: string) =>
+                  ingredients.find(item => String(id) === String(item._id)) as TIngredient
+              )
+              : [];
+      }, [orderData.ingredients, ingredients]);
+  
+  
+      const countedIngredients: TIngredient[] = useMemo(() =>
+          orderData.reduce((arr: TIngredient[], item: any) => {
+              const currentItem = arr.find((element) => element.name === item.name);
+              console.log(currentItem?.count);
+              if (currentItem !== undefined && currentItem.count !== undefined) {
+                  currentItem.count += 1;
+              } else {
+                  arr.push({ ...item, count: 1 });
+              }
+              return arr;
+          }, []),
+          [currentInredients]
+      );*/
 
-        if (state.feedOrders.isOpen && state.feedOrders.orders.length) {
-            const data = state.feedOrders.orders.find((item) => item.number === +number);
-            if (data) return data;
-        }
-
-        if (state.order.orderByNumber?.number === +number) {
-            return state.order.orderByNumber;
-        }
-
-        return null;
-    })
+    const { id } = useParams<{ id: string }>();
+    const ingredients = useSelector(store => store.ingredients.ingredients);
+    const profileOrders = useSelector(store => store.profileOrders);
+    const feedOrders = useSelector(store => store.feedOrders);
+    const [currentOrder, setCurrentOrder] = useState<TOrderFeed | undefined>();
 
     useEffect(() => {
-        if (!orderData) {
-            dispatch(getOrdersByNumber(+number));
+        if (profileOrders.orders?.orders.length) {
+            const currentOrder = profileOrders?.orders?.orders.find(({ number }) => number.toString() === id);
+            if (currentOrder) {
+                setCurrentOrder(currentOrder);
+                return;
+            };
         }
-    }, [dispatch, orderData, number])
+        if (feedOrders.orders?.orders.length) {
+            const currentOrder = feedOrders?.orders?.orders.find(({ number }) => number.toString() === id);
+            if (currentOrder) {
+                setCurrentOrder(currentOrder);
+                return;
+            };
+        }
+    }, [profileOrders, feedOrders])
+
 
     const currentInredients = useMemo(() => {
-        return orderData.ingredients
-            ? orderData.ingredients.map((id: string) =>
+        return currentOrder?.ingredients
+            ? currentOrder.ingredients.map((id: string) =>
                 ingredients.find(item => String(id) === String(item._id)) as TIngredient
             )
             : [];
-    }, [orderData.ingredients, ingredients]);
+    }, [currentOrder?.ingredients, ingredients]);
 
 
     const countedIngredients: TIngredient[] = useMemo(() =>
-        orderData.reduce((arr: TIngredient[], item: any) => {
+        currentInredients.reduce((arr: TIngredient[], item) => {
             const currentItem = arr.find((element) => element.name === item.name);
-            console.log(currentItem?.count);
             if (currentItem !== undefined && currentItem.count !== undefined) {
                 currentItem.count += 1;
             } else {
@@ -68,21 +114,12 @@ const OrderModalDetails: FC = () => {
     );
 
     const getCreatedDate = () => {
-        const date = orderData?.createdAt;
-        return <FormattedDate date={new Date(date)} />;
+        const date = currentOrder?.createdAt;
+        return <FormattedDate date={new Date(date!)} />;
     };
 
-    const totalPrice = (orderData: TIngredient[]) => {
-        return orderData?.reduce((acc, item) => acc + item?.price, 0);
-    };
-
-    const showStatus = (status: string) => {
-        const statusMap: { [key: string]: string } = {
-            "done": "Выполнен",
-            "pending": "Готовится",
-            "created": "Создан"
-        };
-        return statusMap[status] || "Выполнен";
+    const totalPrice = (ingredients: TIngredient[]) => {
+        return currentInredients?.reduce((acc, item) => acc + item?.price, 0);
     };
 
     return (
@@ -90,9 +127,14 @@ const OrderModalDetails: FC = () => {
             <div className={styles.container}>
                 <p className={`${styles.number} text text_type_digits-default`}>#{id}</p>
 
-                <h1 className="text text_type_main-medium pt-10">{orderData?.name}</h1>
-                <p className={`${styles.status} text text_type_main-small pt-3`}>{showStatus(currentOrder?.status)}</p>
-
+                <h1 className="text text_type_main-medium pt-10">{currentOrder?.name}</h1>
+                <p className={`${styles.status} text text_type_main-small pt-3`}>{currentOrder?.status === "done"
+                    ? "Выполнен"
+                    : currentOrder?.status === "pending"
+                        ? "Готовится"
+                        : currentOrder?.status === "created"
+                            ? "Создан"
+                            : "Выполнен"}</p>
                 <p className="text text_type_main-medium pt-15 pb-6">Состав:</p>
                 <div className={`${styles.ingredients} custom-scroll`}>
 
@@ -103,11 +145,12 @@ const OrderModalDetails: FC = () => {
 
                                     <div className={styles.image_name}>
                                         <img className={styles.card_icon} src={item?.image} alt={item?.image} />
-                                        <p className="text text_type_digits-default pl-4">src={item?.name}</p>
+                                        <p className="text text_type_main-small pl-4">{item?.name}</p>
                                     </div>
 
                                     <div className={styles.counting_order}>
-                                        <p className="text text_type_digits-default pr-1">{item?.count}</p>
+                                        <p className="text text_type_digits-default pl-4 pr-1">{item?.count}</p>
+                                        <p className="text text_type_main-small pr-1">x</p>
                                         <p className="text text_type_digits-default pr-1">{item?.price}</p>
                                         <CurrencyIcon type="primary" />
                                     </div>

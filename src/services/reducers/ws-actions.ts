@@ -9,7 +9,7 @@ export type TOrderResponse = {
     total: number;
     totalToday: number;
 
-    isOpen: boolean;
+   // isOpen: boolean;
 };
 
 type TWSOrdersState = {
@@ -17,7 +17,7 @@ type TWSOrdersState = {
     wsConnected: boolean;
     orders?: TOrderResponse;
     error: MessageEvent | null;
-    isOpen: boolean,
+   // isOpen: boolean,
 }
 
 const defaultState: TWSOrdersState = {
@@ -25,7 +25,7 @@ const defaultState: TWSOrdersState = {
     wsConnected: false,
     orders: undefined,
     error: null,
-    isOpen: false,
+   // isOpen: false,
 };
 
 export const wsOrdersReducer = (state = defaultState, action: TWSOrders): TWSOrdersState => {

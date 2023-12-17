@@ -41,7 +41,7 @@ export const orderDetailsReducer = (state = defaultState, action: TOrderActions)
       return {
         ...state,
         number: action.orderNumber,
-        orderByNumber:  action.orders[0],
+        orderByNumber:  action.orders,
         orderRequest: false,
       };
     }

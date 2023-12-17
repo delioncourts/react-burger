@@ -7,6 +7,7 @@ export type TOrderResponse = {
     orders: Array<TOrderFeed>;
     total: number;
     totalToday: number;
+    isOpen?: boolean;
 };
 
 export const WS_ORDERS_CONNECTION_START: 'WS_ORDERS_CONNECTION_START' = 'WS_ORDERS_CONNECTION_START';
