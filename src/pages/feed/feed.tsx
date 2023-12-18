@@ -1,6 +1,6 @@
 import styles from "./feed.module.css";
 import { useDispatch, useSelector } from "../../index";
-import { WS_FEED_CONNECTION_START, WS_FEED_CONNECTION_CLOSED } from "../../services/actions/ws-feed";
+import { WS_FEED_CONNECTION_START, WS_FEED_CONNECTION_CLOSED, WS_FEED_CONNECTION_DISCONNECT } from "../../services/actions/ws-feed";
 import { FC, useEffect } from "react";
 import { useMemo } from "react";
 import { TOrderFeed } from "../../utils/types";
@@ -20,7 +20,7 @@ export const Feed:FC = () => {
         });
 
         return () => {
-            dispatch({ type: WS_FEED_CONNECTION_CLOSED });
+            dispatch({ type: WS_FEED_CONNECTION_DISCONNECT });
         }
     }, [dispatch]);
 
