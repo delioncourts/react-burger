@@ -11,6 +11,8 @@ import { TOrderActions } from '../actions/order-details';
 import { TIngredient } from '../../utils/types';
 import { TOrderFeed } from '../../utils/types';
 
+import { GET_CURRENT_ORDER_ERROR, GET_CURRENT_ORDER_REQUEST, GET_CURRENT_ORDER_SUCCESS } from '../actions/order-details';
+
 type TOrderState = {
  //isOpen?: boolean;
   ingredients:  TOrderFeed;
@@ -41,7 +43,7 @@ export const orderDetailsReducer = (state = defaultState, action: TOrderActions)
       return {
         ...state,
         number: action.orderNumber,
-        orderByNumber: action.orders,
+        //orderByNumber: action.orders,
         orderRequest: false,
       };
     }
@@ -55,6 +57,24 @@ export const orderDetailsReducer = (state = defaultState, action: TOrderActions)
       return {
         ...state,
         number: action.orderNumber,
+      };
+    }
+    case GET_CURRENT_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderError: false,
+      };
+    }
+    case GET_CURRENT_ORDER_SUCCESS: {
+      return {
+        ...state,
+        orderByNumber: action.orders,
+      };
+    }
+    case GET_CURRENT_ORDER_ERROR: {
+      return {
+        ...state,
+        orderError: true,
       };
     }
     default: {
