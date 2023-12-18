@@ -9,6 +9,7 @@ import {
 } from '../constant/const';
 import { AppThunk } from '../../index';
 import { AppDispatch } from '../../index';
+import { getOrdersByNumber } from '../../utils/api';
 
 export interface IGetOrderRequestAction {
   readonly type: typeof GET_ORDER_REQUEST;
@@ -49,6 +50,22 @@ export const sendOrder = (arr: TIngredientFull[]):AppThunk => (dispatch: AppDisp
         });
       });
 
+}
+
+export const getOrder = (number: string) => (dispatch: AppDispatch) => {
+  dispatch(GET_ORDER_REQUEST);
+  getOrdersByNumber(number)
+      .then((res) => {
+        if (res.success) {
+          dispatch({
+            type: GET_ORDER_SUCCESS,
+            orders: res.orders[0],
+          });
+        } else {
+          Promise.reject(`Произошла ошибка: ${res.status}`);
+        }
+      })
+      .catch((err) => dispatch(GET_ORDER_ERROR));
 }
 
 export type TOrderActions = IGetOrderRequestAction | IGetOrderErrorAction | IGetOrderSuccessAction | IUpdateOrderNumber;

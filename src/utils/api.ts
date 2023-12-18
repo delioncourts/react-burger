@@ -143,7 +143,7 @@ type TOrderNumberRequest = {
 
 
 //получаем заказы по номеру
-export const getOrdersByNumber = (number?: number) => {
+export const getOrdersByNumber = (number?: string) => {
  return request<TOrderNumberRequest>(`orders/${number}`, {
     method: 'GET',
     headers: {
