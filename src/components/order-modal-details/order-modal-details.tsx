@@ -7,7 +7,7 @@ import { FC, useEffect, useMemo, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch, } from "../../index";
 import { AllIngredients } from "../../services/selectors";
-import { sendOrder } from "../../services/actions/order-details";
+import { getOrder, sendOrder } from "../../services/actions/order-details";
 import { getOrdersByNumber } from "../../utils/api";
 
 const OrderModalDetails: FC = () => {
@@ -19,8 +19,14 @@ const OrderModalDetails: FC = () => {
     const profileOrders = useSelector(store => store.profileOrders);
     const feedOrders = useSelector(store => store.feedOrders);
     const [currentOrder, setCurrentOrder] = useState<TOrderFeed | undefined>();
+    const orderByNumber = useSelector(store => store.order.orderByNumber);
 
     useEffect(() => {
+        if (orderByNumber._id) {
+            setCurrentOrder(orderByNumber);
+            return;
+        }
+
         if (profileOrders.orders?.orders.length) {
             const currentOrder = profileOrders?.orders?.orders.find(({ number }) => number.toString() === id);
             if (currentOrder) {
@@ -35,14 +41,14 @@ const OrderModalDetails: FC = () => {
                 return;
             };
         }
-    }, [profileOrders, feedOrders])
+    }, [profileOrders, feedOrders, orderByNumber])
 
     //запрашиваем заказ, если его нет в сторе
-    /* useEffect(() => {
-         if (!currentOrder) {
-             dispatch(getOrdersByNumber(number))
-         }
-     }, [dispatch, currentOrder, number])*/
+    useEffect(() => {
+        if (!currentOrder && id) {
+            dispatch(getOrder(id))
+        }
+    }, [dispatch, currentOrder, id])
 
     const currentInredients = useMemo(() => {
         return currentOrder?.ingredients

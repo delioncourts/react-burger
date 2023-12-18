@@ -25,7 +25,7 @@ const defaultState:TOrderState = {
   number: null,
   orderRequest: false,
   orderError: false,
- orderByNumber: {} as TOrderFeed,
+  orderByNumber: {} as TOrderFeed,
 };
 
 export const orderDetailsReducer = (state = defaultState, action: TOrderActions): TOrderState => {

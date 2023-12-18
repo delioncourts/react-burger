@@ -1,4 +1,4 @@
-import { TIngredient, TIngredientFull } from './types';
+import { TIngredient, TIngredientFull, TOrderFeed } from './types';
 import { getCookie } from './cookie';
 //объявляем базовый урл
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
@@ -135,7 +135,7 @@ export const createOrderRequest = async (items: TIngredient[]) => {
 };
 
 type TOrderNumberRequest = {
-  order: any;
+  orders: TOrderFeed[];
   success: boolean;
   status: any;
   number: number;

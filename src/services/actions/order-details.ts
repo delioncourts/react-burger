@@ -71,7 +71,7 @@ export interface IGetOrderCurrentSuccessAction {
 
 
 export const getOrder = (number: string) => (dispatch: AppDispatch) => {
-  dispatch(GET_CURRENT_ORDER_REQUEST);
+  dispatch({type: GET_CURRENT_ORDER_REQUEST});
   getOrdersByNumber(number)
       .then((res) => {
         if (res.success) {
@@ -83,7 +83,7 @@ export const getOrder = (number: string) => (dispatch: AppDispatch) => {
           Promise.reject(`Произошла ошибка: ${res.status}`);
         }
       })
-      .catch((err) => dispatch(GET_CURRENT_ORDER_ERROR));
+      .catch((err) => dispatch({type: GET_CURRENT_ORDER_ERROR}));
 }
 
 export type TOrderActions = IGetOrderRequestAction | 
