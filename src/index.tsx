@@ -58,9 +58,6 @@ const wsOrder: TwsActionTypes = {
 const wsFeedUrl = "wss://norma.nomoreparties.space/orders/all";
 const wsOrdersUrl = "wss://norma.nomoreparties.space/orders";
 
-//const orderMiddleware = socketMiddleware(wsOrdersUrl, wsFeed, false);
-//const feedMiddleware = socketMiddleware(wsFeedUrl, wsOrder, true);
-
 const feedMiddleware = socketMiddleware(wsFeedUrl, wsFeed, false);
 const orderMiddleware = socketMiddleware(wsOrdersUrl, wsOrder, true);
 
@@ -74,14 +71,12 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 //Dispatch & Selector
 export type AppDispatch = ThunkDispatch<RootState, unknown, TAppActions>;
-//export type AppDispatch = typeof store.dispatch;
 export const useDispatch = () => dispatchHook<AppDispatch>();
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 export type TAppActions = TBurgerConstructorActions | TGetIngredientsActions | TOrderActions | TWSOrders | TWSFeed | TAuthActions;
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TAppActions>;
-
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

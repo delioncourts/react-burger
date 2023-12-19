@@ -141,7 +141,6 @@ type TOrderNumberRequest = {
   number: number;
 }
 
-
 //получаем заказы по номеру
 export const getOrdersByNumber = (number?: string) => {
  return request<TOrderNumberRequest>(`orders/${number}`, {

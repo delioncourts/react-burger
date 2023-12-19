@@ -4,14 +4,11 @@ import { TOrderFeed, TIngredient } from "../../utils/types";
 import styles from "./order-modal-details.module.css";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useEffect, useMemo, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch, } from "../../index";
-import { AllIngredients } from "../../services/selectors";
-import { getOrder, sendOrder } from "../../services/actions/order-details";
-import { getOrdersByNumber } from "../../utils/api";
+import { getOrder } from "../../services/actions/order-details";
 
 const OrderModalDetails: FC = () => {
-    //const location = useLocation();
     const dispatch = useDispatch();
 
     const { id } = useParams<{ id: string }>();
