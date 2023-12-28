@@ -1,4 +1,5 @@
-import { TIngredient } from './types';
+import { TIngredient, TIngredientFull, TOrderFeed } from './types';
+import { getCookie } from './cookie';
 //объявляем базовый урл
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
 
@@ -17,29 +18,61 @@ type TRefreshResponse = TServerResponse<{
 interface IBaseResponse {
   success: boolean;
 }
+
+type TIngredientsRequest = {
+  success: any;
+  data: any;
+  status: any;
+
+}
+
+type TOrderRequest = {
+  order: any;
+  success: boolean;
+  status: any;
+}
+
+type TAuthRequest = {
+  [x: string]: any;
+  success: boolean;
+}
+
+type TRegisterRequest = {
+  [x: string]: any;
+  success: boolean;
+}
+
+type TUpdateRequest = {
+  [x: string]: any;
+  success: boolean;
+}
+
+type TLogoutRequest = {
+  status: any;
+  success: boolean;
+}
+
+type TResetRequest = {
+  [x: string]: any;
+  success: boolean;
+}
+
+type TForgotRequest = {
+  [x: string]: any;
+  success: boolean;
+}
 // создаем функцию проверки ответа на `ok`
 // добавляем проверку на ошибку, чтобы она попала в `catch`
 const checkResponse = <T>(res: Response): Promise<T> => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка ${res.status}`);
-};
-
-// создаем функцию проверки на `success`
-// добавляем проверку на ошибку, чтобы она попала в `catch`
-const checkSuccess = <T extends IBaseResponse>(res: T): Promise<T> => {
-  if (res?.success) {
-    return Promise.resolve(res)
-  }
-  return Promise.reject(`Ответ не success: ${res}`);
+  return res.ok ? res.json() : res.json()
+    .then((err) => Promise.reject(err));
 };
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
 const request = <T extends IBaseResponse>(endpoint: string, options: RequestInit) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
-  return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse);
+  return fetch(`${BASE_URL}${endpoint}`, options).then(res => checkResponse<T>(res));
 };
 
 //проверяем что токен не истек и если истек, то тогда мы его обновляем
@@ -49,7 +82,6 @@ const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
     return await checkResponse<T>(res);
   } catch (err: any) {
     if ((err as { message: string }).message === 'jwt expired') {
-      console.log('jwt expired');
       const refreshData = await refreshToken(); //обновляем токен
       if (!refreshData.success) {
         return Promise.reject(refreshData);
@@ -57,10 +89,12 @@ const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
       localStorage.setItem('refreshToken', refreshData.refreshToken);
       localStorage.setItem('accessToken', refreshData.accessToken);
       //options.headers.authorization = refreshData.accessToken;
-      if (options.headers) {
-        (options.headers as { [key: string]: string }).authorization =
-          refreshData.accessToken
-      }
+      //if (options.headers) {
+      // (options.headers as { [key: string]: string }).authorization =
+      // refreshData.accessToken?.split('Bearer ')[1];
+      // }
+      const requestHeaders = new Headers(options.headers);
+      requestHeaders.set("Authorization", refreshData.accessToken);
       const res = await fetch(url, options); //повторяем запрос
       return await checkResponse<T>(res);
     } else {
@@ -70,7 +104,7 @@ const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
 };
 
 export const refreshToken = (): Promise<TRefreshResponse> => {
-  return fetch(`${BASE_URL}/auth/token`, {
+  return fetch(`${BASE_URL}auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -83,25 +117,43 @@ export const refreshToken = (): Promise<TRefreshResponse> => {
 
 //загрузка списка ингредиентов
 export const loadIngredients = async () => {
-  return await request('ingredients', {});
+  return await request<TIngredientsRequest>('ingredients', {});
 };
 
 //создание заказа
 export const createOrderRequest = async (items: TIngredient[]) => {
-  return await request('orders', {
+  return await request<TOrderRequest>('orders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-    },
+      Authorization: localStorage.getItem('accessToken'),
+    } as HeadersInit,
     body: JSON.stringify({
       ingredients: items.map((item) => item._id),
     }),
   });
 };
 
+type TOrderNumberRequest = {
+  orders: TOrderFeed[];
+  success: boolean;
+  status: any;
+  number: number;
+}
+
+//получаем заказы по номеру
+export const getOrdersByNumber = (number?: string) => {
+ return request<TOrderNumberRequest>(`orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+  })
+}
+
 //регистрация
 export const registerRequest = (name?: string, email?: string, password?: string) =>
-  request('auth/register', {
+  request<TRegisterRequest>('auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -111,7 +163,7 @@ export const registerRequest = (name?: string, email?: string, password?: string
 
 //авторизация = login
 export const authorizeRequest = async (email?: string, password?: string) => {
-  return await request('auth/login', {
+  return await request<TAuthRequest>('auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -122,7 +174,7 @@ export const authorizeRequest = async (email?: string, password?: string) => {
 
 //восстановление пароля по имейлу
 export const forgotPasswordRequest = async (email?: string) => {
-  return await request('password-reset', {
+  return await request<TForgotRequest>('password-reset', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -133,7 +185,7 @@ export const forgotPasswordRequest = async (email?: string) => {
 
 //сбросить пароль
 export const resetPasswordRequest = async (password?: string, token?: string) => {
-  return await request('password-reset/reset', {
+  return await request<TResetRequest>('password-reset/reset', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -143,8 +195,8 @@ export const resetPasswordRequest = async (password?: string, token?: string) =>
 };
 
 //выйти из профиля
-export const logoutRequest = async () => {
-  return await request('auth/logout', {
+export const logoutRequest = async (token: string | undefined) => {
+  return await request<TLogoutRequest>('auth/logout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -156,29 +208,31 @@ export const logoutRequest = async () => {
 export type TUser = {
   email: string;
   name: string;
+
 }
 
-type TUserResponse = TServerResponse<{ user: TUser }>;
+type TUserResponse = TServerResponse<{ user: TUser, status: boolean }>;
 
 //получить данные пользователя
 export const getUserInfoRequest = () => {
+  const requestHeaders: HeadersInit = new Headers();
+  requestHeaders.set("Content-Type", "application/json");
+  requestHeaders.set("Authorization", localStorage.getItem("accessToken")!);
+
   return fetchWithRefresh<TUserResponse>(USER_INFO_URL, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      authorization: localStorage.getItem('accessToken'),
-    } as HeadersInit,
+    headers: requestHeaders,
   });
 };
 
 //обновить данные пользователя
 export const updateUserInfoRequest = async (email?: string, password?: string, name?: string) => {
-  return await request(USER_INFO_URL, {
+  const requestHeaders: HeadersInit = new Headers();
+  requestHeaders.set("Content-Type", "application/json");
+  requestHeaders.set("Authorization", localStorage.getItem("accessToken")!);
+  return await request<TUpdateRequest>(USER_INFO_URL, {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-      authorization: localStorage.getItem('accessToken'),
-    } as HeadersInit,
+    headers: requestHeaders,
     body: JSON.stringify({ email, password, name }),
   });
 };

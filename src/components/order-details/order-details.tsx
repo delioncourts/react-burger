@@ -1,14 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
-
+import { FC } from "react";
+import { useSelector } from '../../index';
 import styles from "./order-details.module.css";
 import done from '../../images/done.svg';
 
 import { receiveOrderNumber } from "../../services/selectors";
 
-const OrderDetails = ({ }) => {
+const OrderDetails = ({orderNumber}: {orderNumber: number | null | undefined }) => {
 
-    const orderNumber = useSelector(receiveOrderNumber);
+    //const orderNumber = useSelector(receiveOrderNumber);
+    console.log(orderNumber)
     
     return (
         <div className={`${styles.popup} pt-15 pb-25`}>

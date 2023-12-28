@@ -12,11 +12,6 @@
     gap: 60px;
 }
 
-.linkpanel {
-    text-decoration: none;
-    max-width: 320px; 
-    width: 100%;
-}
 .inputpanel{
     display: flex;
     flex-direction: column;

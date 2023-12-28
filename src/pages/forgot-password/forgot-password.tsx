@@ -2,7 +2,8 @@ import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-comp
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+//import { useDispatch } from "react-redux";
+import { useDispatch } from '../../index';
 import { forgotPassword } from "../../services/actions/auth";
 import { useForm } from "../../hooks/useForm";
 import styles from "./forgot-password.module.css";

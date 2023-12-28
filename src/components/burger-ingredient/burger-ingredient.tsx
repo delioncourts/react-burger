@@ -1,43 +1,45 @@
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../index';
 import { useDrag, useDrop } from 'react-dnd';
 import React, { FC, RefObject, useRef } from 'react';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { MOVE_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions/burger-constructor';
-
+import { MOVE_INGREDIENT, REMOVE_INGREDIENT } from '../../services/constant/const';
 import styles from './burger-ingredient.module.css'
 
 import { TIngredient } from '../../utils/types';
-import type { XYCoord } from 'dnd-core'
+import type { XYCoord } from 'dnd-core';
+
 interface IBurgerIngredient {
     item: TIngredient;
     id?: string;
     key: string;
     index: number;
-    idtd: string;
-  }
+    idtd?: string | undefined;
+}
 
-  type TDndIngredient =  {
-    name: string; 
-    price: number; 
-    image: string; 
-    idtd: string; 
+type TDndIngredient = {
+    name: string;
+    price: number;
+    image: string;
+    idtd: string;
     index: number;
 }
 //элемент в burger constructor - начинки и соусы
-const BurgerIngredient: FC< IBurgerIngredient> = ({ item, index, idtd }) => {
+const BurgerIngredient: FC<IBurgerIngredient> = ({ item, index, idtd }) => {
     const { name, price, image } = item;
 
     const dispatch = useDispatch();
     const ref = useRef<HTMLLIElement>(null);
 
-    function handleDeleteIngredient(id:string) {
+    function handleDeleteIngredient(id: string) {
         dispatch({
             type: REMOVE_INGREDIENT,
-            idtd: id
-        })
-    }
+            idtd: id,
+            item
+        }) 
+    } 
 
     const [{ opacity }, dragRef] = useDrag({
         type: 'sorting',
@@ -92,7 +94,7 @@ const BurgerIngredient: FC< IBurgerIngredient> = ({ item, index, idtd }) => {
                 price={price}
                 thumbnail={image}
                 extraClass="ml-1"
-                handleClose={(() => handleDeleteIngredient(idtd))}
+                handleClose={(() => handleDeleteIngredient(idtd as string))}
             />
         </li>
     )

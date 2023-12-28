@@ -1,10 +1,11 @@
 //универсальный защищенный роут
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
+import { useSelector } from '../../index';
+
 import { loggedIn } from "../../services/selectors";
 import { useState } from "react";
 import React, { FC, ReactElement } from "react";
-import PropTypes from 'prop-types';
 
 interface IProtectedRoute {
     onlyUnAuth?: boolean;

@@ -17,4 +17,5 @@
 
     transition: opacity .5s linear;
 
+    z-index: 200;
 }

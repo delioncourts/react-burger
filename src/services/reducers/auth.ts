@@ -5,16 +5,24 @@ import {
   SIGNOUT_SUCCESS,
   REGISTER_SUCCESS,
   RESET_PASSWORD_SUCCESS,
-} from '../actions/auth';
+} from '../constant/const';
+import { TAuthActions } from '../actions/auth';
 
-const defaultState = {
+type TAuthState = {
+  name: string | null;
+  email: string | null;
+  isLoggedIn: boolean;
+  isPasswordReset: boolean;
+}
+
+const defaultState: TAuthState = {
   name: '',
   email: '',
   isLoggedIn: false,
   isPasswordReset: false,
 };
 
-export const authReducer = (state = defaultState, action) => {
+export const authReducer = (state = defaultState, action: TAuthActions): TAuthState => {
   switch (action.type) {
     case SET_USER: {
       return {
