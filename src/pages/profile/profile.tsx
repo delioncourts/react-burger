@@ -1,13 +1,14 @@
 import styles from "./profile.module.css";
 import { Button, EmailInput, PasswordInput, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink } from "react-router-dom";
 
 import { userNameData, userEmailData } from '../../services/selectors';
-import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../index';
 import { useForm } from '../../hooks/useForm';
 
-import { signout } from '../../services/actions/auth';
 import { updateUserInfo } from '../../services/actions/auth';
+
+import ProfileNavigation from "../../components/profile-navigation/profile-navigation";
 
 export const Profile = () => {
     const dispatch = useDispatch();
@@ -17,10 +18,6 @@ export const Profile = () => {
 
     const form = useForm({ name: userNameInfo, email: userEmailInfo, password: '' });
 
-    function handleSignOut() {
-        dispatch<any>(signout());
-    }
-
     //сброс данных
     function handleReset() {
         form.setValues({ name: userNameInfo, email: userEmailInfo, password: '' });
@@ -28,7 +25,7 @@ export const Profile = () => {
 
     //обновить данные 
     //evt: FormEvent<HTMLFormElement>
-    function handleUpdate(evt: React.SyntheticEvent ) {
+    function handleUpdate(evt: React.SyntheticEvent) {
         evt.preventDefault();
         dispatch<any>(updateUserInfo(form.values.name, form.values.email, form.values.password))
         form.setValues({
@@ -40,28 +37,8 @@ export const Profile = () => {
     return (
         <main className={styles.main}>
             <div className={styles.container}>
-                <section className={styles.linkpanel}>
-                    <NavLink to="/profile" style={({ isActive }) => {
-                        return {
-                            color: isActive ? "#f2f2f3" : "#8585AD",
-                        };
-                    }}>
-                        <p className={`${styles.link} text text_type_main-medium`}>Профиль</p>
-                    </NavLink>
 
-                    <NavLink to="/profile/orders" style={({ isActive }) => {
-                        return {
-                            color: isActive ? "#f2f2f3" : "#8585AD",
-                        };
-                    }}>
-                        <p className={`${styles.link} text text_type_main-medium`}>История заказов</p>
-                    </NavLink>
-
-                    <p onClick={handleSignOut} className={`${styles.link} text text_type_main-medium`}>Выход</p>
-
-
-                    <p className="text text_type_main-default text_color_inactive pt-20">В этом разделе вы можете изменить свои персональные данные</p>
-                </section>
+                <ProfileNavigation />
 
                 <section className={styles.inputpanel}>
                     <form onSubmit={handleUpdate}>

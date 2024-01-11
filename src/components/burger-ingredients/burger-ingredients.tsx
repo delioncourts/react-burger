@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../index';
 import { useInView } from 'react-intersection-observer';
 
 import styles from './burger-ingredients.module.css';
@@ -12,10 +13,10 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Loader from '../loader/loader';
 
 import { getIngregients } from '../../services/actions/burger-ingredients';
-import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/actions/modal';
 import { AllIngredients, currentIngredientModal } from '../../services/selectors';
 import { TIngredient } from '../../utils/types';
 
+import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../services/constant/const';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState<string>('bun');
@@ -26,7 +27,7 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch<any>(getIngregients());
+    dispatch(getIngregients());
   }, [dispatch]);
 
   const [buns, sauces, mains] = useMemo<TIngredient[][]>(() => [

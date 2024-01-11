@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { Button, EmailInput, PasswordInput, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./register.module.css";
 import { register } from '../../services/actions/auth';
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../index';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 
 export const Register = () => {

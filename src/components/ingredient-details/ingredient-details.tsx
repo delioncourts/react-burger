@@ -1,6 +1,7 @@
 import React from "react";
 
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
+import { useSelector } from '../../index';
 
 import { useParams } from "react-router-dom";
 import { AllIngredients } from "../../services/selectors";
@@ -8,7 +9,7 @@ import styles from "./ingredient-details.module.css";
 import Loader from "../loader/loader";
 
 const IngredientDetails = () => {
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
 
     const ingredients = useSelector(AllIngredients);
     const ingredient = ingredients.find((ingredient: { _id: string | undefined; }) => ingredient._id === id);

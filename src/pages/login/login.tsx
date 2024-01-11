@@ -2,7 +2,8 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../index';
 
 import { Link } from 'react-router-dom';
 
