@@ -3,7 +3,7 @@ import { burgerConstructorReducer, defaultState } from "./burger-constructor";
 
 describe('check burger constructor reducer', () => {
     
-    it('should return the initial state', () => {
-        expect(burgerConstructorReducer(undefined, {})).toBeDefined(defaultState);
+    test('should return the initial (default) state', () => {
+        expect(burgerConstructorReducer(undefined, {})).toEqual(defaultState);
     });
 })
