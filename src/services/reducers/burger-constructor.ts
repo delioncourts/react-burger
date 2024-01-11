@@ -10,7 +10,7 @@ type TConstructorState = {
 }
 
 const defaultState:TConstructorState = {
-  buns: null,
+  buns: undefined,
   otherItems: [],
 };
 
