@@ -7,8 +7,6 @@ export type TOrderResponse = {
     orders: Array<TOrderFeed>;
     total: number;
     totalToday: number;
-
-   // isOpen: boolean;
 };
 
 type TWSFeedState = {
@@ -18,12 +16,11 @@ type TWSFeedState = {
     error: MessageEvent | null;
 }
 
-const defaultState: TWSFeedState = {
+export const defaultState: TWSFeedState = {
     wsConnecting: false,
     wsConnected: false,
     orders: undefined,
     error: null,
-  //  isOpen: false,
 };
 
 export const wsFeedReducer = (state = defaultState, action: TWSFeed):TWSFeedState => {

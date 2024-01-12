@@ -22,7 +22,7 @@ type TOrderState = {
   orderByNumber: TOrderFeed;
 }
 
-const defaultState:TOrderState = {
+export const defaultState:TOrderState = {
   ingredients: {} as TOrderFeed,
   number: null,
   orderRequest: false,
