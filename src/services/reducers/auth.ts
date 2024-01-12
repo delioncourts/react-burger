@@ -15,7 +15,7 @@ type TAuthState = {
   isPasswordReset: boolean;
 }
 
-const defaultState: TAuthState = {
+export const defaultState: TAuthState = {
   name: '',
   email: '',
   isLoggedIn: false,
