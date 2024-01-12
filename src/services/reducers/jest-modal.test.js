@@ -1,6 +1,6 @@
 import { modalIngredientsReducer, defaultState } from './modal';
 import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../constant/const';
-import { TEST_BUN } from '../../utils/test';
+import { TEST_BUN_1 } from '../../utils/test';
 
 describe('check modal reducer', () => {
   test('should return the initial (default) state', () => {
@@ -11,10 +11,10 @@ describe('check modal reducer', () => {
     expect(
       modalIngredientsReducer(defaultState, {
         type: GET_VIEWED_INGREDIENT,
-        currentIngredient: TEST_BUN,
+        currentIngredient: TEST_BUN_1,
         isOpen: true,
       }),
-    ).toEqual({ ...defaultState, currentIngredient: TEST_BUN, isOpen: true });
+    ).toEqual({ ...defaultState, currentIngredient: TEST_BUN_1, isOpen: true });
   });
 
   test('should remove current ingredient in modal', () => {

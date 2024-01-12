@@ -4,7 +4,7 @@ import {
   GET_INGREDIENTS_ERROR,
   GET_INGREDIENTS_SUCCESS,
 } from '../constant/const';
-import { TEST_BUN, TEST_SAUCE, TEST_MAIN } from '../../utils/test';
+import { TEST_BUN_1, TEST_SAUCE, TEST_MAIN } from '../../utils/test';
 
 describe('check burger ingredients reducer', () => {
   test('should return the initial (default) state', () => {
@@ -31,10 +31,10 @@ describe('check burger ingredients reducer', () => {
     expect(
       burgerIngredientsReducer(defaultState, {
         type: GET_INGREDIENTS_SUCCESS,
-        ingredients: [TEST_BUN, TEST_SAUCE, TEST_MAIN],
+        ingredients: [TEST_BUN_1, TEST_SAUCE, TEST_MAIN],
       }),
     ).toEqual({
-      ingredients: [TEST_BUN, TEST_SAUCE, TEST_MAIN],
+      ingredients: [TEST_BUN_1, TEST_SAUCE, TEST_MAIN],
       ingredientsRequest: false,
       ingredientsError: false,
     });
