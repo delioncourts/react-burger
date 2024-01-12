@@ -59,3 +59,7 @@ export const TEST_MAIN = {
 };
 
 export const TEST_ORDER_NUMBER = 25675;
+
+export const TEST_AUTH_NAME = 'Veronica';
+export const TEST_AUTH_EMAIL = 'test@test.ru';
+export const TEST_AUTH_PASSWORD = '123456';
