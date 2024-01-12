@@ -5,16 +5,16 @@ import {
   GET_ORDER_ERROR,
   GET_ORDER_SUCCESS,
   UPDATE_ORDER_NUMBER,
+  GET_CURRENT_ORDER_REQUEST,
+  GET_CURRENT_ORDER_ERROR,
+  GET_CURRENT_ORDER_SUCCESS
 } from '../constant/const';
 
 import { TOrderActions } from '../actions/order-details';
-import { TIngredient } from '../../utils/types';
 import { TOrderFeed } from '../../utils/types';
 
-import { GET_CURRENT_ORDER_ERROR, GET_CURRENT_ORDER_REQUEST, GET_CURRENT_ORDER_SUCCESS } from '../actions/order-details';
 
 type TOrderState = {
- //isOpen?: boolean;
   ingredients:  TOrderFeed;
   number: number | undefined | null;
   orderRequest: boolean;
