@@ -89,7 +89,7 @@ const BurgerConstructor: React.FC  = () => {
     }
 
     return (
-        <section ref={dropTarget} id="burger-constructor" className={`${styles.section} pt-25`}>
+        <section ref={dropTarget} id="burger-constructor" className={`${styles.section} pt-25`} data-cy="burger-constructor">
             <div className={`${styles.list} pr-2`}>
                 {buns ? (<ConstructorElement
                     type="top"
@@ -140,7 +140,7 @@ const BurgerConstructor: React.FC  = () => {
                     <OrderDetails orderNumber={orderNumber} />
                 </Modal>
                 )}
-                <Button htmlType="button" type="primary" size="large" onClick={handleButtonClick} disabled={!checkDisabled()} >
+                <Button htmlType="button" type="primary" size="large" onClick={handleButtonClick} disabled={!checkDisabled()} data-cy="order-button">
                     Оформить заказ
                 </Button>
             </div>
