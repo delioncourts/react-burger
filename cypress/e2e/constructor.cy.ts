@@ -57,8 +57,4 @@ describe('stellar burger test', () => {
     cy.get("@closeButton").click();
     cy.get("@closeButton").should("not.exist");
   });
-
-
-
-
 })
