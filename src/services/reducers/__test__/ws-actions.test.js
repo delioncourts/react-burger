@@ -1,12 +1,12 @@
-import { wsOrdersReducer, defaultState } from './ws-actions';
+import { wsOrdersReducer, defaultState } from '../ws-actions';
 import {
   WS_ORDERS_CONNECTION_CLOSED,
   WS_ORDERS_CONNECTION_START,
   WS_ORDERS_CONNECTION_SUCCESS,
   WS_ORDERS_CONNECTION_ERROR,
   WS_ORDERS_SEND_MESSAGE,
-} from '../actions/ws-actions';
-import { TEST_WS_ORDER } from '../../utils/test';
+} from '../../actions/ws-actions';
+import { TEST_WS_ORDER } from '../../../utils/test';
 
 describe('check web socket orders actions  reducer', () => {
   test('should return the initial (default) state', () => {

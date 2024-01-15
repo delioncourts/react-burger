@@ -1,6 +1,6 @@
-import { modalIngredientsReducer, defaultState } from './modal';
-import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../constant/const';
-import { TEST_BUN_1 } from '../../utils/test';
+import { modalIngredientsReducer, defaultState } from '../modal';
+import { GET_VIEWED_INGREDIENT, REMOVE_VIEWED_INGREDIENT } from '../../constant/const';
+import { TEST_BUN_1 } from '../../../utils/test';
 
 describe('check modal reducer', () => {
   test('should return the initial (default) state', () => {

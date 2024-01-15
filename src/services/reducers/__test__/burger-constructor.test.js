@@ -1,6 +1,6 @@
-import { burgerConstructorReducer, defaultState } from './burger-constructor';
-import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../constant/const';
-import { TEST_BUN_1, TEST_BUN_2, TEST_SAUCE, TEST_MAIN } from '../../utils/test';
+import { burgerConstructorReducer, defaultState } from '../burger-constructor';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../constant/const';
+import { TEST_BUN_1, TEST_BUN_2, TEST_SAUCE, TEST_MAIN } from '../../../utils/test';
 
 describe('check burger constructor reducer', () => {
   test('should return the initial (default) state', () => {

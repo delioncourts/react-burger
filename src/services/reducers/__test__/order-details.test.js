@@ -1,4 +1,4 @@
-import { orderDetailsReducer, defaultState } from './order-details';
+import { orderDetailsReducer, defaultState } from '../order-details';
 import {
   GET_ORDER_REQUEST,
   GET_ORDER_ERROR,
@@ -7,8 +7,8 @@ import {
   GET_CURRENT_ORDER_REQUEST,
   GET_CURRENT_ORDER_ERROR,
   GET_CURRENT_ORDER_SUCCESS,
-} from '../constant/const';
-import { TEST_ORDER_NUMBER } from '../../utils/test';
+} from '../../constant/const';
+import { TEST_ORDER_NUMBER } from '../../../utils/test';
 
 describe('check order details reducer', () => {
   test('should return the initial (default) state', () => {

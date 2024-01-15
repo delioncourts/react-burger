@@ -1,12 +1,12 @@
-import { defaultState, authReducer } from './auth';
+import { defaultState, authReducer } from '../auth';
 import {
   SET_USER,
   LOGIN_SUCCESS,
   SIGNOUT_SUCCESS,
   REGISTER_SUCCESS,
   RESET_PASSWORD_SUCCESS,
-} from '../constant/const';
-import { TEST_AUTH_EMAIL, TEST_AUTH_NAME } from '../../utils/test';
+} from '../../constant/const';
+import { TEST_AUTH_EMAIL, TEST_AUTH_NAME } from '../../../utils/test';
 
 describe('check auth reducer', () => {
   test('should return the initial (default) state', () => {

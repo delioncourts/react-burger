@@ -1,10 +1,10 @@
-import { burgerIngredientsReducer, defaultState } from './burger-ingredients';
+import { burgerIngredientsReducer, defaultState } from '../burger-ingredients';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_ERROR,
   GET_INGREDIENTS_SUCCESS,
-} from '../constant/const';
-import { TEST_BUN_1, TEST_SAUCE, TEST_MAIN } from '../../utils/test';
+} from '../../constant/const';
+import { TEST_BUN_1, TEST_SAUCE, TEST_MAIN } from '../../../utils/test';
 
 describe('check burger ingredients reducer', () => {
   test('should return the initial (default) state', () => {
