@@ -1,6 +1,3 @@
-//fix describe - without export failure with error
-export { };
-
 import { BASE_URL } from "../../src/utils/api";
 
 describe('stellar burger test', () => {
