@@ -2,9 +2,6 @@
 export { };
 
 import { BASE_URL } from "../../src/utils/api";
-//const BASE_URL = 'https://norma.nomoreparties.space/api/';
-
-const testURL = 'http://localhost:3000'
 
 describe('stellar burger test', () => {
 
@@ -20,11 +17,11 @@ describe('stellar burger test', () => {
       fixture: 'order.json',
     })
 
-    cy.visit(testURL)
+    cy.visit('/')
   });
 
   it('should load main page', () => {
-    cy.visit(testURL);
+    cy.visit('/');
     cy.contains('Соберите бургер');
   });
 
