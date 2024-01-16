@@ -23,7 +23,7 @@ describe('stellar burger test', () => {
   });
 
   it("should open and close modal with ingredient", () => {
-    cy.get('[alt="Соус Spicy-X"]').click();
+    cy.contains('Соус Spicy-X').click();
     cy.get('[data-cy="ingredient-details-modal"]').contains(
       "Соус Spicy-X"
     );
@@ -34,12 +34,12 @@ describe('stellar burger test', () => {
   });
 
   it('should create order with dnd and open modal in burger constructor', () => {
-    cy.get('[alt="Флюоресцентная булка R2-D3"]').trigger("dragstart");
+    cy.contains('Флюоресцентная булка R2-D3').trigger("dragstart");
     cy.get('[data-cy="burger-constructor"]').as('constructor');
     cy.get('@constructor').trigger("drop");
-    cy.get('[alt="Говяжий метеорит (отбивная)"]').trigger("dragstart");
+    cy.contains('Говяжий метеорит (отбивная)').trigger("dragstart");
     cy.get('@constructor').trigger("drop");
-    cy.get('[alt="Соус фирменный Space Sauce"]').trigger(
+    cy.contains('Соус фирменный Space Sauce').trigger(
       "dragstart"
     );
     cy.get('@constructor').trigger("drop");
