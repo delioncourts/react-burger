@@ -9,8 +9,8 @@ type TConstructorState = {
   otherItems: TIngredient[],
 }
 
-const defaultState:TConstructorState = {
-  buns: null,
+export const defaultState:TConstructorState = {
+  buns: undefined,
   otherItems: [],
 };
 

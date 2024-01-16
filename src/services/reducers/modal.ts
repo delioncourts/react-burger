@@ -8,7 +8,7 @@ type TModalState = {
   isOpen: boolean;
 }
 
-const defaultState: TModalState = {
+export const defaultState: TModalState = {
   currentIngredient: null,
   isOpen: false,
   type: undefined,

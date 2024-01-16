@@ -12,7 +12,7 @@ const OrderDetails = ({orderNumber}: {orderNumber: number | null | undefined }) 
     console.log(orderNumber)
     
     return (
-        <div className={`${styles.popup} pt-15 pb-25`}>
+        <div className={`${styles.popup} pt-15 pb-25`} data-cy="order-details-modal">
             <h2 className={`${styles.glow} text text_type_digits-large`}>{orderNumber}</h2>
             <p className="text text_type_main-medium pt-8 pb-15">идентификатор заказа</p>
             <img className={styles.image} src={done} alt='Ваш заказ начали готовить' />

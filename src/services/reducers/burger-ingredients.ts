@@ -13,7 +13,7 @@ type TIngredientState = {
   ingredientsError: boolean;
 }
 
-const defaultState: TIngredientState = {
+export const defaultState: TIngredientState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsError: false,

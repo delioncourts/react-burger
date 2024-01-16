@@ -5,8 +5,12 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_ERROR,
   GET_ORDER_SUCCESS,
-  UPDATE_ORDER_NUMBER
+  UPDATE_ORDER_NUMBER,
+  GET_CURRENT_ORDER_REQUEST,
+  GET_CURRENT_ORDER_ERROR,
+  GET_CURRENT_ORDER_SUCCESS
 } from '../constant/const';
+
 import { AppThunk } from '../../index';
 import { AppDispatch } from '../../index';
 import { getOrdersByNumber } from '../../utils/api';
@@ -51,10 +55,6 @@ export const sendOrder = (arr: TIngredientFull[]):AppThunk => (dispatch: AppDisp
       });
 
 }
-
-export const GET_CURRENT_ORDER_REQUEST: 'GET_CURRENT_ORDER_REQUEST' = 'GET_CURRENT_ORDER_REQUEST';
-export const GET_CURRENT_ORDER_ERROR: 'GET_CURRENT__ORDER_ERROR' = 'GET_CURRENT__ORDER_ERROR';
-export const GET_CURRENT_ORDER_SUCCESS: 'GET_CURRENT_ORDER_SUCCESS' = 'GET_CURRENT_ORDER_SUCCESS';
 
 export interface IGetOrderCurrentRequestAction {
   readonly type: typeof GET_CURRENT_ORDER_REQUEST;

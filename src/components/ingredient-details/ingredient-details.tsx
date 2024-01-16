@@ -19,7 +19,7 @@ const IngredientDetails = () => {
      }
 
     return (
-        ingredient ? <div className={styles.container}>
+        ingredient ? <div className={styles.container} data-cy="ingredient-details-modal">
             <div className={styles.content}>
                 <img src={ingredient.image_large} alt={ingredient.name} />
                 <p className="text text_type_main-medium">{ingredient.name}</p>
